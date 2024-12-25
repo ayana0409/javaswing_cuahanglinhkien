@@ -15,9 +15,11 @@ import share.utils.PasswordUtils;
 public class Employee extends BaseModel {
     private String gender, address, phoneNumber, Status, username, hashedPassword;
     private Date Birthday;
+    private int roleId;
+
 
     public Employee(String name, String gender, String address,String phoneNumber,
-            String Status, String username, String password, Date Birthday) {
+            String Status, String username, String password, Date Birthday, int roleId) {
         super(name);
         this.gender = gender;
         this.address = address;
@@ -26,10 +28,11 @@ public class Employee extends BaseModel {
         this.username = username;
         setPassword(password);
         this.Birthday = Birthday;
+        this.roleId = roleId;
     }
     
     public Employee(int id, String name, String gender, String address,String phoneNumber,
-            String Status, String username, String password, Date Birthday) {
+            String Status, String username, String password, Date Birthday, int roleId) {
         super(id, name);
         this.gender = gender;
         this.address = address;
@@ -38,6 +41,7 @@ public class Employee extends BaseModel {
         this.username = username;
         setPassword(password);
         this.Birthday = Birthday;
+        this.roleId = roleId;
     }
 
     public String getGender() {
@@ -96,4 +100,11 @@ public class Employee extends BaseModel {
         this.Birthday = Birthday;
     }
     
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
 }
