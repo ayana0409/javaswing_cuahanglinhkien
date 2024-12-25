@@ -8,12 +8,12 @@ package com.mycompany.cuahanglinhkien_java.views;
  *
  * @author DLCT
  */
-public class frmCategory extends javax.swing.JFrame {
+public class frmManufacturer extends javax.swing.JFrame {
 
     /**
      * Creates new form frmCategory
      */
-    public frmCategory() {
+    public frmManufacturer() {
         initComponents();
     }
 
@@ -50,12 +50,11 @@ public class frmCategory extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 350));
         setSize(new java.awt.Dimension(500, 300));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("QUẢN LÝ DANH MỤC");
+        jLabel1.setText("QUẢN LÝ HÃNG SẢN XUẤT");
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
         java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
@@ -106,7 +105,7 @@ public class frmCategory extends javax.swing.JFrame {
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel3.setText("Tên danh mục");
+        jLabel3.setText("Tên hãng sản xuất");
         jPanel5.add(jLabel3);
 
         jTextField1.setText("jTextField1");
@@ -249,20 +248,21 @@ public class frmCategory extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCategory().setVisible(true);
+                new frmManufacturer().setVisible(true);
             }
         });
     }
