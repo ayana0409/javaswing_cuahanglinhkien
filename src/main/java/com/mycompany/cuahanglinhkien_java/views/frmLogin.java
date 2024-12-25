@@ -45,19 +45,20 @@ public class frmLogin extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setSize(new java.awt.Dimension(480, 480));
 
-        jPanel1.setBackground(new java.awt.Color(102, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 126, 242));
         jPanel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setBackground(new java.awt.Color(153, 255, 255));
+        jLabel1.setBackground(new java.awt.Color(0, 142, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ĐĂNG NHẬP");
         jLabel1.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.setBackground(new java.awt.Color(153, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Tên đăng nhập");
@@ -119,14 +120,17 @@ public class frmLogin extends javax.swing.JFrame {
         jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel3.setLayout(new java.awt.GridLayout(1, 2, 30, 30));
 
-        btnLogin.setBackground(new java.awt.Color(51, 255, 255));
+        btnLogin.setBackground(new java.awt.Color(52, 45, 126));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Đăng nhập");
         btnLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
         btnLogin.setMargin(new java.awt.Insets(2, 50, 3, 14));
         jPanel3.add(btnLogin);
 
+        btnExit.setBackground(new java.awt.Color(209, 0, 0));
         btnExit.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("Thoát");
         jPanel3.add(btnExit);
 
