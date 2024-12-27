@@ -4,16 +4,19 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.AuthenticationController;
+import com.mycompany.cuahanglinhkien_java.models.Employee;
+import java.util.Arrays;
+import share.singleton.UserSession;
+
 /**
  *
  * @author Asus
  */
 public class frmLogin extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Login
-     */
+    private final AuthenticationController _authController;
     public frmLogin() {
+        _authController = new AuthenticationController();
         initComponents();
     }
 
@@ -31,10 +34,11 @@ public class frmLogin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtUsernameError = new javax.swing.JLabel();
         txtPasswordError = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
+        txtLoginError = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnLogin = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
@@ -64,9 +68,11 @@ public class frmLogin extends javax.swing.JFrame {
         jLabel2.setText("Tên đăng nhập");
 
         txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtPassword.setToolTipText("Nhập mật khẩu");
+        txtUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsernameKeyPressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Mật khẩu");
@@ -75,27 +81,44 @@ public class frmLogin extends javax.swing.JFrame {
 
         txtPasswordError.setForeground(new java.awt.Color(204, 0, 0));
 
+        txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtPassword.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                txtPasswordInputMethodTextChanged(evt);
+            }
+        });
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+        });
+
+        txtLoginError.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtLoginError.setForeground(new java.awt.Color(204, 0, 0));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addGap(137, 137, 137)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtPasswordError)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPasswordError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtUsernameError)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtUsernameError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)))
+                    .addComponent(txtLoginError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,18 +128,21 @@ public class frmLogin extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtUsernameError)
-                .addGap(18, 18, 18)
+                .addComponent(txtUsernameError, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPasswordError)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addComponent(txtPasswordError, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtLoginError, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
 
+        jPanel3.setBackground(new java.awt.Color(204, 255, 255));
         jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel3.setLayout(new java.awt.GridLayout(1, 2, 30, 30));
 
@@ -126,6 +152,11 @@ public class frmLogin extends javax.swing.JFrame {
         btnLogin.setText("Đăng nhập");
         btnLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153), 2));
         btnLogin.setMargin(new java.awt.Insets(2, 50, 3, 14));
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnLogin);
 
         btnExit.setBackground(new java.awt.Color(209, 0, 0));
@@ -145,17 +176,11 @@ public class frmLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -166,6 +191,68 @@ public class frmLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        //_authController.addAccount();
+        if (!login()) {
+            txtLoginError.setText("Tên đăng nhập hoặc tài khoản không đúng");
+            return;
+        }
+        
+        frmHome home = new frmHome();
+        home.setLocationRelativeTo(null);
+        this.dispose();
+        home.setVisible(true);
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtPasswordInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_txtPasswordInputMethodTextChanged
+        txtPasswordError.setText("");
+        txtLoginError.setText("");
+    }//GEN-LAST:event_txtPasswordInputMethodTextChanged
+
+    private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
+        txtUsernameError.setText("");
+        txtLoginError.setText("");
+    }//GEN-LAST:event_txtUsernameKeyPressed
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        txtPasswordError.setText("");
+        txtLoginError.setText("");
+    }//GEN-LAST:event_txtPasswordKeyPressed
+
+    private boolean login(){
+        if (txtUsername.getText().isBlank()) {
+            clearInput();
+            txtUsernameError.setText("Tên đăng nhập không được để trống.");
+            return false;
+        }
+        if (txtPassword.getPassword().length == 0) {
+            clearInput();
+            txtPasswordError.setText("Mật khẩu không được để trống.");
+            return false;
+        }
+        
+        String username = txtUsername.getText();
+        String password = new String(txtPassword.getPassword());
+        
+        Employee user = _authController.getUserByUsername(username);
+        if (user == null) return false;
+        
+        if (user.checkPassword(password)) {
+            UserSession.getInstance().setId(user.getId());
+            UserSession.getInstance().setUsername(user.getUsername());
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private void clearInput(){
+        txtUsername.setText("");
+        txtUsernameError.setText("");
+        txtPassword.setText("");
+        txtPasswordError.setText("");
+        txtLoginError.setText("");
+   }
     /**
      * @param args the command line arguments
      */
@@ -211,7 +298,8 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JLabel txtLoginError;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JLabel txtPasswordError;
     private javax.swing.JTextField txtUsername;
     private javax.swing.JLabel txtUsernameError;

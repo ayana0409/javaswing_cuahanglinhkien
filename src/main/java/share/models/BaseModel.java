@@ -18,11 +18,17 @@ public class BaseModel {
     }
     
     public BaseModel(int id, String name) {
+        idComponent = new BaseModelOnlyId();
+        nameComponent = new BaseModelOnlyName();
+        
         idComponent.setId(id);
         nameComponent.setName(name);
     }
 
     public BaseModel(String name){
+        idComponent = new BaseModelOnlyId();
+        nameComponent = new BaseModelOnlyName();
+        
         idComponent.setId(-1);
         nameComponent.setName(name);
     }

@@ -39,7 +39,7 @@ public class Employee extends BaseModel {
         this.phoneNumber = phoneNumber;
         this.Status = Status;
         this.username = username;
-        setPassword(password);
+        this.hashedPassword = password;
         this.Birthday = Birthday;
         this.roleId = roleId;
     }
@@ -92,6 +92,10 @@ public class Employee extends BaseModel {
         return PasswordUtils.verifyPassword(rawPassword, this.hashedPassword);
     }
 
+    public String getHashedPassword() {
+        return this.hashedPassword;
+    }
+    
     public Date getBirthday() {
         return Birthday;
     }

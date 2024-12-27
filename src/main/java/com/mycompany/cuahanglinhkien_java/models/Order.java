@@ -4,8 +4,9 @@
  */
 package com.mycompany.cuahanglinhkien_java.models;
 
-import java.sql.Date;
+import java.util.Date;
 import share.models.BaseModelOnlyId;
+import share.singleton.UserSession;
 
 /**
  *
@@ -13,12 +14,29 @@ import share.models.BaseModelOnlyId;
  */
 public class Order extends BaseModelOnlyId {
     private Date purchaseDate;
-    private String status;
+    private String status, phoneNumber;
     private float totalAmount;
     private int employeeId;
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
     
-    public Order(int id, int employeeId, Date purchaseDate, String status, float totalAmount) {
+    public Order(int id, int employeeId, String phoneNumber, Date purchaseDate, String status, float totalAmount) {
         super(id);
+        this.phoneNumber = phoneNumber;
         this.purchaseDate = purchaseDate;
         this.status = status;
         this.totalAmount = totalAmount;
@@ -30,14 +48,25 @@ public class Order extends BaseModelOnlyId {
         this.status = "";
         this.totalAmount = 0;
         this.employeeId = 0;
+        this.phoneNumber = "0";
     }
 
-    public Order(int employeeId, Date purchaseDate, String status, float TotalAmount) {
+    public Order(int employeeId, String phoneNumber, Date purchaseDate, String status, float TotalAmount) {
         super();
         this.purchaseDate = purchaseDate;
         this.status = status;
         this.totalAmount = TotalAmount;
         this.employeeId = employeeId;
+        this.phoneNumber = phoneNumber;
+    }
+    
+    public Order(String phoneNumber) {
+        super();
+        this.purchaseDate = new Date();
+        this.status = "New";
+        this.totalAmount = 0;
+        this.employeeId = UserSession.getInstance().getId();
+        this.phoneNumber = phoneNumber;
     }
     
     public Date getPurchaseDate() {
