@@ -4,37 +4,17 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
-import com.mycompany.cuahanglinhkien_java.controllers.CategoryController;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import com.mycompany.cuahanglinhkien_java.models.Category;
-import com.mysql.cj.xdevapi.Result;
-import java.sql.Connection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author DLCT
  */
-public class frmCategory extends javax.swing.JFrame {
-    
-    CategoryController controller = new CategoryController();
-    String[] columnNames = {"Mã Danh Mục", "Tên Danh Mục"};
-    DefaultTableModel model = new DefaultTableModel(columnNames,0);
-    String selected ="";
-    
-    public frmCategory() {
+public class frmManufacturer extends javax.swing.JFrame {
+           
+    public frmManufacturer() {
         initComponents();
-        addEvent();
-        tbCategory.setModel(model);
-        loadData();
-        clearInput();
     }
 
     /**
@@ -51,16 +31,14 @@ public class frmCategory extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbCategory = new javax.swing.JTable();
+        jtbManu = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -76,41 +54,25 @@ public class frmCategory extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("QUẢN LÝ DANH MỤC");
+        jLabel1.setText("QUẢN LÝ HÃNG SẢN XUẤT");
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
         java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
         jPanel2Layout.columnWidths = new int[] {700, 260};
         jPanel2.setLayout(jPanel2Layout);
 
-        tbCategory.setModel(new javax.swing.table.DefaultTableModel(
+        jtbManu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Mã Danh Mục", "Tên Danh Mục"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tbCategory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbCategoryMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tbCategory);
-        if (tbCategory.getColumnModel().getColumnCount() > 0) {
-            tbCategory.getColumnModel().getColumn(0).setResizable(false);
-        }
+        ));
+        jScrollPane1.setViewportView(jtbManu);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -143,19 +105,24 @@ public class frmCategory extends javax.swing.JFrame {
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel3.setText("Mã Danh Mục");
+        jLabel3.setText("Tên hãng sản xuất");
         jPanel5.add(jLabel3);
-        jPanel5.add(txtID);
+
+        txtName.setText("jTextField1");
+        jPanel5.add(txtName);
 
         jPanel4.add(jPanel5);
 
-        jPanel6.setLayout(new java.awt.GridLayout(2, 0));
-
-        jLabel4.setText("Tên Danh Mục");
-        jPanel6.add(jLabel4);
-
-        txtName.setText("jTextField1");
-        jPanel6.add(txtName);
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 260, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 83, Short.MAX_VALUE)
+        );
 
         jPanel4.add(jPanel6);
 
@@ -214,32 +181,12 @@ public class frmCategory extends javax.swing.JFrame {
         jPanel4.add(jPanel10);
 
         btnSearch.setText("Tìm kiếm");
-        btnSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSearchActionPerformed(evt);
-            }
-        });
 
         btnAdd.setText("Thêm");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
 
         btnEdit.setText("Sửa");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
 
         btnDelete.setText("Xóa");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -284,116 +231,6 @@ public class frmCategory extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       
-        try{
-        // Lấy dữ liệu từ trường nhập liệu
-        String name = txtName.getText().trim();
-        
-        // Kiểm tra nếu tên danh mục rỗng
-        if (name.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Tên danh mục không được để trống!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        // Tạo đối tượng danh mục
-        Category newCategory = new Category();
-        newCategory.setName(name);
-        
-
-        // Gọi phương thức thêm danh mụdíc từ controller
-        boolean success = controller.addCategory(newCategory);
-
-        // Kiểm tra kết quả và thông báo
-        if (success) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Thêm danh mục thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            loadData();  // Tải lại dữ liệu bảng
-            clearInput(); // Xóa trường nhập liệu
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Thêm danh mục thất bại!", "Thông báo", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_btnAddActionPerformed
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        if (!selected.isEmpty()) {
-            controller.updateCategory(Integer.parseInt(txtID.getText()), txtName.getText());
-                loadData();
-                clearInput();
-        }
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-      /* if (!selected.isEmpty()) {
-             controller.deleteCategory();
-                loadData();
-                clearInput();
-       }*/
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        
-    }//GEN-LAST:event_btnSearchActionPerformed
-
-    private void tbCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCategoryMouseClicked
-        try{
-            int row = this.tbCategory.getSelectedRow();
-             if (row >= 0) {
-            // Lấy dữ liệu từ bảng
-            String id = tbCategory.getValueAt(row, 0).toString();
-            String name = tbCategory.getValueAt(row, 1).toString();
-
-            // Hiển thị dữ liệu lên các trường nhập liệu
-            txtID.setText(id);
-            txtName.setText(name);
-            
-            // Lưu id của dòng đã chọn vào biến selected
-            selected = id;
-        }
-    } catch (Exception ex) {
-        Logger.getLogger(frmCategory.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_tbCategoryMouseClicked
-    private void addEvent() {
-        tbCategory.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            if (!e.getValueIsAdjusting()) {
-                int selectedRow = tbCategory.getSelectedRow();
-                if (selectedRow != -1) {
-                    selected = (String) tbCategory.getValueAt(selectedRow, 0);
-                    txtID.setText(selected);
-                    txtName.setText((String) tbCategory.getValueAt(selectedRow, 1));
-                }
-            }
-        });
-    }
-    
-    
-    private void loadData() {
-    try {
-        // Lấy danh sách danh mục từ cơ sở dữ liệu
-        List<Category> listCate = controller.getAllCategory();
-
-        // Xóa dữ liệu cũ trong bảng
-        model.setRowCount(0);
-
-        // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
-        listCate.forEach(category -> {
-            model.addRow(new Object[]{category.getId(), category.getName()});
-        });
-    } catch (SQLException ex) {
-        // Log lỗi nếu có vấn đề khi tải dữ liệu
-        Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-}
-
-  
-        private void clearInput(){
-            txtID.setText("");
-            txtName.setText("");
-        }
     /**
      * @param args the command line arguments
      */
@@ -411,23 +248,21 @@ public class frmCategory extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmCategory().setVisible(true);
+                new frmManufacturer().setVisible(true);
             }
         });
     }
@@ -440,7 +275,6 @@ public class frmCategory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -453,10 +287,7 @@ public class frmCategory extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbCategory;
-    private javax.swing.JTextField txtID;
+    private javax.swing.JTable jtbManu;
     private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
-
-    
 }
