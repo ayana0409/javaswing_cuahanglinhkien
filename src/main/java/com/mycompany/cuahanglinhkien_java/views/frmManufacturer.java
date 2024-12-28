@@ -4,15 +4,15 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 /**
  *
  * @author DLCT
  */
 public class frmManufacturer extends javax.swing.JFrame {
-
-    /**
-     * Creates new form frmCategory
-     */
+           
     public frmManufacturer() {
         initComponents();
     }
@@ -31,23 +31,23 @@ public class frmManufacturer extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtbManu = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(500, 300));
@@ -61,7 +61,7 @@ public class frmManufacturer extends javax.swing.JFrame {
         jPanel2Layout.columnWidths = new int[] {700, 260};
         jPanel2.setLayout(jPanel2Layout);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtbManu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -72,7 +72,7 @@ public class frmManufacturer extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtbManu);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -108,8 +108,8 @@ public class frmManufacturer extends javax.swing.JFrame {
         jLabel3.setText("Tên hãng sản xuất");
         jPanel5.add(jLabel3);
 
-        jTextField1.setText("jTextField1");
-        jPanel5.add(jTextField1);
+        txtName.setText("jTextField1");
+        jPanel5.add(txtName);
 
         jPanel4.add(jPanel5);
 
@@ -180,13 +180,13 @@ public class frmManufacturer extends javax.swing.JFrame {
 
         jPanel4.add(jPanel10);
 
-        jButton4.setText("Tìm kiếm");
+        btnSearch.setText("Tìm kiếm");
 
-        jButton1.setText("Thêm");
+        btnAdd.setText("Thêm");
 
-        jButton2.setText("Sửa");
+        btnEdit.setText("Sửa");
 
-        jButton3.setText("Xóa");
+        btnDelete.setText("Xóa");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -194,15 +194,15 @@ public class frmManufacturer extends javax.swing.JFrame {
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                .addComponent(btnSearch)
                 .addGap(85, 85, 85))
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jButton1)
+                .addComponent(btnAdd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addComponent(btnEdit)
                 .addGap(12, 12, 12)
-                .addComponent(jButton3)
+                .addComponent(btnDelete)
                 .addContainerGap(8, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
@@ -210,11 +210,11 @@ public class frmManufacturer extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnAdd)
+                    .addComponent(btnEdit)
+                    .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addComponent(btnSearch)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
@@ -268,10 +268,10 @@ public class frmManufacturer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -287,7 +287,7 @@ public class frmManufacturer extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jtbManu;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
 }

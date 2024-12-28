@@ -4,6 +4,7 @@
 
 package com.mycompany.cuahanglinhkien_java;
 
+import com.mycompany.cuahanglinhkien_java.views.frmCategory;
 import com.mycompany.cuahanglinhkien_java.views.frmLogin;
 import javax.swing.JFrame;
 
@@ -14,8 +15,13 @@ import javax.swing.JFrame;
 public class CuaHangLinhKien_Java {
 
     public static void main(String[] args) {
-        frmLogin frmLogin = new frmLogin();
         
-        frmLogin.setVisible(true);
+        //frmLogin frmLogin = new frmLogin();
+        //frmLogin.setVisible(true);
+        
+        frmCategory frmCategory = new frmCategory();
+        frmCategory.setVisible(true);
     }
+    
 }
+
