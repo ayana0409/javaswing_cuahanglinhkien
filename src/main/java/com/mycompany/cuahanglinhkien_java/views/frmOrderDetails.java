@@ -4,27 +4,54 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.OrderDetailController;
+import com.mycompany.cuahanglinhkien_java.models.OrderDetail;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Asus
  */
 public class frmOrderDetails extends javax.swing.JFrame {
 
+    private OrderDetailController _orderDetailController;
+    private Object[] header = {"ID", "Tên sản phẩm", "Số lượng", "Giá bán"};
+    private DefaultTableModel detailModel;
     private int selectedDetail;
     private int orderId;
+
     public frmOrderDetails() {
+        _orderDetailController = new OrderDetailController();
         initComponents();
+        detailModel = new DefaultTableModel(header, 0);
+        tbOrderDetails.setModel(detailModel);
         addEvent();
+        loadData();
     }
 
-    private void addEvent(){
+    private void addEvent() {
+        spQuantity.addChangeListener((e) -> {
+            if (selectedDetail != 0) {
+                int quantity = (int) spQuantity.getValue();
+                int productId = selectedDetail;
+                var newDetail = new OrderDetail(productId, orderId, quantity, 0);
+                _orderDetailController.upsertOrDeleteOrderDetail(newDetail);
+            }
+        });
+
         
     }
-    
-    private void loadData(){
-        
+
+    private void loadData() {
+        List<OrderDetail> orderDetails = _orderDetailController.getByOrderId(orderId);
+        for (OrderDetail detail : orderDetails) {
+            detailModel.addRow(new Object[]{detail.getProductId(), detail.getProductId(),
+                detail.getQuantitySold(), detail.getSalePrice()});
+        }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,8 +79,10 @@ public class frmOrderDetails extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         lbQuantity = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
-        spQuantity = new javax.swing.JSpinner();
         txtDelete = new javax.swing.JButton();
+        jPanel14 = new javax.swing.JPanel();
+        btnAddProduct = new javax.swing.JButton();
+        spQuantity = new javax.swing.JSpinner();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -113,7 +142,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -135,7 +164,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -179,12 +208,19 @@ public class frmOrderDetails extends javax.swing.JFrame {
         lbQuantity.setText("Số lượng");
         jPanel8.add(lbQuantity);
 
-        jPanel13.setLayout(new java.awt.BorderLayout(20, 0));
-        jPanel13.add(spQuantity, java.awt.BorderLayout.CENTER);
+        jPanel13.setLayout(new java.awt.BorderLayout(5, 0));
 
         txtDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtDelete.setText("Xóa");
         jPanel13.add(txtDelete, java.awt.BorderLayout.LINE_END);
+
+        jPanel14.setLayout(new java.awt.BorderLayout(5, 0));
+
+        btnAddProduct.setText("Thêm");
+        jPanel14.add(btnAddProduct, java.awt.BorderLayout.LINE_END);
+        jPanel14.add(spQuantity, java.awt.BorderLayout.CENTER);
+
+        jPanel13.add(jPanel14, java.awt.BorderLayout.CENTER);
 
         jPanel8.add(jPanel13);
 
@@ -194,7 +230,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
+            .addGap(0, 231, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,6 +330,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddProduct;
     private javax.swing.JButton btnCancelOrder;
     private javax.swing.JButton btnPayment;
     private javax.swing.JLabel jLabel1;
@@ -307,6 +344,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

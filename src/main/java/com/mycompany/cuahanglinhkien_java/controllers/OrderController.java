@@ -51,32 +51,7 @@ public class OrderController {
                     formattedDate, order.getStatus(), order.getTotalAmount());
             return id > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
             return false;
         }
     }
-
-//    public boolean updateAccountPassword(String username, String newPassword) {
-//        String query = "UPDATE account SET password = ? WHERE username = ?";
-//
-//        try {
-//            int rowsAffected = _dbHelper.updateOrDelete(query, newPassword, username);
-//            return rowsAffected > 0;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-//
-//    public boolean deleteAccount(String username) {
-//        String query = "DELETE FROM account WHERE username = ?";
-//
-//        try {
-//            int rowsAffected = _dbHelper.updateOrDelete(query, username);
-//            return rowsAffected > 0;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
 }
