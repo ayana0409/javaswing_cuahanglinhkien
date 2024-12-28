@@ -23,14 +23,15 @@ public class OrderController {
     }
 
     public Order getOrder(int orderId) {
-        String query = "SELECT * FROM order WHERE id = ?";
+        String query = "SELECT * FROM orders WHERE id = ?";
         try {
             return _dbContext.fetchOne(query, rs -> {
                 try {
                     return new Order(rs.getInt("id"), rs.getInt("emp_id"), 
                             rs.getString("phoneNumber"), rs.getDate("purchaseDate"), 
                             rs.getString("status"), rs.getFloat("totalAmount"));
-                } catch (SQLException e) {                   
+                } catch (SQLException ex) {   
+                    Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
                     return null;
                 }
             }, orderId);

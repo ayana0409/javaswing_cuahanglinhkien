@@ -22,11 +22,10 @@ public class ProductController {
         try {
             return _dbHelper.fetchOne(query, rs -> {
                 try {
-                    return new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("categoryId"),
-                            rs.getInt("manufacturerId"),rs.getInt("quantity"),
+                    return new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("cat_Id"),
+                            rs.getInt("man_Id"),rs.getInt("quantity"),
                             rs.getString("details"),rs.getString("image"));
                 } catch (SQLException e) {
-                    e.printStackTrace();
                     return null;
                 }
             }, id);
@@ -42,11 +41,10 @@ public class ProductController {
         try {
             return _dbHelper.fetchAll(query, rs -> {
                 try {
-                    return new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("categoryId"),
-                            rs.getInt("manufacturerId"),rs.getInt("quantity"),
+                    return new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("cat_Id"),
+                            rs.getInt("man_Id"),rs.getInt("quantity"),
                             rs.getString("details"),rs.getString("image"));
                 } catch (SQLException e) {
-                    e.printStackTrace();
                     return null;
                 }
             });

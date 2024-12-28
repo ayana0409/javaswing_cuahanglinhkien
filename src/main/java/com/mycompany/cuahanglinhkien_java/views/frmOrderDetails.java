@@ -4,10 +4,14 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.OrderController;
 import com.mycompany.cuahanglinhkien_java.controllers.OrderDetailController;
+import com.mycompany.cuahanglinhkien_java.controllers.ProductController;
+import com.mycompany.cuahanglinhkien_java.models.Order;
 import com.mycompany.cuahanglinhkien_java.models.OrderDetail;
-import java.util.ArrayList;
+import com.mycompany.cuahanglinhkien_java.models.Product;
 import java.util.List;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -15,41 +19,83 @@ import javax.swing.table.DefaultTableModel;
  * @author Asus
  */
 public class frmOrderDetails extends javax.swing.JFrame {
-
-    private OrderDetailController _orderDetailController;
-    private Object[] header = {"ID", "Tên sản phẩm", "Số lượng", "Giá bán"};
-    private DefaultTableModel detailModel;
+    
+    private final OrderDetailController _orderDetailController;
+    private final ProductController _productController;
+    private final OrderController _orderController;
+    private final Object[] header = {"ID", "Tên sản phẩm", "Số lượng", "Giá bán"};
+    private final DefaultTableModel detailModel;
     private int selectedDetail;
-    private int orderId;
-
+    private Order order = null;
+    
     public frmOrderDetails() {
+        int orderId = 1;
+        
         _orderDetailController = new OrderDetailController();
+        _productController = new ProductController();
+        _orderController = new OrderController();
         initComponents();
+        tbOrderDetails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        order = _orderController.getOrder(orderId);
         detailModel = new DefaultTableModel(header, 0);
         tbOrderDetails.setModel(detailModel);
         addEvent();
         loadData();
     }
-
+    
     private void addEvent() {
         spQuantity.addChangeListener((e) -> {
             if (selectedDetail != 0) {
                 int quantity = (int) spQuantity.getValue();
                 int productId = selectedDetail;
-                var newDetail = new OrderDetail(productId, orderId, quantity, 0);
+                var newDetail = new OrderDetail(productId, order.getId(), quantity, 0);
                 _orderDetailController.upsertOrDeleteOrderDetail(newDetail);
+                loadTable();
             }
         });
-
         
+        tbOrderDetails.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tbOrderDetails.getSelectedRow();
+                if (selectedRow >= 0) {
+                    selectedDetail = Integer.parseInt(tbOrderDetails.getValueAt(selectedRow, 0).toString());
+                    checkSelectedRow();
+                }
+            }
+        });
     }
-
+    
     private void loadData() {
-        List<OrderDetail> orderDetails = _orderDetailController.getByOrderId(orderId);
+        txtOrderId.setText(order.getId() + "");
+        txtPhone.setText(order.getPhoneNumber());
+        txtStatus.setText(order.getStatus());
+        txtTotalPrice.setText(order.getTotalAmount() + "");
+        
+        loadTable();
+    }
+    
+    private void loadTable() {
+        List<OrderDetail> orderDetails = _orderDetailController.getByOrderId(order.getId());
+        List<Product> products = _productController.getAllProduct();
+        detailModel.setRowCount(0);
         for (OrderDetail detail : orderDetails) {
-            detailModel.addRow(new Object[]{detail.getProductId(), detail.getProductId(),
-                detail.getQuantitySold(), detail.getSalePrice()});
+            Product product = products.stream()
+                    .filter(p -> p.getId() == detail.getProductId())
+                    .findFirst()
+                    .orElse(null);
+            detailModel.addRow(new Object[]{
+                detail.getProductId(),
+                product != null ? product.getName() : "Unknown",
+                detail.getQuantitySold(),
+                detail.getSalePrice()
+            });
         }
+    }
+    
+    private void checkSelectedRow() {
+        spQuantity.setEnabled(selectedDetail > 0);
+        btnDelete.setEnabled(selectedDetail > 0);
     }
 
     /**
@@ -79,7 +125,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         lbQuantity = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
-        txtDelete = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         btnAddProduct = new javax.swing.JButton();
         spQuantity = new javax.swing.JSpinner();
@@ -210,14 +256,17 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         jPanel13.setLayout(new java.awt.BorderLayout(5, 0));
 
-        txtDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtDelete.setText("Xóa");
-        jPanel13.add(txtDelete, java.awt.BorderLayout.LINE_END);
+        btnDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDelete.setText("Xóa");
+        btnDelete.setEnabled(false);
+        jPanel13.add(btnDelete, java.awt.BorderLayout.LINE_END);
 
         jPanel14.setLayout(new java.awt.BorderLayout(5, 0));
 
         btnAddProduct.setText("Thêm");
         jPanel14.add(btnAddProduct, java.awt.BorderLayout.LINE_END);
+
+        spQuantity.setEnabled(false);
         jPanel14.add(spQuantity, java.awt.BorderLayout.CENTER);
 
         jPanel13.add(jPanel14, java.awt.BorderLayout.CENTER);
@@ -332,6 +381,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddProduct;
     private javax.swing.JButton btnCancelOrder;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPayment;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -357,7 +407,6 @@ public class frmOrderDetails extends javax.swing.JFrame {
     private javax.swing.JLabel lbQuantity;
     private javax.swing.JSpinner spQuantity;
     private javax.swing.JTable tbOrderDetails;
-    private javax.swing.JButton txtDelete;
     private javax.swing.JTextField txtOrderId;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtStatus;

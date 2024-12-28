@@ -16,11 +16,9 @@ public class CuaHangLinhKien_Java {
 
     public static void main(String[] args) {
         
-        //frmLogin frmLogin = new frmLogin();
-        //frmLogin.setVisible(true);
-        
-        frmCategory frmCategory = new frmCategory();
-        frmCategory.setVisible(true);
+        frmLogin frmLogin = new frmLogin();
+        frmLogin.setVisible(true);
+
     }
     
 }

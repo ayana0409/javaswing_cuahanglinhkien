@@ -68,7 +68,7 @@ public class OrderDetailController {
         String query;
         try {
             if (existDetail == null) {
-                query = "insert";
+                query = "insert into orderdetail (pro_id, id, salePrice, quantitySold) value (?,?,?,?)";
                 return _dbContext.insert(query, detail.getOrderId(), detail.getProductId(),
                         detail.getQuantitySold(), detail.getSalePrice()) > 0;
             } else if (detail.getQuantitySold() > 0) {

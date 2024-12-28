@@ -249,12 +249,13 @@
                     <Property name="horizontalGap" type="int" value="5"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="txtDelete">
+                    <Component class="javax.swing.JButton" name="btnDelete">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -284,6 +285,9 @@
                           </Constraints>
                         </Component>
                         <Component class="javax.swing.JSpinner" name="spQuantity">
+                          <Properties>
+                            <Property name="enabled" type="boolean" value="false"/>
+                          </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                               <BorderConstraints direction="Center"/>

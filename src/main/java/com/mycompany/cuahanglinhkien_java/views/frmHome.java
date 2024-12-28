@@ -168,6 +168,11 @@ public class frmHome extends javax.swing.JFrame {
         btnManageCategory.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnManageCategory.setForeground(new java.awt.Color(255, 255, 255));
         btnManageCategory.setText("Danh mục");
+        btnManageCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageCategoryActionPerformed(evt);
+            }
+        });
         jPanel6.add(btnManageCategory, java.awt.BorderLayout.PAGE_END);
 
         lbCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -186,6 +191,11 @@ public class frmHome extends javax.swing.JFrame {
         btnManageManufacturer.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnManageManufacturer.setForeground(new java.awt.Color(255, 255, 255));
         btnManageManufacturer.setText("Thương hiệu");
+        btnManageManufacturer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageManufacturerActionPerformed(evt);
+            }
+        });
         jPanel7.add(btnManageManufacturer, java.awt.BorderLayout.PAGE_END);
 
         jPanel3.add(jPanel7);
@@ -199,6 +209,11 @@ public class frmHome extends javax.swing.JFrame {
         btnProduct.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnProduct.setForeground(new java.awt.Color(255, 255, 255));
         btnProduct.setText("Sản phẩm");
+        btnProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductActionPerformed(evt);
+            }
+        });
         jPanel8.add(btnProduct, java.awt.BorderLayout.PAGE_END);
 
         jPanel3.add(jPanel8);
@@ -308,6 +323,27 @@ public class frmHome extends javax.swing.JFrame {
         frmLogin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnChangeAccountActionPerformed
+
+    private void btnManageManufacturerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageManufacturerActionPerformed
+        frmManufacturer frmManufacturer = new frmManufacturer();
+        frmManufacturer.setLocationRelativeTo(null);
+        frmManufacturer.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnManageManufacturerActionPerformed
+
+    private void btnManageCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageCategoryActionPerformed
+        frmCategory frmCategory = new frmCategory();
+        frmCategory.setLocationRelativeTo(null);
+        frmCategory.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnManageCategoryActionPerformed
+
+    private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
+        frmProduct frmProduct = new frmProduct();
+        frmProduct.setLocationRelativeTo(null);
+        frmProduct.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnProductActionPerformed
 
     /**
      * @param args the command line arguments
