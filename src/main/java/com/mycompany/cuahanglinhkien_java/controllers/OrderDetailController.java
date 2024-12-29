@@ -72,12 +72,12 @@ public class OrderDetailController {
                 return _dbContext.insert(query, detail.getOrderId(), detail.getProductId(),
                         detail.getQuantitySold(), detail.getSalePrice()) > 0;
             } else if (detail.getQuantitySold() > 0) {
-                query = "update";
-                return _dbContext.updateOrDelete(query, detail.getOrderId(), detail.getProductId(),
-                        detail.getQuantitySold(), existDetail.getSalePrice()) > 0;
+                query = "UPDATE orderdetail SET quantitySold = ? WHERE pro_id = ? and id = ?";
+                return _dbContext.updateOrDelete(query, detail.getQuantitySold(), 
+                        detail.getProductId(), detail.getOrderId()) > 0;
             } else {
-                query = "delete";
-                return _dbContext.updateOrDelete(query, detail.getOrderId(), detail.getProductId()) > 0;
+                query = "DELETE FROM orderdetail WHERE pro_id = ? and id = ?";
+                return _dbContext.updateOrDelete(query, detail.getProductId(), detail.getOrderId()) > 0;
             }
         } catch (SQLException ex) {
             Logger.getLogger(OrderDetailController.class.getName()).log(Level.SEVERE, null, ex);

@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Asus
  */
 public class frmOrderDetails extends javax.swing.JFrame {
-    
+
     private final OrderDetailController _orderDetailController;
     private final ProductController _productController;
     private final OrderController _orderController;
@@ -27,54 +27,60 @@ public class frmOrderDetails extends javax.swing.JFrame {
     private final DefaultTableModel detailModel;
     private int selectedDetail;
     private Order order = null;
-    
+    int orderId = 1;
+
     public frmOrderDetails() {
-        int orderId = 1;
-        
+
         _orderDetailController = new OrderDetailController();
         _productController = new ProductController();
         _orderController = new OrderController();
         initComponents();
         tbOrderDetails.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
-        order = _orderController.getOrder(orderId);
+
         detailModel = new DefaultTableModel(header, 0);
         tbOrderDetails.setModel(detailModel);
         addEvent();
         loadData();
     }
-    
+
     private void addEvent() {
         spQuantity.addChangeListener((e) -> {
             if (selectedDetail != 0) {
                 int quantity = (int) spQuantity.getValue();
                 int productId = selectedDetail;
-                var newDetail = new OrderDetail(productId, order.getId(), quantity, 0);
-                _orderDetailController.upsertOrDeleteOrderDetail(newDetail);
-                loadTable();
+                int existValue = Integer.parseInt(tbOrderDetails.getValueAt(tbOrderDetails.getSelectedRow(), 2).toString());
+                if (existValue != quantity) {
+                    var newDetail = new OrderDetail(productId, order.getId(), quantity, 0);
+                    _orderDetailController.upsertOrDeleteOrderDetail(newDetail);
+                    loadData();
+                    loadTable();
+                    checkSelectedRow();
+                }
             }
         });
-        
+
         tbOrderDetails.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = tbOrderDetails.getSelectedRow();
                 if (selectedRow >= 0) {
                     selectedDetail = Integer.parseInt(tbOrderDetails.getValueAt(selectedRow, 0).toString());
+                    spQuantity.setValue(Integer.parseInt(tbOrderDetails.getValueAt(selectedRow, 2).toString()));
                     checkSelectedRow();
                 }
             }
         });
     }
-    
+
     private void loadData() {
+        order = _orderController.getOrder(orderId);
         txtOrderId.setText(order.getId() + "");
         txtPhone.setText(order.getPhoneNumber());
         txtStatus.setText(order.getStatus());
         txtTotalPrice.setText(order.getTotalAmount() + "");
-        
+
         loadTable();
     }
-    
+
     private void loadTable() {
         List<OrderDetail> orderDetails = _orderDetailController.getByOrderId(order.getId());
         List<Product> products = _productController.getAllProduct();
@@ -91,9 +97,24 @@ public class frmOrderDetails extends javax.swing.JFrame {
                 detail.getSalePrice()
             });
         }
+        detailModel.fireTableDataChanged();
     }
-    
+
     private void checkSelectedRow() {
+        boolean found = false;
+        for (int i = 0; i < tbOrderDetails.getRowCount(); i++) {
+            int value = Integer.parseInt(tbOrderDetails.getValueAt(i, 0).toString());
+            if (value == selectedDetail) {
+                tbOrderDetails.setRowSelectionInterval(i, i);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            tbOrderDetails.clearSelection();
+            selectedDetail = -1;
+        }
+
         spQuantity.setEnabled(selectedDetail > 0);
         btnDelete.setEnabled(selectedDetail > 0);
     }
@@ -170,6 +191,9 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
+        jPanel3.setBackground(new java.awt.Color(204, 255, 255));
+
+        tbOrderDetails.setBackground(new java.awt.Color(204, 255, 255));
         tbOrderDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -198,6 +222,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.CENTER);
 
+        jPanel4.setBackground(new java.awt.Color(204, 255, 255));
         jPanel4.setLayout(new java.awt.GridLayout(8, 0, 0, 10));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -223,6 +248,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         jPanel4.add(jPanel5);
 
+        jPanel6.setBackground(new java.awt.Color(204, 255, 255));
         jPanel6.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -231,11 +257,13 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         txtOrderId.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtOrderId.setAutoscrolls(false);
+        txtOrderId.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtOrderId.setEnabled(false);
         jPanel6.add(txtOrderId);
 
         jPanel4.add(jPanel6);
 
+        jPanel7.setBackground(new java.awt.Color(204, 255, 255));
         jPanel7.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -244,6 +272,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         txtPhone.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtPhone.setAutoscrolls(false);
+        txtPhone.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtPhone.setEnabled(false);
         jPanel7.add(txtPhone);
 
@@ -256,9 +285,16 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         jPanel13.setLayout(new java.awt.BorderLayout(5, 0));
 
-        btnDelete.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDelete.setBackground(new java.awt.Color(209, 0, 0));
+        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("Xóa");
         btnDelete.setEnabled(false);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jPanel13.add(btnDelete, java.awt.BorderLayout.LINE_END);
 
         jPanel14.setLayout(new java.awt.BorderLayout(5, 0));
@@ -275,6 +311,8 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         jPanel4.add(jPanel8);
 
+        jPanel9.setBackground(new java.awt.Color(204, 255, 255));
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -288,6 +326,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         jPanel4.add(jPanel9);
 
+        jPanel10.setBackground(new java.awt.Color(204, 255, 255));
         jPanel10.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -296,32 +335,38 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         txtStatus.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtStatus.setAutoscrolls(false);
+        txtStatus.setDisabledTextColor(new java.awt.Color(0, 102, 204));
         txtStatus.setEnabled(false);
         jPanel10.add(txtStatus);
 
         jPanel4.add(jPanel10);
 
+        jPanel11.setBackground(new java.awt.Color(204, 255, 255));
         jPanel11.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setText("Tổng tiền");
         jPanel11.add(jLabel6);
 
-        txtTotalPrice.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTotalPrice.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtTotalPrice.setText("0");
         txtTotalPrice.setAutoscrolls(false);
+        txtTotalPrice.setDisabledTextColor(new java.awt.Color(255, 0, 51));
         txtTotalPrice.setEnabled(false);
         jPanel11.add(txtTotalPrice);
 
         jPanel4.add(jPanel11);
 
+        jPanel12.setBackground(new java.awt.Color(204, 255, 255));
         jPanel12.setLayout(new java.awt.GridLayout(1, 2, 20, 0));
 
         btnPayment.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnPayment.setText("Thanh toán");
         jPanel12.add(btnPayment);
 
+        btnCancelOrder.setBackground(new java.awt.Color(209, 0, 0));
         btnCancelOrder.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnCancelOrder.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelOrder.setText("Hủy");
         jPanel12.add(btnCancelOrder);
 
@@ -342,6 +387,17 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (selectedDetail != 0) {
+            int productId = selectedDetail;
+            var newDetail = new OrderDetail(productId, order.getId(), 0, 0);
+            _orderDetailController.upsertOrDeleteOrderDetail(newDetail);
+            loadData();
+            loadTable();
+            checkSelectedRow();
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
