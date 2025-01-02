@@ -71,7 +71,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
         });
     }
 
-    private void loadData() {
+    public void loadData() {
         order = _orderController.getOrder(orderId);
         txtOrderId.setText(order.getId() + "");
         txtPhone.setText(order.getPhoneNumber());
