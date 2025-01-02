@@ -4,12 +4,16 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.CustomerController;
+import com.mycompany.cuahanglinhkien_java.models.Customer;
+
 /**
  *
  * @author YEN VY
  */
 public class frmCustomer extends javax.swing.JFrame {
 
+    private CustomerController customercontroller=new CustomerController();
     /**
      * Creates new form frmCustomer
      */
@@ -32,26 +36,26 @@ public class frmCustomer extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtPhoneNumber = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtAddress = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtSearch = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbCustomer = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,31 +76,25 @@ public class frmCustomer extends javax.swing.JFrame {
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("Số điện thoại");
         jPanel5.add(jLabel1);
-
-        jTextField1.setText("jTextField1");
-        jPanel5.add(jTextField1);
+        jPanel5.add(txtPhoneNumber);
 
         jPanel3.add(jPanel5);
 
         jPanel6.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
-        jLabel2.setText("jLabel1");
+        jLabel2.setText("Họ & Tên Khách hàng");
         jPanel6.add(jLabel2);
-
-        jTextField2.setText("jTextField1");
-        jPanel6.add(jTextField2);
+        jPanel6.add(txtName);
 
         jPanel3.add(jPanel6);
 
         jPanel7.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
-        jLabel3.setText("jLabel1");
+        jLabel3.setText("Địa chỉ");
         jPanel7.add(jLabel3);
-
-        jTextField3.setText("jTextField1");
-        jPanel7.add(jTextField3);
+        jPanel7.add(txtAddress);
 
         jPanel3.add(jPanel7);
 
@@ -115,11 +113,9 @@ public class frmCustomer extends javax.swing.JFrame {
 
         jPanel12.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
-        jLabel4.setText("jLabel1");
+        jLabel4.setText("Tìm kiếm");
         jPanel12.add(jLabel4);
-
-        jTextField4.setText("jTextField1");
-        jPanel12.add(jTextField4);
+        jPanel12.add(txtSearch);
 
         jPanel3.add(jPanel12);
 
@@ -138,23 +134,33 @@ public class frmCustomer extends javax.swing.JFrame {
 
         jPanel11.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
-        jButton1.setText("jButton1");
-        jPanel11.add(jButton1);
+        btnAdd.setText("Thêm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        jPanel11.add(btnAdd);
 
-        jButton2.setText("jButton2");
-        jPanel11.add(jButton2);
+        btnEdit.setText("Sửa");
+        jPanel11.add(btnEdit);
 
-        jButton3.setText("jButton3");
-        jPanel11.add(jButton3);
+        btnDelete.setText("Xóa");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel11.add(btnDelete);
 
-        jButton4.setText("jButton4");
-        jPanel11.add(jButton4);
+        btnSearch.setText("Tìm kiếm");
+        jPanel11.add(btnSearch);
 
         jPanel3.add(jPanel11);
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.LINE_END);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -165,7 +171,7 @@ public class frmCustomer extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbCustomer);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -201,6 +207,21 @@ public class frmCustomer extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        String phoneNumber=txtPhoneNumber.getText();
+        String name=txtName.getText();
+        String address=txtAddress.getText();
+        if(!phoneNumber.isBlank()&& !name.isBlank()&& !address.isBlank()){
+            customercontroller.addCustomer(new Customer(phoneNumber, name, address));
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,10 +259,10 @@ public class frmCustomer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -259,10 +280,10 @@ public class frmCustomer extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTable tbCustomer;
+    private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPhoneNumber;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

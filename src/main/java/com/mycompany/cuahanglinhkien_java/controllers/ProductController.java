@@ -24,7 +24,7 @@ public class ProductController {
                 try {
                     return new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("cat_Id"),
                             rs.getInt("man_Id"),rs.getInt("quantity"),
-                            rs.getString("details"),rs.getString("image"));
+                            rs.getString("details"),rs.getString("image"), rs.getFloat("price"));
                 } catch (SQLException e) {
                     return null;
                 }
@@ -43,7 +43,7 @@ public class ProductController {
                 try {
                     return new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("cat_Id"),
                             rs.getInt("man_Id"),rs.getInt("quantity"),
-                            rs.getString("details"),rs.getString("image"));
+                            rs.getString("details"),rs.getString("image"), rs.getFloat("price"));
                 } catch (SQLException e) {
                     return null;
                 }

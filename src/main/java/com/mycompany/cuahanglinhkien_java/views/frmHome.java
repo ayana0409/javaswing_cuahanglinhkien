@@ -228,6 +228,11 @@ public class frmHome extends javax.swing.JFrame {
         btnManageEmployee.setForeground(new java.awt.Color(255, 255, 255));
         btnManageEmployee.setText("Nhân viên");
         btnManageEmployee.setToolTipText("");
+        btnManageEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageEmployeeActionPerformed(evt);
+            }
+        });
         jPanel9.add(btnManageEmployee, java.awt.BorderLayout.PAGE_END);
 
         jPanel3.add(jPanel9);
@@ -241,6 +246,11 @@ public class frmHome extends javax.swing.JFrame {
         btnStatistic.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnStatistic.setForeground(new java.awt.Color(255, 255, 255));
         btnStatistic.setText("Thống kê");
+        btnStatistic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStatisticActionPerformed(evt);
+            }
+        });
         jPanel10.add(btnStatistic, java.awt.BorderLayout.PAGE_END);
 
         jPanel3.add(jPanel10);
@@ -315,7 +325,10 @@ public class frmHome extends javax.swing.JFrame {
     }//GEN-LAST:event_btnManageOrderActionPerformed
 
     private void btnManageCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageCustomerActionPerformed
-        // TODO add your handling code here:
+        frmCustomer frmCustomer = new frmCustomer();
+        frmCustomer.setLocationRelativeTo(null);
+        frmCustomer.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnManageCustomerActionPerformed
 
     private void btnChangeAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChangeAccountActionPerformed
@@ -344,6 +357,20 @@ public class frmHome extends javax.swing.JFrame {
         frmProduct.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnProductActionPerformed
+
+    private void btnManageEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageEmployeeActionPerformed
+        frmEmployee frmEmployee = new frmEmployee();
+        frmEmployee.setLocationRelativeTo(null);
+        frmEmployee.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnManageEmployeeActionPerformed
+
+    private void btnStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatisticActionPerformed
+        frmStatistic frmStatistic = new frmStatistic();
+        frmStatistic.setLocationRelativeTo(null);
+        frmStatistic.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnStatisticActionPerformed
 
     /**
      * @param args the command line arguments

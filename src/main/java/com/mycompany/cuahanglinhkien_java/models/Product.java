@@ -13,25 +13,36 @@ import share.models.BaseModel;
 public class Product extends BaseModel {
     private int categoryId, manufacturerId, quantity;
     private String  details, image;
+    private float price;
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
 
     public Product(int id, String name, int categoryId, int manufacturerId, 
-            int quantity, String details, String image) {
+            int quantity, String details, String image, float price) {
         super(id, name);
         this.categoryId = categoryId;
         this.manufacturerId = manufacturerId;
         this.quantity = quantity;
         this.details = details;
         this.image = image;
+        this.price = price;
     }
     
     public Product(String name, int categoryId, int manufacturerId, 
-            int quantity, String details, String image) {
+            int quantity, String details, String image, float price) {
         super(name);
         this.categoryId = categoryId;
         this.manufacturerId = manufacturerId;
         this.quantity = quantity;
         this.details = details;
         this.image = image;
+        this.price = price;
     }
 
     public Product() {
@@ -41,6 +52,7 @@ public class Product extends BaseModel {
         this.quantity = 0;
         this.details = "";
         this.image = "";
+        this.price = 0;
     }
     
     public int getCategoryId() {
