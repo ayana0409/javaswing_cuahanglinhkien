@@ -109,6 +109,11 @@ public class frmManufacturer extends javax.swing.JFrame {
         jPanel5.add(jLabel3);
 
         txtName.setText("jTextField1");
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
         jPanel5.add(txtName);
 
         jPanel4.add(jPanel5);
@@ -230,6 +235,10 @@ public class frmManufacturer extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameActionPerformed
 
     /**
      * @param args the command line arguments
