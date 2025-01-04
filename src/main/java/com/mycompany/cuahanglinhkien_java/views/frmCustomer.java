@@ -4,8 +4,15 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.CategoryController;
 import com.mycompany.cuahanglinhkien_java.controllers.CustomerController;
+import com.mycompany.cuahanglinhkien_java.models.Category;
 import com.mycompany.cuahanglinhkien_java.models.Customer;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Logger;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,11 +21,18 @@ import com.mycompany.cuahanglinhkien_java.models.Customer;
 public class frmCustomer extends javax.swing.JFrame {
 
     private CustomerController customercontroller=new CustomerController();
+    String[] columnNames = {"Số điện thoại", "Tên khách hàng","Địa chỉ"};
+    DefaultTableModel model = new DefaultTableModel(columnNames,0);
+    String selected ="";
     /**
      * Creates new form frmCustomer
      */
     public frmCustomer() {
         initComponents();
+        tbCustomer.setModel(model);
+        loadData();
+        addEvent();
+      
     }
 
     /**
@@ -78,6 +92,12 @@ public class frmCustomer extends javax.swing.JFrame {
 
         jLabel1.setText("Số điện thoại");
         jPanel5.add(jLabel1);
+
+        txtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPhoneNumberActionPerformed(evt);
+            }
+        });
         jPanel5.add(txtPhoneNumber);
 
         jPanel3.add(jPanel5);
@@ -143,6 +163,11 @@ public class frmCustomer extends javax.swing.JFrame {
         jPanel11.add(btnAdd);
 
         btnEdit.setText("Sửa");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
         jPanel11.add(btnEdit);
 
         btnDelete.setText("Xóa");
@@ -209,6 +234,12 @@ public class frmCustomer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        String phoneNumber=txtPhoneNumber.getText();
+        if(!phoneNumber.isBlank()){
+            customercontroller.deleteCustomer(phoneNumber);
+            loadData();
+            clearInput();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -218,11 +249,58 @@ public class frmCustomer extends javax.swing.JFrame {
         String address=txtAddress.getText();
         if(!phoneNumber.isBlank()&& !name.isBlank()&& !address.isBlank()){
             customercontroller.addCustomer(new Customer(phoneNumber, name, address));
+            loadData();
+            clearInput();
         }
         
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        if (!selected.isEmpty()&&!txtPhoneNumber.getText().isBlank()&& !txtName.getText().isBlank()&& !txtAddress.getText().isBlank()) {
+            customercontroller.editCustomer(new Customer(txtPhoneNumber.getText(),txtAddress.getText(),txtName.getText()),selected );
+            
+                loadData();
+                clearInput();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void txtPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPhoneNumberActionPerformed
+
+    private void loadData() {
+        // Lấy danh sách danh mục từ cơ sở dữ liệu
+        List<Customer> listCate = customercontroller.getAllCustomer();
+
+        // Xóa dữ liệu cũ trong bảng
+        model.setRowCount(0);
+
+        // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
+        listCate.forEach(customer -> {
+            model.addRow(new Object[]{customer.getPhoneNumber(), customer.getName(), customer.getAddress()});
+        });
+
+    }
+    private void addEvent() {
+        tbCustomer.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tbCustomer.getSelectedRow();
+                if (selectedRow != -1) {
+                    selected = (String) tbCustomer.getValueAt(selectedRow, 0);
+                    txtPhoneNumber.setText(selected);
+                    txtName.setText((String) tbCustomer.getValueAt(selectedRow, 1));
+                    txtAddress.setText((String) tbCustomer.getValueAt(selectedRow, 2));
+                }
+            }
+        });
+    }
+    private void clearInput(){
+            txtPhoneNumber.setText("");
+            txtName.setText("");
+            txtAddress.setText("");
+       }
     /**
      * @param args the command line arguments
      */
