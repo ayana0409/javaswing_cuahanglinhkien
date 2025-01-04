@@ -4,7 +4,7 @@
  */
 package com.mycompany.cuahanglinhkien_java.models;
 
-import java.sql.Date;
+import java.util.Date;
 import share.models.BaseModelOnlyId;
 
 /**
@@ -26,6 +26,16 @@ public class Inventory extends BaseModelOnlyId {
         setTotal(importPirce*quantityImported);
         this.importPirce = importPirce;
         this.importDate = importDate;
+    }
+    
+    public Inventory(int productId, String batchNumber, int quantityImported, float importPirce) {
+        this.batchNumber = batchNumber;
+        this.productId = productId;
+        this.quantityImported = quantityImported;
+        this.stockQuantity = quantityImported;
+        setTotal(importPirce*quantityImported);
+        this.importPirce = importPirce;
+        this.importDate = new Date();
     }
 
     public Inventory() {

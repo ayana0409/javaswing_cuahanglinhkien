@@ -49,8 +49,9 @@ public class frmOrderDetails extends javax.swing.JFrame {
                 int quantity = (int) spQuantity.getValue();
                 int productId = selectedDetail;
                 int existValue = Integer.parseInt(tbOrderDetails.getValueAt(tbOrderDetails.getSelectedRow(), 2).toString());
+                float existPrice = Float.parseFloat(tbOrderDetails.getValueAt(tbOrderDetails.getSelectedRow(), 3).toString());
                 if (existValue != quantity) {
-                    var newDetail = new OrderDetail(productId, order.getId(), quantity, 0);
+                    var newDetail = new OrderDetail(productId, order.getId(), quantity, existPrice);
                     _orderDetailController.upsertOrDeleteOrderDetail(newDetail);
                     loadData();
                     loadTable();
@@ -300,6 +301,11 @@ public class frmOrderDetails extends javax.swing.JFrame {
         jPanel14.setLayout(new java.awt.BorderLayout(5, 0));
 
         btnAddProduct.setText("Thêm");
+        btnAddProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddProductActionPerformed(evt);
+            }
+        });
         jPanel14.add(btnAddProduct, java.awt.BorderLayout.LINE_END);
 
         spQuantity.setEnabled(false);
@@ -398,6 +404,12 @@ public class frmOrderDetails extends javax.swing.JFrame {
             checkSelectedRow();
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
+        frmAddProduct frmAddProduct = new frmAddProduct(orderId, this);
+        frmAddProduct.setLocationRelativeTo(null);
+        frmAddProduct.setVisible(true);
+    }//GEN-LAST:event_btnAddProductActionPerformed
 
     /**
      * @param args the command line arguments

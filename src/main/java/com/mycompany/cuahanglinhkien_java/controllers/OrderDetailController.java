@@ -68,12 +68,12 @@ public class OrderDetailController {
         String query;
         try {
             if (existDetail == null) {
-                query = "insert into orderdetail (pro_id, id, salePrice, quantitySold) value (?,?,?,?)";
+                query = "insert into orderdetail (id, pro_id, quantitySold, salePrice) value (?,?,?,?)";
                 return _dbContext.insert(query, detail.getOrderId(), detail.getProductId(),
                         detail.getQuantitySold(), detail.getSalePrice()) > 0;
             } else if (detail.getQuantitySold() > 0) {
-                query = "UPDATE orderdetail SET quantitySold = ? WHERE pro_id = ? and id = ?";
-                return _dbContext.updateOrDelete(query, detail.getQuantitySold(), 
+                query = "UPDATE orderdetail SET quantitySold = ?, salePrice = ? WHERE pro_id = ? and id = ?";
+                return _dbContext.updateOrDelete(query, detail.getQuantitySold(), detail.getSalePrice(),
                         detail.getProductId(), detail.getOrderId()) > 0;
             } else {
                 query = "DELETE FROM orderdetail WHERE pro_id = ? and id = ?";
