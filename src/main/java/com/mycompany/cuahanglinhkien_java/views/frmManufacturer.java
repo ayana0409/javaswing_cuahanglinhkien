@@ -4,8 +4,16 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.ManufacturerController;
+import com.mycompany.cuahanglinhkien_java.models.Manufacturer;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,10 +21,20 @@ import javax.swing.JTextField;
  */
 public class frmManufacturer extends javax.swing.JFrame {
            
+    ManufacturerController controller = new ManufacturerController();
+    String[] columnNames = {"Mã hãng", "Tên hãng"};
+    DefaultTableModel model = new DefaultTableModel(columnNames,0);
+    String selected ="";
+    
     public frmManufacturer() {
         initComponents();
+        loadData();
+        clearInput();
+        AddEvents();
+        tbManu.setModel(model);
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,15 +49,19 @@ public class frmManufacturer extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtbManu = new javax.swing.JTable();
+        tbManu = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txtID = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
+        txtName = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -61,18 +83,31 @@ public class frmManufacturer extends javax.swing.JFrame {
         jPanel2Layout.columnWidths = new int[] {700, 260};
         jPanel2.setLayout(jPanel2Layout);
 
-        jtbManu.setModel(new javax.swing.table.DefaultTableModel(
+        tbManu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Mã hãng", "Tên hãng "
             }
-        ));
-        jScrollPane1.setViewportView(jtbManu);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbManu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbManuMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbManu);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -105,42 +140,46 @@ public class frmManufacturer extends javax.swing.JFrame {
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel3.setText("Tên hãng sản xuất");
-        jPanel5.add(jLabel3);
-
-        txtName.setText("jTextField1");
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
-        jPanel5.add(txtName);
+        jLabel4.setText("Mã hãng");
+        jPanel5.add(jLabel4);
+        jPanel5.add(txtID);
 
         jPanel4.add(jPanel5);
+
+        jLabel3.setText("Tên hãng sản xuất");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 260, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 83, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, 0)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jPanel4.add(jPanel6);
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
-        );
+        jPanel7.setLayout(new java.awt.GridLayout(2, 0));
+
+        jLabel5.setText("Nhập thông tin tìm kiếm ");
+        jPanel7.add(jLabel5);
+        jPanel7.add(txtSearch);
 
         jPanel4.add(jPanel7);
 
@@ -186,12 +225,32 @@ public class frmManufacturer extends javax.swing.JFrame {
         jPanel4.add(jPanel10);
 
         btnSearch.setText("Tìm kiếm");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         btnAdd.setText("Thêm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("Sửa");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Xóa");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
@@ -236,10 +295,160 @@ public class frmManufacturer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        if (!selected.isEmpty()) {
+            controller.updateManufacturer(Integer.parseInt(txtID.getText()), txtName.getText());
+                loadData();
+                clearInput();
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        
+        try {
+            // Lấy dữ liệu từ trường nhập liệu
+            String name = txtName.getText().trim();
+
+            // Kiểm tra nếu tên danh mục rỗng
+            if (name.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Tên danh mục không được để trống!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Tạo đối tượng danh mục
+            Manufacturer newManu= new Manufacturer(0, name);
+            newManu.setName(name);
+
+            // Gọi phương thức thêm danh mụdíc từ controller
+            boolean success = controller.addManufacturer(newManu);
+
+            // Kiểm tra kết quả và thông báo
+            if (success) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Thêm danh mục thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                loadData();
+                clearInput();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Thêm danh mục thất bại!", "Thông báo", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // Kiểm tra xem có dòng nào được chọn trong bảng không
+        int selectedRow = tbManu.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn một hãng để xóa!", "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Lấy ID của danh mục được chọn từ bảng
+        String manuIDStr = model.getValueAt(selectedRow, 0).toString();
+        int manuId;
+        try {
+            manuId = Integer.parseInt(manuIDStr);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ID hãng không hợp lệ!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Xác nhận hành động xóa với người dùng
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa hãng này?", "Xác nhận xóa", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        // Gọi phương thức xóa danh mục từ controller
+        boolean success = controller.deleteManufacturer(manuId);
+        if (success) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Xóa hãng thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            loadData();  // Tải lại dữ liệu bảng
+            clearInput(); // Xóa trường nhập liệu
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Xóa hãng thất bại!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+      try {
+            String searchQuery = txtSearch.getText().trim();
+            if (searchQuery.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên hãng để tìm kiếm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            List<Manufacturer> searchResults = controller.searchManufacturerbyName(searchQuery);
+            model.setRowCount(0);
+            if (searchResults != null && !searchResults.isEmpty()) {
+                for (Manufacturer manufacturer : searchResults) {
+                    model.addRow(new Object[]{manufacturer.getId(), manufacturer.getName()});
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy hãng nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void tbManuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbManuMouseClicked
+                try{
+            int row = this.tbManu.getSelectedRow();
+             if (row >= 0) {
+            // Lấy dữ liệu từ bảng
+            String id = tbManu.getValueAt(row, 0).toString();
+            String name = tbManu.getValueAt(row, 1).toString();
+
+            // Hiển thị dữ liệu lên các trường nhập liệu
+            txtID.setText(id);
+            txtName.setText(name);
+            
+            // Lưu id của dòng đã chọn vào biến selected
+            selected = id;
+        }
+    } catch (Exception ex) {
+        Logger.getLogger(frmCategory.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tbManuMouseClicked
+
+    
+    private void loadData() {
+        try {
+        // Lấy danh sách danh mục từ cơ sở dữ liệu
+        List<Manufacturer> listManu = controller.getAllManufacturer();
+
+        // Xóa dữ liệu cũ trong bảng
+        model.setRowCount(0);
+
+        // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
+        listManu.forEach(manufacturer -> {
+            model.addRow(new Object[]{manufacturer.getId(), manufacturer.getName()});
+        });
+    } catch (SQLException ex) {
+        // Log lỗi nếu có vấn đề khi tải dữ liệu
+        Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    }
+    }
+
+    private void clearInput() {
+        txtID.setText(" ");
+        txtName.setText(" ");        
+    }
+
+    private void AddEvents() {
+        tbManu.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tbManu.getSelectedRow();
+                if (selectedRow != -1) {
+                    selected = (String) tbManu.getValueAt(selectedRow, 0);
+                    txtID.setText(selected);
+                    txtName.setText((String) tbManu.getValueAt(selectedRow, 1));
+                }
+            }
+        });
+    }
     /**
      * @param args the command line arguments
      */
@@ -284,6 +493,8 @@ public class frmManufacturer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -296,7 +507,11 @@ public class frmManufacturer extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jtbManu;
+    private javax.swing.JTable tbManu;
+    private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
+
+
 }

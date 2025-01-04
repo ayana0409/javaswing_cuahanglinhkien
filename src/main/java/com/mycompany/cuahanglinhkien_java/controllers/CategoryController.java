@@ -4,13 +4,13 @@
  */
 package com.mycompany.cuahanglinhkien_java.controllers;
 
-
 import java.sql.SQLException;
 import java.util.List;
 import share.GenericController;
 import com.mycompany.cuahanglinhkien_java.models.Category;
 
 public class CategoryController {
+
     GenericController<Category> _dbHelper = new GenericController<>();
 
     public Category getCategoryById(int id) throws SQLException {
@@ -60,8 +60,24 @@ public class CategoryController {
             return false;
         }
     }
-
-     public  List<Category> getAllCategory() throws SQLException{
+    
+    public List<Category> searchCategorybyName(String name ){
+        String query ="SELECT * FROM category WHERE name LIKE ?";
+        try {
+        return _dbHelper.fetchAll(query, rs -> {
+            try {
+                return new Category(rs.getInt("id"), rs.getString("name"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }, "%"+name+"%"); 
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+    public List<Category> getAllCategory() throws SQLException {
         String query = "SELECT * FROM category";
         return _dbHelper.fetchAll(query, rs -> {
             try {
@@ -71,7 +87,7 @@ public class CategoryController {
                 return null;
             }
         });
-}
+    }
 }
 
 

@@ -33,6 +33,8 @@ public class frmInventory extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
     String selected = "";
     int productId;
+    
+    
 
     /**
      * Creates new form frmCategory
@@ -42,6 +44,7 @@ public class frmInventory extends javax.swing.JFrame {
         tbInventory.setModel(model);
         this.productId = productId;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        loadData();
     }
 
     /**
@@ -68,7 +71,6 @@ public class frmInventory extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtBatchNumber = new javax.swing.JTextField();
@@ -78,14 +80,13 @@ public class frmInventory extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         spImportPrice = new javax.swing.JSpinner();
-        jPanel12 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         btnImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(500, 300));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ NHẬP HÀNG");
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
@@ -122,7 +123,7 @@ public class frmInventory extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbInventory);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 18, 688, 580));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 18, 688, 340));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
@@ -135,7 +136,7 @@ public class frmInventory extends javax.swing.JFrame {
         jLabel2.setText("Thông tin sản phẩm");
         jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
-        jPanel4.setLayout(new java.awt.GridLayout(10, 0, 0, 10));
+        jPanel4.setLayout(new java.awt.GridLayout(6, 0, 0, 10));
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 0));
 
@@ -156,9 +157,6 @@ public class frmInventory extends javax.swing.JFrame {
         jPanel6.add(txtName);
 
         jPanel4.add(jPanel6);
-
-        jPanel7.setLayout(new java.awt.GridLayout(1, 4));
-        jPanel4.add(jPanel7);
 
         jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel8.setLayout(new java.awt.GridLayout(2, 0));
@@ -185,12 +183,8 @@ public class frmInventory extends javax.swing.JFrame {
 
         jPanel4.add(jPanel10);
 
-        jPanel12.setLayout(new java.awt.GridLayout(2, 0));
-        jPanel4.add(jPanel12);
-
-        jPanel15.setLayout(new java.awt.GridLayout(0, 3));
-
         btnImport.setText("Nhập hàng");
+        btnImport.setPreferredSize(new java.awt.Dimension(100, 43));
         btnImport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImportActionPerformed(evt);
@@ -227,7 +221,11 @@ public class frmInventory extends javax.swing.JFrame {
             controller.ImportProduct(newInventory);
         }
     }//GEN-LAST:event_btnImportActionPerformed
-
+    
+    private void loadData()  {
+        
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -277,14 +275,12 @@ public class frmInventory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;

@@ -6,15 +6,10 @@ package com.mycompany.cuahanglinhkien_java.views;
 
 import com.mycompany.cuahanglinhkien_java.controllers.CategoryController;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import com.mycompany.cuahanglinhkien_java.models.Category;
-import com.mysql.cj.xdevapi.Result;
-import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -61,9 +56,10 @@ public class frmCategory extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        jPanel7 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        txtSearch = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         btnSearch = new javax.swing.JButton();
@@ -125,7 +121,7 @@ public class frmCategory extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 87, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -153,49 +149,30 @@ public class frmCategory extends javax.swing.JFrame {
 
         jLabel4.setText("Tên Danh Mục");
         jPanel6.add(jLabel4);
-
-        txtName.setText("jTextField1");
         jPanel6.add(txtName);
 
         jPanel4.add(jPanel6);
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
-        );
+        jPanel7.setLayout(new java.awt.GridLayout(2, 0, 0, 10));
 
-        jPanel4.add(jPanel7);
-
-        jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
-        );
-
-        jPanel4.add(jPanel8);
+        jLabel5.setText("Nhập thông tin tìm kiếm");
+        jPanel7.add(jLabel5);
+        jPanel7.add(txtSearch);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel9);
@@ -208,7 +185,7 @@ public class frmCategory extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
+            .addGap(0, 95, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel10);
@@ -268,7 +245,7 @@ public class frmCategory extends javax.swing.JFrame {
                     .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSearch)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel11);
@@ -297,18 +274,18 @@ public class frmCategory extends javax.swing.JFrame {
         }
 
         // Tạo đối tượng danh mục
-        Category newCategory = new Category();
-        newCategory.setName(name);
+        Category newCate = new Category(0,name);
+            newCate.setName(name);
         
 
         // Gọi phương thức thêm danh mụdíc từ controller
-        boolean success = controller.addCategory(newCategory);
+        boolean success = controller.addCategory(newCate);
 
         // Kiểm tra kết quả và thông báo
         if (success) {
             javax.swing.JOptionPane.showMessageDialog(this, "Thêm danh mục thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            loadData();  // Tải lại dữ liệu bảng
-            clearInput(); // Xóa trường nhập liệu
+            loadData();  
+            clearInput(); 
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Thêm danh mục thất bại!", "Thông báo", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
@@ -327,15 +304,61 @@ public class frmCategory extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-      /* if (!selected.isEmpty()) {
-             controller.deleteCategory();
-                loadData();
-                clearInput();
-       }*/
+
+        // Kiểm tra xem có dòng nào được chọn trong bảng không
+        int selectedRow = tbCategory.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn một danh mục để xóa!", "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Lấy ID của danh mục được chọn từ bảng
+        String categoryIdStr = model.getValueAt(selectedRow, 0).toString();
+        int categoryId;
+        try {
+            categoryId = Integer.parseInt(categoryIdStr);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ID danh mục không hợp lệ!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Xác nhận hành động xóa với người dùng
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa danh mục này?", "Xác nhận xóa", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        // Gọi phương thức xóa danh mục từ controller
+        boolean success = controller.deleteCategory(categoryId);
+        if (success) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Xóa danh mục thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            loadData();  // Tải lại dữ liệu bảng
+            clearInput(); // Xóa trường nhập liệu
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Xóa danh mục thất bại!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        
+        try {
+            String searchQuery = txtSearch.getText().trim();
+            if (searchQuery.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên danh mục để tìm kiếm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            List<Category> searchResults = controller.searchCategorybyName(searchQuery);
+            model.setRowCount(0);
+            if (searchResults != null && !searchResults.isEmpty()) {
+                for (Category category : searchResults) {
+                    model.addRow(new Object[]{category.getId(), category.getName()});
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy danh mục nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void tbCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCategoryMouseClicked
@@ -441,6 +464,7 @@ public class frmCategory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -450,13 +474,12 @@ public class frmCategory extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbCategory;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
-
-    
+ 
 }
