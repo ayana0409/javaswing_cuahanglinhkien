@@ -22,4 +22,8 @@ public class Manufacturer extends BaseModel {
     public Manufacturer(String name) {
         super(name);
     }
+    @Override
+    public String toString(){
+        return getName();
+    }
 }

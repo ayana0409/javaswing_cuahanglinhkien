@@ -22,4 +22,9 @@ public class Category extends BaseModel {
     public Category(String name) {
         super(name);
     }
+    
+    @Override
+    public String toString(){
+        return getName();
+    }
 }

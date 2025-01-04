@@ -15,9 +15,10 @@ import share.GenericController;
  * @author DLCT
  */
 public class ProductController {
+
     GenericController<Product> _dbHelper = new GenericController<>();
 
-    public Product getProductById(int id){
+    public Product getProductById(int id) {
         String query = "SELECT * FROM product WHERE id = ?";
         try {
             return _dbHelper.fetchOne(query, rs -> {
@@ -35,6 +36,54 @@ public class ProductController {
         return null;
     }
 
+    public boolean addProduct(Product product) {
+        String query = "INSERT INTO product ( cat_Id, man_Id, name,quantity, details,  price, image  ) VALUES (?,?,?,?,?,?,?)";
+
+        try {
+            int id = _dbHelper.insert(query,
+                     product.getCategoryId(),product.getManufacturerId(),product.getName(), product.getQuantity(),
+                    product.getDetails(), product.getPrice(),
+                    product.getImage());
+            return id > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateProduct(Product product) {
+        String query = "UPDATE product SET name = ?, category_id = ?, manufacturer_id = ?, quantity = ?, details = ?, image = ? WHERE id = ?";
+
+        try {
+            int rowsAffected = _dbHelper.updateOrDelete(query,
+                    product.getName(),
+                    product.getCategoryId(),
+                    product.getManufacturerId(),
+                    product.getQuantity(),
+                    product.getDetails(),
+                    product.getImage(),
+                    product.getId()
+            );
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteProduct(int productId) {
+        String query = "DELETE FROM product WHERE id = ?";
+
+        try {
+            int rowsAffected = _dbHelper.updateOrDelete(query, productId);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    
 
     public List<Product> getAllProduct(){
         String query = "SELECT * FROM product";
@@ -43,6 +92,7 @@ public class ProductController {
                 try {
                     return new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("cat_Id"),
                             rs.getInt("man_Id"),rs.getInt("quantity"),
+
                             rs.getString("details"),rs.getString("image"), rs.getFloat("price"));
                 } catch (SQLException e) {
                     return null;
