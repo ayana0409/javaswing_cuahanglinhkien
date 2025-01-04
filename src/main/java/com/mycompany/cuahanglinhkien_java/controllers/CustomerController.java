@@ -66,4 +66,26 @@ public class CustomerController extends javax.swing.JFrame {
             return false;
         }
     }
+    public boolean editCustomer(Customer customer, String phoneNumber ) {
+        String query = "UPDATE customer SET name = ?, phoneNumber = ?, address = ? WHERE phoneNumber = ?";
+
+        try {
+            int rowsAffected = _dbHelper.updateOrDelete(query, customer.getName(), customer.getPhoneNumber(), customer.getAddress(), phoneNumber);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean deleteCustomer(String phoneNumber) {
+        String query = "DELETE FROM customer WHERE phoneNumber = ?";
+
+        try {
+            int rowsAffected = _dbHelper.updateOrDelete(query, phoneNumber);
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
