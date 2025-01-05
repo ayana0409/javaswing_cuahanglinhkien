@@ -557,7 +557,28 @@ public class frmProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        // TODO add your handling code here:
+        try {
+            String searchQuery = txtSearch.getText().trim();
+            if (searchQuery.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên sản phẩm để tìm kiếm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            List<Product> searchResults = controller.searchProductByName(searchQuery);
+            model.setRowCount(0);
+            if (searchResults != null && !searchResults.isEmpty()) {
+                for (Product product : searchResults) {
+                    model.addRow(new Object[]{product.getId(), product.getName(),
+                    product.getCategoryId(), product.getManufacturerId(),
+                    product.getQuantity(), product.getDetails(),
+                    product.getPrice(), product.getImage()});
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnLoadImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadImageActionPerformed

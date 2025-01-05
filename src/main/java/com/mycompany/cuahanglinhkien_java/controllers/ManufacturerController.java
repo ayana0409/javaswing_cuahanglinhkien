@@ -84,7 +84,7 @@ public class ManufacturerController {
     }
 
     public List<Manufacturer> searchManufacturerbyName(String name) {
-        String query = "SELET * FROM manufacturer WHERE name LIKE ?";
+        String query = "SELECT * FROM manufacturer WHERE name LIKE ?";
         try {
             return _dbHelper.fetchAll(query, rs -> {
                 try {

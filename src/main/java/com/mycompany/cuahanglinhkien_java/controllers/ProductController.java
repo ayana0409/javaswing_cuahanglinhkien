@@ -84,17 +84,34 @@ public class ProductController {
         }
     }
 
-    
+    public List<Product> searchProductByName(String name) {
+        String query = "SELECT * FROM product WHERE name LIKE ?";
+        try {
+            return _dbHelper.fetchAll(query, rs -> {
+                try {
+                    return new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("cat_Id"),
+                            rs.getInt("man_Id"), rs.getInt("quantity"),
+                            rs.getString("details"), rs.getString("image"), rs.getFloat("price"));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }, "%"+name+"%");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-    public List<Product> getAllProduct(){
+
+    public List<Product> getAllProduct() {
         String query = "SELECT * FROM product";
         try {
             return _dbHelper.fetchAll(query, rs -> {
                 try {
                     return new Product(rs.getInt("id"), rs.getString("name"), rs.getInt("cat_Id"),
-                            rs.getInt("man_Id"),rs.getInt("quantity"),
-
-                            rs.getString("details"),rs.getString("image"), rs.getFloat("price"));
+                            rs.getInt("man_Id"), rs.getInt("quantity"),
+                            rs.getString("details"), rs.getString("image"), rs.getFloat("price"));
                 } catch (SQLException e) {
                     return null;
                 }
