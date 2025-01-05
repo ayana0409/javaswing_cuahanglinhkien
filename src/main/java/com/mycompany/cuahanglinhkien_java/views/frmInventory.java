@@ -97,7 +97,7 @@ public class frmInventory extends javax.swing.JFrame {
         jPanel2Layout.columnWidths = new int[] {700, 260};
         jPanel2.setLayout(jPanel2Layout);
 
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         tbInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -125,7 +125,17 @@ public class frmInventory extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbInventory);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 18, 688, 450));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 672;
+        gridBagConstraints.ipady = 430;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 6);
+        jPanel3.add(jScrollPane1, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;

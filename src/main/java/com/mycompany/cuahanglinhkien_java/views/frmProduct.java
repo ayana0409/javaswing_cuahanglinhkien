@@ -10,10 +10,15 @@ import com.mycompany.cuahanglinhkien_java.controllers.ManufacturerController;
 import com.mycompany.cuahanglinhkien_java.models.Category;
 import com.mycompany.cuahanglinhkien_java.models.Manufacturer;
 import com.mycompany.cuahanglinhkien_java.models.Product;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.PasswordAuthentication;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -21,6 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import share.utils.PasswordUtils;
 
 /**
  *
@@ -32,13 +38,21 @@ public class frmProduct extends javax.swing.JFrame {
     CategoryController controllerCate = new CategoryController();
     ManufacturerController controllerManu = new ManufacturerController();
     String[] columnNames = {"Mã ", "Tên ", "Danh mục", "Hãng", "Số lượng", "Chi tiết", "Giá", "Hình"};
-    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+    
     int selected = 0;
+    String path = System.getProperty("user.dir");
+    String baseImagePath = path + "\\src\\main\\java\\com\\mycompany\\cuahanglinhkien_java\\images\\product_images\\";
     DefaultComboBoxModel<Category> cbCategoryModel = new DefaultComboBoxModel<Category>();
     DefaultComboBoxModel<Manufacturer> cbManufacturerModel = new DefaultComboBoxModel<Manufacturer>();
-    /**
-     * Creates new form frmCategory
-     */
+    private DefaultTableModel model = new DefaultTableModel(columnNames, 0){
+        public Class<?> getColumnClass (int columIndex){
+            if (columIndex == 7){
+                return ImageIcon.class;
+            }
+            return super.getColumnClass(columIndex);
+        }
+    };
+    
     public frmProduct()  {
         initComponents();
         cbCategory.setModel(cbCategoryModel);
@@ -72,29 +86,34 @@ public class frmProduct extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        jPanel16 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        cbCategory = new javax.swing.JComboBox<>();
+        jPanel17 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         cbManufacturer = new javax.swing.JComboBox<>();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        txtQuantity = new javax.swing.JTextField();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        cbCategory = new javax.swing.JComboBox<>();
+        jPanel18 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtDetail = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtQuantity = new javax.swing.JTextField();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        lbImage = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JTextField();
-        jPanel13 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         btnLoadImage = new javax.swing.JButton();
@@ -116,7 +135,7 @@ public class frmProduct extends javax.swing.JFrame {
         jPanel2Layout.columnWidths = new int[] {700, 260};
         jPanel2.setLayout(jPanel2Layout);
 
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         tbProduct.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -136,11 +155,36 @@ public class frmProduct extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbProduct);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 48, 688, 560));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 672;
+        gridBagConstraints.ipady = 540;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(8, 6, 0, 6);
+        jPanel3.add(jScrollPane1, gridBagConstraints);
 
         jLabel11.setText("Nhập tên sản phẩm cần tìm");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 30));
-        jPanel3.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 200, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 4;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
+        jPanel3.add(jLabel11, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 136;
+        gridBagConstraints.ipady = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
+        jPanel3.add(txtSearch, gridBagConstraints);
 
         btnSearch.setText("Tìm kiếm");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -148,7 +192,13 @@ public class frmProduct extends javax.swing.JFrame {
                 btnSearchActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, -1, 30));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipady = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
+        jPanel3.add(btnSearch, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
@@ -161,9 +211,11 @@ public class frmProduct extends javax.swing.JFrame {
         jLabel2.setText("Thông tin");
         jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
-        jPanel4.setLayout(new java.awt.GridLayout(10, 0, 0, 10));
+        jPanel4.setLayout(new java.awt.GridLayout(5, 0, 0, 10));
 
-        jPanel5.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel16.setLayout(new java.awt.GridLayout(2, 0));
+
+        jPanel5.setLayout(new java.awt.GridLayout(2, 1));
 
         jLabel3.setText("Mã sản phẩm");
         jPanel5.add(jLabel3);
@@ -171,26 +223,28 @@ public class frmProduct extends javax.swing.JFrame {
         txtID.setEnabled(false);
         jPanel5.add(txtID);
 
-        jPanel4.add(jPanel5);
+        jPanel16.add(jPanel5);
 
-        jPanel6.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel6.setLayout(new java.awt.BorderLayout());
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Tên sản phẩm");
-        jPanel6.add(jLabel4);
+        jPanel6.add(jLabel4, java.awt.BorderLayout.LINE_START);
 
         txtName.setText("jTextField1");
-        jPanel6.add(txtName);
+        txtName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
+        jPanel6.add(txtName, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(jPanel6);
+        jPanel16.add(jPanel6);
 
-        jPanel7.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel4.add(jPanel16);
 
-        jLabel5.setText("Danh mục");
-        jPanel7.add(jLabel5);
-
-        jPanel7.add(cbCategory);
-
-        jPanel4.add(jPanel7);
+        jPanel17.setLayout(new java.awt.GridLayout(2, 0));
 
         jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel8.setLayout(new java.awt.GridLayout(2, 0));
@@ -200,17 +254,20 @@ public class frmProduct extends javax.swing.JFrame {
 
         jPanel8.add(cbManufacturer);
 
-        jPanel4.add(jPanel8);
+        jPanel17.add(jPanel8);
 
-        jPanel9.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel7.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel7.setText("Số lượng");
-        jPanel9.add(jLabel7);
+        jLabel5.setText("Danh mục");
+        jPanel7.add(jLabel5);
 
-        txtQuantity.setText("jTextField1");
-        jPanel9.add(txtQuantity);
+        jPanel7.add(cbCategory);
 
-        jPanel4.add(jPanel9);
+        jPanel17.add(jPanel7);
+
+        jPanel4.add(jPanel17);
+
+        jPanel18.setLayout(new java.awt.GridLayout(2, 0));
 
         jPanel10.setLayout(new java.awt.GridLayout(2, 0));
 
@@ -220,7 +277,33 @@ public class frmProduct extends javax.swing.JFrame {
         txtDetail.setText("jTextField1");
         jPanel10.add(txtDetail);
 
-        jPanel4.add(jPanel10);
+        jPanel18.add(jPanel10);
+
+        jPanel9.setLayout(new java.awt.GridLayout(2, 0));
+
+        jLabel7.setText("Số lượng");
+        jPanel9.add(jLabel7);
+
+        txtQuantity.setText("jTextField1");
+        jPanel9.add(txtQuantity);
+
+        jPanel18.add(jPanel9);
+
+        jPanel4.add(jPanel18);
+
+        jPanel13.setPreferredSize(new java.awt.Dimension(100, 16));
+        jPanel13.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel10.setText("Hình");
+        jPanel13.add(jLabel10);
+
+        lbImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbImage.setText("jLabel12");
+        jPanel13.add(lbImage);
+
+        jPanel4.add(jPanel13);
+
+        jPanel19.setLayout(new java.awt.GridLayout(2, 0));
 
         jPanel12.setLayout(new java.awt.GridLayout(2, 0));
 
@@ -230,14 +313,9 @@ public class frmProduct extends javax.swing.JFrame {
         txtPrice.setText("jTextField1");
         jPanel12.add(txtPrice);
 
-        jPanel4.add(jPanel12);
+        jPanel19.add(jPanel12);
 
-        jPanel13.setLayout(new java.awt.GridLayout(2, 0));
-
-        jLabel10.setText("Hình");
-        jPanel13.add(jLabel10);
-
-        jPanel4.add(jPanel13);
+        jPanel4.add(jPanel19);
 
         jPanel11.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -264,10 +342,9 @@ public class frmProduct extends javax.swing.JFrame {
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnLoadImage)
-                .addContainerGap(21, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addGap(0, 86, Short.MAX_VALUE)
+                .addComponent(btnLoadImage))
             .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel14Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -324,21 +401,6 @@ public class frmProduct extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoadImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadImageActionPerformed
-         // Hiển thị hộp thoại chọn tệp
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Hình ảnh", "jpg", "png", "jpeg"));
-
-    int returnValue = fileChooser.showOpenDialog(this);
-    if (returnValue == JFileChooser.APPROVE_OPTION) {
-        // Lấy đường dẫn tệp được chọn
-        String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-        
-        // Hiển thị đường dẫn tệp trong JTextField
-        txtImage.setText(filePath);
-    }
-    }//GEN-LAST:event_btnLoadImageActionPerformed
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
             
@@ -347,8 +409,18 @@ public class frmProduct extends javax.swing.JFrame {
             Manufacturer selectedManu = (Manufacturer) cbManufacturer.getSelectedItem();
             int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
-            String image = txtImage.getText().trim();
+            String image = lbImage.getText().trim();
             double price = Double.parseDouble(txtPrice.getText().trim()); 
+            
+            ImageIcon imgIcon = (ImageIcon) lbImage.getIcon();
+            Image img = imgIcon.getImage();
+            BufferedImage bufferedImage = new BufferedImage(img.getWidth(null),
+                    img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            bufferedImage.getGraphics().drawImage(img, 0, 0, null);
+            
+            String fileName = PasswordUtils.hashPassword(name)+".png";
+            File outputFile = new File(baseImagePath + fileName);
+            ImageIO.write(bufferedImage,"PNG", outputFile);
             
             
             if (name.isEmpty() || details.isEmpty() || image.isEmpty()) {
@@ -363,6 +435,7 @@ public class frmProduct extends javax.swing.JFrame {
             newPro.setDetails(details);
             newPro.setQuantity(quantity);
             newPro.setPrice((float) price);
+            newPro.setImage(fileName);
             
             boolean success = controller.addProduct(newPro);
             if (success) {
@@ -396,7 +469,7 @@ public class frmProduct extends javax.swing.JFrame {
             Manufacturer selectedManufacturer = (Manufacturer) cbManufacturer.getSelectedItem();
             int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
-            String image = txtImage.getText().trim();
+            String image = lbImage.getText().trim();
             double price = Double.parseDouble(txtPrice.getText().trim());
 
             // Kiểm tra trường nhập liệu
@@ -479,7 +552,7 @@ public class frmProduct extends javax.swing.JFrame {
                 txtDetail.setText(details);
                 txtQuantity.setText(quantity);
                 txtPrice.setText(price);
-                txtImage.setText(image);
+                lbImage.setText(image);
                 
                 for ( Manufacturer manufacturer: listManu){
                     if(manufacturer.getName().equals(tbProduct.getValueAt(row, 3).toString())){
@@ -515,6 +588,28 @@ public class frmProduct extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSearchActionPerformed
 
+    private void btnLoadImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadImageActionPerformed
+        // Hiển thị hộp thoại chọn tệp
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Hình ảnh", "jpg", "png", "jpeg"));
+
+        int returnValue = fileChooser.showOpenDialog(this);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            // Lấy đường dẫn tệp được chọn
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+
+            // Tạo ImageIcon từ đường dẫn tệp
+            ImageIcon imageIcon = new ImageIcon(filePath);
+
+            // Đặt hình ảnh vào JLabel
+            lbImage.setIcon(imageIcon);
+        }
+    }//GEN-LAST:event_btnLoadImageActionPerformed
+
+    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNameActionPerformed
+
     private void loadCate()  {
 
         List<Category> categories;  
@@ -547,8 +642,7 @@ public class frmProduct extends javax.swing.JFrame {
         List<Product> listProduct = controller.getAllProduct();
         List<Category> listCate = controllerCate.getAllCategory();
         List<Manufacturer> listManu = controllerManu.getAllManufacturer();
-        String path = System.getProperty("product.dir");
-        String baseImagePath = path + "\\src\\main\\java\\com\\mycompany\\cuahanglinhkien_java\\images\\product_images";
+       
         
         model.setRowCount(0);
         listProduct.forEach(Product -> { 
@@ -557,7 +651,7 @@ public class frmProduct extends javax.swing.JFrame {
             model.addRow(new Object[]{Product.getId(), Product.getName(),
                category.getName(), manufacturer.getName(),
                 Product.getQuantity(), Product.getDetails(),
-                Product.getPrice(), new ImageIcon(baseImagePath)});
+                Product.getPrice(), new ImageIcon(baseImagePath + Product.getImage())});
         });
     }
 
@@ -579,7 +673,7 @@ public class frmProduct extends javax.swing.JFrame {
                     txtDetail.setText( tbProduct.getValueAt(selectedRow, 5).toString());
                     txtQuantity.setText(tbProduct.getValueAt(selectedRow, 4).toString());
                     txtPrice.setText( tbProduct.getValueAt(selectedRow, 6).toString());
-                    txtImage.setText((String) tbProduct.getValueAt(selectedRow, 7));
+                    lbImage.setIcon((ImageIcon)tbProduct.getValueAt(selectedRow, 7));
                 }
             }
         });
@@ -592,7 +686,7 @@ public class frmProduct extends javax.swing.JFrame {
         cbManufacturer.setSelectedIndex(0);
         txtPrice.setText("");
         txtQuantity.setText("");
-        txtImage.setText("");
+        lbImage.setText("");
         txtDetail.setText("");
     }
 
@@ -659,6 +753,10 @@ public class frmProduct extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -668,6 +766,7 @@ public class frmProduct extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbImage;
     private javax.swing.JTable tbProduct;
     private javax.swing.JTextField txtDetail;
     private javax.swing.JTextField txtID;
