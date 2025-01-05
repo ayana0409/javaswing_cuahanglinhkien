@@ -33,27 +33,32 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
-        jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtPhoneNumber = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel12 = new javax.swing.JPanel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
-        jSpinner3 = new javax.swing.JSpinner();
+        txtName = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        txtAddress = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         cbStatus = new javax.swing.JComboBox<>();
-        jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
+        txtSearch = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        btnSearch = new javax.swing.JButton();
+        btnPrint = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbOrder = new javax.swing.JTable();
@@ -80,85 +85,91 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel5.add(jLabel2);
         jPanel5.add(txtID);
 
-        jPanel3.add(jPanel5);
-
-        jPanel6.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
-
         jLabel3.setText("Số điện thoại");
-        jPanel6.add(jLabel3);
-        jPanel6.add(txtPhoneNumber);
+        jPanel5.add(jLabel3);
+        jPanel5.add(txtPhoneNumber);
 
-        jPanel3.add(jPanel6);
+        jPanel3.add(jPanel5);
 
         jPanel7.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
-        jLabel4.setText("Ngày đặt hàng");
+        jLabel4.setText("Tên khách hàng");
         jPanel7.add(jLabel4);
-
-        jPanel12.setLayout(new java.awt.GridLayout(1, 3, 5, 0));
-        jPanel12.add(jSpinner1);
-        jPanel12.add(jSpinner2);
-        jPanel12.add(jSpinner3);
-
-        jPanel7.add(jPanel12);
+        jPanel7.add(txtName);
 
         jPanel3.add(jPanel7);
+
+        jPanel6.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
+
+        jLabel6.setText("Địa chỉ");
+        jPanel6.add(jLabel6);
+        jPanel6.add(txtAddress);
+
+        jPanel3.add(jPanel6);
 
         jPanel8.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel5.setText("Trạng thái");
         jPanel8.add(jLabel5);
 
-        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mới", "Hoàn thành", "Hủy" }));
         jPanel8.add(cbStatus);
 
         jPanel3.add(jPanel8);
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
-        );
-
-        jPanel3.add(jPanel9);
-
         jPanel10.setLayout(new java.awt.GridLayout(2, 3));
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 38, Short.MAX_VALUE)
-        );
+        jPanel14.setLayout(new java.awt.BorderLayout());
+
+        jLabel7.setText("Tổng tiền");
+        jPanel14.add(jLabel7, java.awt.BorderLayout.LINE_START);
+        jPanel14.add(txtTotal, java.awt.BorderLayout.CENTER);
 
         jPanel10.add(jPanel14);
 
-        jButton1.setText("Tìm kiếm");
-        jPanel10.add(jButton1);
-
         jPanel3.add(jPanel10);
 
+        jPanel9.setLayout(new java.awt.GridLayout(2, 0));
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 226, Short.MAX_VALUE)
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 38, Short.MAX_VALUE)
+        );
+
+        jPanel9.add(jPanel15);
+        jPanel9.add(txtSearch);
+
+        jPanel3.add(jPanel9);
+
         jPanel11.setLayout(new java.awt.GridLayout(2, 0));
+
+        jPanel12.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
+
+        btnSearch.setText("Tìm kiếm");
+        jPanel12.add(btnSearch);
+
+        btnPrint.setText("Xuất hóa đơn");
+        btnPrint.setActionCommand("Xuất hóa đơn");
+        jPanel12.add(btnPrint);
+
+        jPanel11.add(jPanel12);
 
         jPanel13.setLayout(new java.awt.GridLayout(1, 3, 5, 0));
 
         btnAdd.setText("Thêm");
         jPanel13.add(btnAdd);
 
-        btnEdit.setText("Sửa");
-        jPanel13.add(btnEdit);
+        btnView.setText("Xem");
+        jPanel13.add(btnView);
 
-        btnDelete.setText("Xóa");
-        jPanel13.add(btnDelete);
+        btnCancel.setText("Hủy");
+        jPanel13.add(btnCancel);
 
         jPanel11.add(jPanel13);
 
@@ -183,7 +194,7 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 644, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,21 +247,25 @@ public class frmOrder extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnDelete;
-    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnPrint;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JButton btnView;
     private javax.swing.JComboBox<String> cbStatus;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -260,11 +275,12 @@ public class frmOrder extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
-    private javax.swing.JSpinner jSpinner3;
     private javax.swing.JTable tbOrder;
+    private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPhoneNumber;
+    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

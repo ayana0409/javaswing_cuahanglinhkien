@@ -47,28 +47,28 @@ public class frmEmployee extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        jPanel22 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel23 = new javax.swing.JPanel();
         txtID = new javax.swing.JTextField();
+        txtPhoneNumber = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        txtPhoneNumber = new javax.swing.JTextField();
-        jPanel21 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         rbGenderBoy = new javax.swing.JRadioButton();
         rbGenderGirl = new javax.swing.JRadioButton();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        txtAddress = new javax.swing.JTextField();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         spDay = new javax.swing.JSpinner();
         spMonth = new javax.swing.JSpinner();
         spYear = new javax.swing.JSpinner();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        txtAddress = new javax.swing.JTextField();
         jPanel20 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         txtUserName = new javax.swing.JTextField();
@@ -99,6 +99,7 @@ public class frmEmployee extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 126, 242));
+        jPanel1.setPreferredSize(new java.awt.Dimension(960, 640));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -111,19 +112,37 @@ public class frmEmployee extends javax.swing.JFrame {
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setPreferredSize(new java.awt.Dimension(225, 592));
-        jPanel2.setLayout(new java.awt.GridLayout(10, 0, 0, 5));
+        jPanel2.setLayout(new java.awt.GridLayout(9, 0, 0, 2));
 
-        jPanel5.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setText("Mã nhân viên");
-        jPanel5.add(jLabel1);
+        jPanel22.setLayout(new java.awt.GridLayout(2, 0));
+
+        jLabel1.setText("Mã ");
+        jPanel22.add(jLabel1);
+
+        jLabel3.setText("Số điện thoại ");
+        jPanel22.add(jLabel3);
+
+        jPanel5.add(jPanel22, java.awt.BorderLayout.LINE_START);
+
+        jPanel23.setLayout(new java.awt.GridLayout(2, 0, 0, 4));
 
         txtID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIDActionPerformed(evt);
             }
         });
-        jPanel5.add(txtID);
+        jPanel23.add(txtID);
+
+        txtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPhoneNumberActionPerformed(evt);
+            }
+        });
+        jPanel23.add(txtPhoneNumber);
+
+        jPanel5.add(jPanel23, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(jPanel5);
 
@@ -135,34 +154,30 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel6);
 
-        jPanel8.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel8.setLayout(new java.awt.GridLayout(2, 3));
 
-        jPanel10.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
+        jPanel10.setLayout(new java.awt.GridLayout(1, 3, 3, 0));
 
-        jLabel3.setText("Số điện thoại");
-        jPanel10.add(jLabel3);
+        jLabel4.setText("Giới tính");
+        jPanel10.add(jLabel4);
 
-        txtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPhoneNumberActionPerformed(evt);
-            }
-        });
-        jPanel10.add(txtPhoneNumber);
+        rbGenderBoy.setText("Nam");
+        jPanel10.add(rbGenderBoy);
+
+        rbGenderGirl.setText("Nữ");
+        jPanel10.add(rbGenderGirl);
 
         jPanel8.add(jPanel10);
 
-        jPanel21.setLayout(new java.awt.GridLayout(1, 3, 3, 0));
+        jPanel13.setLayout(new java.awt.GridLayout(1, 4, 2, 0));
 
-        jLabel4.setText("Giới tính");
-        jPanel21.add(jLabel4);
+        jLabel6.setText("Ngày sinh");
+        jPanel13.add(jLabel6);
+        jPanel13.add(spDay);
+        jPanel13.add(spMonth);
+        jPanel13.add(spYear);
 
-        rbGenderBoy.setText("Nam");
-        jPanel21.add(rbGenderBoy);
-
-        rbGenderGirl.setText("Nữ");
-        jPanel21.add(rbGenderGirl);
-
-        jPanel8.add(jPanel21);
+        jPanel8.add(jPanel13);
 
         jPanel2.add(jPanel8);
 
@@ -173,20 +188,6 @@ public class frmEmployee extends javax.swing.JFrame {
         jPanel7.add(txtAddress);
 
         jPanel2.add(jPanel7);
-
-        jPanel11.setLayout(new java.awt.GridLayout(2, 0));
-
-        jLabel6.setText("Ngày sinh:");
-        jPanel11.add(jLabel6);
-
-        jPanel13.setLayout(new java.awt.GridLayout(1, 3, 5, 0));
-        jPanel13.add(spDay);
-        jPanel13.add(spMonth);
-        jPanel13.add(spYear);
-
-        jPanel11.add(jPanel13);
-
-        jPanel2.add(jPanel11);
 
         jPanel20.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
 
@@ -386,10 +387,63 @@ public class frmEmployee extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
     
+        int selectedRow = tbEmployee.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn một nhân viên để xóa!", "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Lấy ID của danh mục được chọn từ bảng
+        String empIDStr = model.getValueAt(selectedRow, 0).toString();
+        int id;
+        try {
+            id = Integer.parseInt(empIDStr);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "ID Nhân viên không hợp lệ!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Xác nhận hành động xóa với người dùng
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa nhân viên này?", "Xác nhận xóa", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm != javax.swing.JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        // Gọi phương thức xóa danh mục từ controller
+        boolean success = employeecontroller.deleteEmployee(id);
+        if (success) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Xóa nhân viên thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            loadData();  // Tải lại dữ liệu bảng
+            clearInput(); // Xóa trường nhập liệu
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Xóa nhân viên thất bại!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+
+        try {
+            String searchQuery = txtSearch.getText().trim();
+            if (searchQuery.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhân viên để tìm kiếm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            List<Employee> searchResults = employeecontroller.searchEmployeebyName(searchQuery);
+            model.setRowCount(0);
+            if (searchResults != null && !searchResults.isEmpty()) {
+                for (Employee employee : searchResults) {
+                    model.addRow(new Object[]{employee.getId(), employee.getRoleId(), employee.getName(), 
+                employee.getBirthday(), employee.getGender(), employee.getPhoneNumber(), 
+                employee.getStatus(), employee.getUsername()});
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -403,6 +457,7 @@ public class frmEmployee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditPasswordActionPerformed
 
+    
     private void loadData() {
         // Lấy danh sách danh mục từ cơ sở dữ liệu
         List<Employee> listCate = employeecontroller.getAllEmployee();
@@ -501,7 +556,6 @@ public class frmEmployee extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -512,7 +566,8 @@ public class frmEmployee extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

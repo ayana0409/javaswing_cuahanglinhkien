@@ -13,7 +13,7 @@ import java.util.function.Function;
 public class GenericController<T> {
     private static final String URL = "jdbc:mysql://localhost:3306/java_cuahanglinhkien";
     private static final String USER = "root";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "123123";
 
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);

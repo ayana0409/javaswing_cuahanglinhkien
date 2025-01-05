@@ -5,6 +5,7 @@
 package com.mycompany.cuahanglinhkien_java.controllers;
 
 import com.mycompany.cuahanglinhkien_java.models.Employee;
+import com.mycompany.cuahanglinhkien_java.models.Manufacturer;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -138,6 +139,31 @@ public class EmployeeController implements Serializable{
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+    public List<Employee> searchEmployeebyName(String name) {
+        String query = "SELET * FROM employee WHERE name LIKE ?";
+        try {
+            return _dbHelper.fetchAll(query, rs -> {
+                try {
+                    return new Employee(rs.getInt("Id"),
+                    rs.getString("name"),
+                    rs.getString("gender"),
+                    rs.getString("address"),
+                    rs.getString("PhoneNumber"),
+                    rs.getString("Status"),
+                    rs.getString("Username"),
+                    rs.getString("Password"),
+                    rs.getDate("birthday"),
+                    rs.getInt("Rol_Id"));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }, "%"+name+"%");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }
