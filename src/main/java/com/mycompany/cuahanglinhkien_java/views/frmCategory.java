@@ -56,11 +56,9 @@ public class frmCategory extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        jPanel9 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
-        jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         btnSearch = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
@@ -70,7 +68,7 @@ public class frmCategory extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(500, 300));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ DANH MỤC");
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
@@ -119,9 +117,9 @@ public class frmCategory extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 87, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -135,7 +133,7 @@ public class frmCategory extends javax.swing.JFrame {
         jLabel2.setText("Thông tin");
         jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
-        jPanel4.setLayout(new java.awt.GridLayout(7, 0));
+        jPanel4.setLayout(new java.awt.GridLayout(4, 0));
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 0));
 
@@ -149,46 +147,19 @@ public class frmCategory extends javax.swing.JFrame {
 
         jLabel4.setText("Tên Danh Mục");
         jPanel6.add(jLabel4);
+
+        txtName.setText("jTextField1");
         jPanel6.add(txtName);
 
         jPanel4.add(jPanel6);
 
-        jPanel7.setLayout(new java.awt.GridLayout(2, 0, 0, 10));
+        jPanel7.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel5.setText("Nhập thông tin tìm kiếm");
-        jPanel7.add(jLabel5);
+        jLabel6.setText("Nhập tên danh mục cần tìm");
+        jPanel7.add(jLabel6);
         jPanel7.add(txtSearch);
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel4.add(jPanel9);
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 95, Short.MAX_VALUE)
-        );
-
-        jPanel4.add(jPanel10);
+        jPanel4.add(jPanel7);
 
         btnSearch.setText("Tìm kiếm");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -245,7 +216,7 @@ public class frmCategory extends javax.swing.JFrame {
                     .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSearch)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel11);
@@ -395,21 +366,14 @@ public class frmCategory extends javax.swing.JFrame {
     
     
     private void loadData() {
-    try {
         // Lấy danh sách danh mục từ cơ sở dữ liệu
         List<Category> listCate = controller.getAllCategory();
-
         // Xóa dữ liệu cũ trong bảng
         model.setRowCount(0);
-
         // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
         listCate.forEach(category -> {
             model.addRow(new Object[]{category.getId(), category.getName()});
         });
-    } catch (SQLException ex) {
-        // Log lỗi nếu có vấn đề khi tải dữ liệu
-        Logger.getLogger(frmCategory.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
 }
 
   
@@ -464,9 +428,8 @@ public class frmCategory extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -474,7 +437,6 @@ public class frmCategory extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbCategory;
     private javax.swing.JTextField txtID;

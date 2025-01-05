@@ -7,6 +7,10 @@ package com.mycompany.cuahanglinhkien_java.controllers;
 import com.mycompany.cuahanglinhkien_java.models.Inventory;
 import com.mycompany.cuahanglinhkien_java.models.Product;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import share.GenericController;
 
 /**
@@ -15,7 +19,7 @@ import share.GenericController;
  */
 public class InventoryController {
 
-    GenericController<Product> _dbHelper = new GenericController<>();
+    GenericController<Inventory> _dbHelper = new GenericController<>();
 
     public boolean ImportProduct(Inventory inventory) {
         String query = "INSERT INTO inventory (Pro_Id, ImportDate, BatchNumber, Total, QuantityImported, Importprice, StockQuantity) VALUES (?,?,?,?,?,?,?)";
@@ -29,4 +33,30 @@ public class InventoryController {
             return false;
         }
     }
+    public List<Inventory> getAllInventory() {
+    String query = "SELECT * FROM inventory";
+    try {
+        return _dbHelper.fetchAll(query, rs -> {
+            try {
+                return new Inventory(
+                    rs.getInt("Id"), // Lấy Id từ bảng inventory
+                    rs.getInt("Pro_Id"), // Lấy ProductId
+                    rs.getString("BatchNumber"), // Lấy BatchNumber
+                    rs.getInt("QuantityImported"), // Lấy QuantityImported
+                    rs.getInt("StockQuantity"), // Lấy StockQuantity
+                    rs.getFloat("ImportPrice"), // Lấy ImportPrice
+                    rs.getDate("ImportDate") // Lấy ImportDate
+                );
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return new ArrayList<>(); // Trả về danh sách rỗng nếu có lỗi
+    }
+}
+
+
 }

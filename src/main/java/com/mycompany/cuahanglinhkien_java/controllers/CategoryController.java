@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.List;
 import share.GenericController;
 import com.mycompany.cuahanglinhkien_java.models.Category;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CategoryController {
 
@@ -77,16 +79,21 @@ public class CategoryController {
         return null;
     }
 }
-    public List<Category> getAllCategory() throws SQLException {
+    public List<Category> getAllCategory() {
         String query = "SELECT * FROM category";
-        return _dbHelper.fetchAll(query, rs -> {
-            try {
-                return new Category(rs.getInt("id"), rs.getString("name"));
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null;
-            }
-        });
+        try {
+            return _dbHelper.fetchAll(query, rs -> {
+                try {
+                    return new Category(rs.getInt("id"), rs.getString("name"));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            });
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
 

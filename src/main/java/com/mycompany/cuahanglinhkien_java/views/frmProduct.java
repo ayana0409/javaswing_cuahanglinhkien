@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
@@ -67,7 +68,7 @@ public class frmProduct extends javax.swing.JFrame {
         tbProduct = new javax.swing.JTable();
         jLabel11 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -94,7 +95,6 @@ public class frmProduct extends javax.swing.JFrame {
         txtPrice = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        txtImage = new javax.swing.JTextField();
         jPanel14 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         btnLoadImage = new javax.swing.JButton();
@@ -142,8 +142,13 @@ public class frmProduct extends javax.swing.JFrame {
         jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 30));
         jPanel3.add(txtSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 200, 30));
 
-        jButton1.setText("Tìm kiếm");
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, -1, 30));
+        btnSearch.setText("Tìm kiếm");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, -1, 30));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
@@ -231,9 +236,6 @@ public class frmProduct extends javax.swing.JFrame {
 
         jLabel10.setText("Hình");
         jPanel13.add(jLabel10);
-
-        txtImage.setText("jTextField8");
-        jPanel13.add(txtImage);
 
         jPanel4.add(jPanel13);
 
@@ -339,7 +341,6 @@ public class frmProduct extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
-            // Lấy dữ liệu từ các trường nhập liệu
             
             String name = txtName.getText().trim();
             Category selectedCate = (Category) cbCategory.getSelectedItem();
@@ -347,9 +348,9 @@ public class frmProduct extends javax.swing.JFrame {
             int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
             String image = txtImage.getText().trim();
-            double price = Double.parseDouble(txtPrice.getText().trim());
-
-            // Kiểm tra các trường nhập liệu    
+            double price = Double.parseDouble(txtPrice.getText().trim()); 
+            
+            
             if (name.isEmpty() || details.isEmpty() || image.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Không được để trống các trường bắt buộc!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
@@ -363,11 +364,7 @@ public class frmProduct extends javax.swing.JFrame {
             newPro.setQuantity(quantity);
             newPro.setPrice((float) price);
             
-
-            // Gọi phương thức thêm sản phẩm từ controller
             boolean success = controller.addProduct(newPro);
-
-            // Kiểm tra kết quả và thông báo
             if (success) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 loadData();
@@ -466,21 +463,36 @@ public class frmProduct extends javax.swing.JFrame {
         try {
             int row = this.tbProduct.getSelectedRow();
             if (row >= 0) {
+                
+                List<Category> listCate = controllerCate.getAllCategory();
+                List<Manufacturer> listManu = controllerManu.getAllManufacturer();
                 String id = tbProduct.getValueAt(row, 0).toString();
                 String name = tbProduct.getValueAt(row, 1).toString();
                 String details = tbProduct.getValueAt(row, 5).toString();
                 String quantity = tbProduct.getValueAt(row, 4).toString();
                 String price = tbProduct.getValueAt(row, 6).toString();
+                String image = tbProduct.getValueAt(row, 7).toString();
+                Category selectedCate = (Category) cbCategory.getSelectedItem();
+                Manufacturer selectManu = (Manufacturer) cbManufacturer.getSelectedItem();
                 txtID.setText(id);
                 txtName.setText(name);
-                Category selectedCate = (Category) cbCategory.getSelectedItem();
-                cbCategory.setSelectedItem(selectedCate);
-                Manufacturer selectManu = (Manufacturer) cbManufacturer.getSelectedItem();
-                cbManufacturer.setSelectedItem(selectManu);
                 txtDetail.setText(details);
                 txtQuantity.setText(quantity);
                 txtPrice.setText(price);
-
+                txtImage.setText(image);
+                
+                for ( Manufacturer manufacturer: listManu){
+                    if(manufacturer.getName().equals(tbProduct.getValueAt(row, 3).toString())){
+                        cbManufacturerModel.setSelectedItem(manufacturer);
+                        break;
+                    }
+                }
+                for ( Category category: listCate){
+                    if(category.getName().equals(tbProduct.getValueAt(row, 2).toString())){
+                        cbCategoryModel.setSelectedItem(category);
+                        break;
+                    }
+                }
             }
         } catch (Exception ex) {
             Logger.getLogger(frmCategory.class.getName()).log(Level.SEVERE, null, ex);
@@ -489,65 +501,64 @@ public class frmProduct extends javax.swing.JFrame {
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         if ( selected != -1 ){
+            int selectedRow = tbProduct.getSelectedRow();
+            String productId = tbProduct.getValueAt(selectedRow, 0).toString();
+            String productName = tbProduct.getValueAt(selectedRow, 1).toString();
             frmInventory frmInventory = new frmInventory(selected);
             frmInventory.setLocationRelativeTo(null);
             frmInventory.setVisible(true);
         }
+        
     }//GEN-LAST:event_btnImportActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void loadCate()  {
 
         List<Category> categories;  
-        try {
-            categories = controllerCate.getAllCategory();
-            // Xóa tất cả mục hiện tại trong ComboBox trước khi thêm mới
+        categories = controllerCate.getAllCategory();
+        // Xóa tất cả mục hiện tại trong ComboBox trước khi thêm mới
         cbCategoryModel.removeAllElements();
-
         // Thêm danh mục vào ComboBox
         for (Category category : categories) {
             cbCategoryModel.addElement(category);
         }
-        
         cbCategory.firePopupMenuCanceled();
-        } catch (SQLException ex) {
-            Logger.getLogger(frmProduct.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         
     }
 
     private void loadManu()  {
         List<Manufacturer> listManu;
-        try {
-            listManu = controllerManu.getAllManufacturer();
-            // Xóa tất cả mục hiện tại trong ComboBox trước khi thêm mới
+        listManu = controllerManu.getAllManufacturer();
         cbManufacturerModel.removeAllElements();
-
         // Thêm danh mục vào ComboBox
         for (Manufacturer manufacturer : listManu) {
             cbManufacturerModel.addElement(manufacturer);
         }
         cbManufacturer.firePopupMenuCanceled();
-        } catch (SQLException ex) {
-            Logger.getLogger(frmProduct.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         
     }
 
     private void loadData()  {
-        // Lấy danh sách danh mục từ cơ sở dữ liệu
         List<Product> listProduct = controller.getAllProduct();
-        // Xóa dữ liệu cũ trong bảng
-        model.setRowCount(0);
-        // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
-        listProduct.forEach(Product -> {
-            model.addRow(new Object[]{Product.getId(), Product.getName(),
-                Product.getCategoryId(), Product.getManufacturerId(),
-                Product.getQuantity(), Product.getDetails(),
-                Product.getPrice(), Product.getImage(),});
-        });
+        List<Category> listCate = controllerCate.getAllCategory();
+        List<Manufacturer> listManu = controllerManu.getAllManufacturer();
+        String path = System.getProperty("product.dir");
+        String baseImagePath = path + "\\src\\main\\java\\com\\mycompany\\cuahanglinhkien_java\\images\\product_images";
         
+        model.setRowCount(0);
+        listProduct.forEach(Product -> { 
+            Manufacturer manufacturer = listManu.stream().filter(p-> p.getId() == Product.getManufacturerId()).findFirst().orElse(null);
+            Category category = listCate.stream().filter(p -> p.getId() == Product.getCategoryId()).findFirst().orElse(null);
+            model.addRow(new Object[]{Product.getId(), Product.getName(),
+               category.getName(), manufacturer.getName(),
+                Product.getQuantity(), Product.getDetails(),
+                Product.getPrice(), new ImageIcon(baseImagePath)});
+        });
     }
 
     private void addEvent() {
@@ -627,9 +638,9 @@ public class frmProduct extends javax.swing.JFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnImport;
     private javax.swing.JButton btnLoadImage;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<Category> cbCategory;
     private javax.swing.JComboBox<Manufacturer> cbManufacturer;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -660,7 +671,6 @@ public class frmProduct extends javax.swing.JFrame {
     private javax.swing.JTable tbProduct;
     private javax.swing.JTextField txtDetail;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtImage;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;
     private javax.swing.JTextField txtQuantity;

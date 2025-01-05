@@ -7,6 +7,8 @@ package com.mycompany.cuahanglinhkien_java.controllers;
 import com.mycompany.cuahanglinhkien_java.models.Manufacturer;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import share.GenericController;
 
 /**
@@ -29,16 +31,21 @@ public class ManufacturerController {
         }, id);
     }
 
-    public List<Manufacturer> getAllManufacturer() throws SQLException {
+    public List<Manufacturer> getAllManufacturer() {
         String query = "SELECT * FROM manufacturer ";
-        return _dbHelper.fetchAll(query, rs -> {
-            try {
-                return new Manufacturer(rs.getInt("id"), rs.getString("name"));
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null;
-            }
-        });
+        try {
+            return _dbHelper.fetchAll(query, rs -> {
+                try {
+                    return new Manufacturer(rs.getInt("id"), rs.getString("name"));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            });
+        } catch (SQLException ex) {
+            Logger.getLogger(ManufacturerController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public boolean addManufacturer(Manufacturer manufacturer) {

@@ -29,7 +29,8 @@ import javax.swing.table.DefaultTableModel;
 public class frmInventory extends javax.swing.JFrame {
 
     InventoryController controller = new InventoryController();
-    String[] columnNames = {"Mã ", "Tên ", "Ngày nhập", "Hãng", "Số lô", "Số lượng nhập", "Giá nhập", "Tổng giá trị"};
+    ProductController controllerPro = new ProductController();
+    String[] columnNames = {"Mã","Ngày nhập", "Số lô", "Số lượng nhập", "Giá nhập", "Tổng giá trị"};
     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
     String selected = "";
     int productId;
@@ -44,7 +45,7 @@ public class frmInventory extends javax.swing.JFrame {
         tbInventory.setModel(model);
         this.productId = productId;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        loadData();
+        loadTable();
     }
 
     /**
@@ -67,10 +68,10 @@ public class frmInventory extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
+        txtProductID = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
+        txtProductName = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtBatchNumber = new javax.swing.JTextField();
@@ -82,6 +83,7 @@ public class frmInventory extends javax.swing.JFrame {
         spImportPrice = new javax.swing.JSpinner();
         jPanel15 = new javax.swing.JPanel();
         btnImport = new javax.swing.JButton();
+        btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(500, 300));
@@ -123,7 +125,7 @@ public class frmInventory extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbInventory);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 18, 688, 340));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 18, 688, 450));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
@@ -143,8 +145,8 @@ public class frmInventory extends javax.swing.JFrame {
         jLabel3.setText("Mã sản phẩm");
         jPanel5.add(jLabel3);
 
-        txtID.setEnabled(false);
-        jPanel5.add(txtID);
+        txtProductID.setEnabled(false);
+        jPanel5.add(txtProductID);
 
         jPanel4.add(jPanel5);
 
@@ -153,8 +155,8 @@ public class frmInventory extends javax.swing.JFrame {
         jLabel4.setText("Tên sản phẩm");
         jPanel6.add(jLabel4);
 
-        txtName.setEnabled(false);
-        jPanel6.add(txtName);
+        txtProductName.setEnabled(false);
+        jPanel6.add(txtProductName);
 
         jPanel4.add(jPanel6);
 
@@ -183,6 +185,8 @@ public class frmInventory extends javax.swing.JFrame {
 
         jPanel4.add(jPanel10);
 
+        jPanel15.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
+
         btnImport.setText("Nhập hàng");
         btnImport.setPreferredSize(new java.awt.Dimension(100, 43));
         btnImport.addActionListener(new java.awt.event.ActionListener() {
@@ -191,6 +195,9 @@ public class frmInventory extends javax.swing.JFrame {
             }
         });
         jPanel15.add(btnImport);
+
+        btnExit.setText("Thoát");
+        jPanel15.add(btnExit);
 
         jPanel4.add(jPanel15);
 
@@ -220,12 +227,31 @@ public class frmInventory extends javax.swing.JFrame {
             Inventory newInventory = new Inventory(productId, batchNumber, quantity, importPrice);
             controller.ImportProduct(newInventory);
         }
+        loadTable();
     }//GEN-LAST:event_btnImportActionPerformed
-    
-    private void loadData()  {
+    private void loadTable() {
+        InventoryController controller = new InventoryController();
+        Product pro = controllerPro.getProductById(productId);
+        txtProductID.setText(productId+"");
+        txtProductName.setText(pro.getName());
+        List<Inventory> listInventory = controller.getAllInventory();
         
-        
+        DefaultTableModel model = (DefaultTableModel) tbInventory.getModel();
+        model.setRowCount(0);
+
+        listInventory.forEach(inventory -> {
+            model.addRow(new Object[]{
+                inventory.getId(),
+                inventory.getImportDate(), 
+                inventory.getBatchNumber(), 
+                inventory.getQuantityImported(), 
+                inventory.getImportPirce(), 
+                inventory.getTotal() 
+            });
+        });
+
     }
+   
     /**
      * @param args the command line arguments
      */
@@ -265,6 +291,7 @@ public class frmInventory extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExit;
     private javax.swing.JButton btnImport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -288,8 +315,10 @@ public class frmInventory extends javax.swing.JFrame {
     private javax.swing.JSpinner spQuantity;
     private javax.swing.JTable tbInventory;
     private javax.swing.JTextField txtBatchNumber;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtProductID;
+    private javax.swing.JTextField txtProductName;
     // End of variables declaration//GEN-END:variables
+
+    
 
 }

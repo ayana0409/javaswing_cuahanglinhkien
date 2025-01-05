@@ -74,7 +74,7 @@ public class frmManufacturer extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(500, 300));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ HÃNG SẢN XUẤT");
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
@@ -163,7 +163,7 @@ public class frmManufacturer extends javax.swing.JFrame {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
+            .addGap(0, 82, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -193,7 +193,7 @@ public class frmManufacturer extends javax.swing.JFrame {
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
+            .addGap(0, 82, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel8);
@@ -206,7 +206,7 @@ public class frmManufacturer extends javax.swing.JFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
+            .addGap(0, 82, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel9);
@@ -219,7 +219,7 @@ public class frmManufacturer extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 83, Short.MAX_VALUE)
+            .addGap(0, 82, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel10);
@@ -279,7 +279,7 @@ public class frmManufacturer extends javax.swing.JFrame {
                     .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSearch)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel11);
@@ -415,21 +415,14 @@ public class frmManufacturer extends javax.swing.JFrame {
 
     
     private void loadData() {
-        try {
         // Lấy danh sách danh mục từ cơ sở dữ liệu
         List<Manufacturer> listManu = controller.getAllManufacturer();
-
         // Xóa dữ liệu cũ trong bảng
         model.setRowCount(0);
-
         // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
         listManu.forEach(manufacturer -> {
             model.addRow(new Object[]{manufacturer.getId(), manufacturer.getName()});
         });
-    } catch (SQLException ex) {
-        // Log lỗi nếu có vấn đề khi tải dữ liệu
-        Logger.getLogger(frmManufacturer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
     }
 
     private void clearInput() {
