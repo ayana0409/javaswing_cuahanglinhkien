@@ -7,6 +7,8 @@ package com.mycompany.cuahanglinhkien_java.controllers;
 import com.mycompany.cuahanglinhkien_java.models.Order;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import share.GenericController;
@@ -17,7 +19,7 @@ import share.GenericController;
  */
 public class OrderController {
 
-    private final GenericController<Object> _dbContext;
+    private final GenericController<Order> _dbContext;
 
     public OrderController() {
         this._dbContext = new GenericController<>();
@@ -41,6 +43,25 @@ public class OrderController {
             return null;
         }
     }
+    public List<Order> getAllOrder() {
+    String query = "SELECT * FROM order";
+    try {
+        return _dbContext.fetchAll(query, rs -> {
+            try {
+                return new Order(rs.getInt("id"), rs.getInt("emp_id"), 
+                            rs.getString("phoneNumber"), rs.getDate("purchaseDate"), 
+                            rs.getString("status"), rs.getFloat("totalAmount") 
+                );
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null; // Trả về null nếu có lỗi trong quá trình đọc ResultSet
+            }
+        });
+    } catch (SQLException ex) {
+        Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, "Error fetching employees", ex);
+        return new ArrayList<>(); // Trả về danh sách rỗng nếu có lỗi khi thực thi query
+    }
+}
 
     public boolean addOrder(Order order) {
         String query = "INSERT INTO orders (emp_id, phoneNumber, purchaseDate, status, totalAmount) "

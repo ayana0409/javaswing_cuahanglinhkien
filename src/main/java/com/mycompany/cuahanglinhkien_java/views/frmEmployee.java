@@ -424,7 +424,7 @@ public class frmEmployee extends javax.swing.JFrame {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
 
         try {
-            String searchQuery = txtSearch.getText().trim();
+            String searchQuery ="%"+ txtSearch.getText().trim()+"%";
             if (searchQuery.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhân viên để tìm kiếm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;

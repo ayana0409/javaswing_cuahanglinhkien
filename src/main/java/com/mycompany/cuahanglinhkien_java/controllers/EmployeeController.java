@@ -52,33 +52,33 @@ public class EmployeeController implements Serializable{
             return null;
         }  
     }
-   public List<Employee> getAllEmployee() {
-    String query = "SELECT * FROM employee";
-    try {
-        return _dbHelper.fetchAll(query, rs -> {
-            try {
-                return new Employee(
-                    rs.getInt("Id"),
-                    rs.getString("name"),
-                    rs.getString("gender"),
-                    rs.getString("address"),
-                    rs.getString("PhoneNumber"),
-                    rs.getString("Status"),
-                    rs.getString("Username"),
-                    rs.getString("Password"),
-                    rs.getDate("birthday"),
-                    rs.getInt("Rol_Id") 
-                );
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null; // Trả về null nếu có lỗi trong quá trình đọc ResultSet
-            }
-        });
-    } catch (SQLException ex) {
-        Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, "Error fetching employees", ex);
-        return new ArrayList<>(); // Trả về danh sách rỗng nếu có lỗi khi thực thi query
+    public List<Employee> getAllEmployee() {
+        String query = "SELECT * FROM employee";
+        try {
+            return _dbHelper.fetchAll(query, rs -> {
+                try {
+                    return new Employee(
+                            rs.getInt("Id"),
+                            rs.getString("name"),
+                            rs.getString("gender"),
+                            rs.getString("address"),
+                            rs.getString("PhoneNumber"),
+                            rs.getString("Status"),
+                            rs.getString("Username"),
+                            rs.getString("Password"),
+                            rs.getDate("birthday"),
+                            rs.getInt("Rol_Id")
+                    );
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null; // Trả về null nếu có lỗi trong quá trình đọc ResultSet
+                }
+            });
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, "Error fetching employees", ex);
+            return new ArrayList<>(); // Trả về danh sách rỗng nếu có lỗi khi thực thi query
+        }
     }
-}
     public boolean addEmployee(Employee employee) {
         String query = "INSERT INTO employee ( name, birthday, gender, address, PhoneNumber, Status, Username,Password, Rol_Id) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
 

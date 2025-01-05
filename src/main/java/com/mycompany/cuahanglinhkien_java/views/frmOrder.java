@@ -4,17 +4,76 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.CustomerController;
+import com.mycompany.cuahanglinhkien_java.controllers.EmployeeController;
+import com.mycompany.cuahanglinhkien_java.controllers.OrderController;
+import com.mycompany.cuahanglinhkien_java.models.Customer;
+import com.mycompany.cuahanglinhkien_java.models.Employee;
+import com.mycompany.cuahanglinhkien_java.models.Order;
+import java.util.List;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author YEN VY
  */
 public class frmOrder extends javax.swing.JFrame {
+    EmployeeController employeecontroller=new EmployeeController();
+    CustomerController customerController=new CustomerController();
+    OrderController ordercontroller=new OrderController();
+    String[] columnNames = {"Mã đơn hàng","Số điện thoại", "Ngày mua", "Trạng thái", "Tổng tiền "};
+    DefaultTableModel model = new DefaultTableModel(columnNames,0);
+    int selected =-1;
 
     /**
      * Creates new form frmOrder
      */
     public frmOrder() {
         initComponents();
+        txtPhoneNumber.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String phoneNumber = txtPhoneNumber.getText();
+                Customer customer = customerController.getCustomerByPhoneNumber(phoneNumber);
+                if (customer != null) {
+                    txtName.setText(customer.getName());
+                    txtAddress.setText(customer.getAddress());
+                    txtName.setEnabled(false);
+                    txtAddress.setEnabled(false);
+                } else {
+                    txtName.setText("");
+                    txtAddress.setText("");
+                    txtName.setEnabled(true);
+                    txtAddress.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String phoneNumber = txtPhoneNumber.getText();
+                Customer customer = customerController.getCustomerByPhoneNumber(phoneNumber);
+                if (customer != null) {
+                    txtName.setText(customer.getName());
+                    txtAddress.setText(customer.getAddress());
+                    txtName.setEnabled(false);
+                    txtAddress.setEnabled(false);
+                } else {
+                    txtName.setText("");
+                    txtAddress.setText("");
+                    txtName.setEnabled(true);
+                    txtAddress.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Không cần xử lý, vì không thay đổi thuộc tính hiển thị (như font, style).
+            }
+        });
+        loadData();
     }
 
     /**
@@ -163,6 +222,11 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel13.setLayout(new java.awt.GridLayout(1, 3, 5, 0));
 
         btnAdd.setText("Thêm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
         jPanel13.add(btnAdd);
 
         btnView.setText("Xem");
@@ -210,6 +274,36 @@ public class frmOrder extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void loadData() {
+        // Lấy danh sách danh mục từ cơ sở dữ liệu
+        List<Order> listCate = ordercontroller.getAllOrder();
+
+        // Xóa dữ liệu cũ trong bảng
+        model.setRowCount(0);
+
+        // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
+        listCate.forEach(order -> {
+            model.addRow(new Object[]{order.getId(), order.getPhoneNumber(), order.getStatus(), order.getTotalAmount()});
+        });
+    }
+    private void addEvent() {
+        tbOrder.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tbOrder.getSelectedRow();
+                if (selectedRow != -1) {
+                    selected = Integer.parseInt(tbOrder.getValueAt(selectedRow, 0).toString()) ;
+                    Order order= ordercontroller.getOrder(selected);
+                    txtID.setText(selected+"");
+                    txtPhoneNumber.setText(order.getPhoneNumber());
+                    cbStatus.setSelectedItem(order.getStatus());
+                }
+            }
+        });
+    }
     /**
      * @param args the command line arguments
      */
