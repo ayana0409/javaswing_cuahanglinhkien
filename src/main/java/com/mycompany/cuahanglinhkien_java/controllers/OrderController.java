@@ -16,7 +16,8 @@ import share.GenericController;
  * @author Asus
  */
 public class OrderController {
-    private final GenericController<Order> _dbContext;
+
+    private final GenericController<Object> _dbContext;
 
     public OrderController() {
         this._dbContext = new GenericController<>();
@@ -25,7 +26,7 @@ public class OrderController {
     public Order getOrder(int orderId) {
         String query = "SELECT * FROM orders WHERE id = ?";
         try {
-            return _dbContext.fetchOne(query, rs -> {
+            return (Order) _dbContext.fetchOne(query, rs -> {
                 try {
                     return new Order(rs.getInt("id"), rs.getInt("emp_id"), 
                             rs.getString("phoneNumber"), rs.getDate("purchaseDate"), 

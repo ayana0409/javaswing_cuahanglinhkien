@@ -4,17 +4,32 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.EmployeeController;
+import com.mycompany.cuahanglinhkien_java.models.Employee;
+import java.sql.Date;
+import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author YEN VY
  */
 public class frmEmployee extends javax.swing.JFrame {
 
+    private EmployeeController employeecontroller=new EmployeeController();
+    String[] columnNames = {"Mã nhân viên","Chức vụ", "Họ & tên", "Ngày sinh", "Giới tính", "Số điện thoại", "Trạng thái", "Tên đăng nhập"};
+    DefaultTableModel model = new DefaultTableModel(columnNames,0);
+    int selected =-1;
     /**
      * Creates new form frmEmployee
      */
     public frmEmployee() {
         initComponents();
+        tbEmployee.setModel(model);
+        loadData();
+        addEvent();
+        clearInput();
     }
 
     /**
@@ -37,26 +52,49 @@ public class frmEmployee extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtPhoneNumber = new javax.swing.JTextField();
-        jPanel8 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
         rbGenderBoy = new javax.swing.JRadioButton();
         rbGenderGirl = new javax.swing.JRadioButton();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        txtAddress = new javax.swing.JTextField();
         jPanel11 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        spDay = new javax.swing.JSpinner();
+        spMonth = new javax.swing.JSpinner();
+        spYear = new javax.swing.JSpinner();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        txtUserName = new javax.swing.JTextField();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbStatus = new javax.swing.JComboBox<>();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        cbRole = new javax.swing.JComboBox<>();
+        jPanel14 = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        txtSearch = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jPanel16 = new javax.swing.JPanel();
+        btnAdd = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnEditPassword = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbEmployee = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,14 +104,14 @@ public class frmEmployee extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("QUẢN LÝ KHÁCH HÀNG");
+        jLabel10.setText("QUẢN LÝ NHÂN VIÊN");
         jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(jLabel10, java.awt.BorderLayout.PAGE_START);
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setPreferredSize(new java.awt.Dimension(225, 592));
-        jPanel2.setLayout(new java.awt.GridLayout(7, 0, 0, 10));
+        jPanel2.setLayout(new java.awt.GridLayout(10, 0, 0, 5));
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
@@ -97,79 +135,160 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel6);
 
-        jPanel7.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
+        jPanel8.setLayout(new java.awt.GridLayout(2, 0));
+
+        jPanel10.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
 
         jLabel3.setText("Số điện thoại");
-        jPanel7.add(jLabel3);
+        jPanel10.add(jLabel3);
 
         txtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPhoneNumberActionPerformed(evt);
             }
         });
-        jPanel7.add(txtPhoneNumber);
-
-        jPanel2.add(jPanel7);
-
-        jPanel8.setLayout(new java.awt.GridLayout(1, 2, 5, 2));
-
-        jLabel4.setText("Giới tính");
-        jPanel8.add(jLabel4);
-
-        jPanel10.setLayout(new java.awt.GridLayout(1, 0));
-
-        rbGenderBoy.setText("Nam");
-        jPanel10.add(rbGenderBoy);
-
-        rbGenderGirl.setText("Nữ");
-        jPanel10.add(rbGenderGirl);
+        jPanel10.add(txtPhoneNumber);
 
         jPanel8.add(jPanel10);
 
+        jPanel21.setLayout(new java.awt.GridLayout(1, 3, 3, 0));
+
+        jLabel4.setText("Giới tính");
+        jPanel21.add(jLabel4);
+
+        rbGenderBoy.setText("Nam");
+        jPanel21.add(rbGenderBoy);
+
+        rbGenderGirl.setText("Nữ");
+        jPanel21.add(rbGenderGirl);
+
+        jPanel8.add(jPanel21);
+
         jPanel2.add(jPanel8);
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 225, Short.MAX_VALUE)
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jPanel7.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
+
+        jLabel11.setText("Địa chỉ");
+        jPanel7.add(jLabel11);
+        jPanel7.add(txtAddress);
+
+        jPanel2.add(jPanel7);
+
+        jPanel11.setLayout(new java.awt.GridLayout(2, 0));
+
+        jLabel6.setText("Ngày sinh:");
+        jPanel11.add(jLabel6);
+
+        jPanel13.setLayout(new java.awt.GridLayout(1, 3, 5, 0));
+        jPanel13.add(spDay);
+        jPanel13.add(spMonth);
+        jPanel13.add(spYear);
+
+        jPanel11.add(jPanel13);
 
         jPanel2.add(jPanel11);
 
+        jPanel20.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
+
+        jLabel8.setText("Tên đăng nhập");
+        jPanel20.add(jLabel8);
+        jPanel20.add(txtUserName);
+
+        jPanel2.add(jPanel20);
+
+        jPanel15.setLayout(new java.awt.GridLayout(2, 1, 3, 5));
+
+        jLabel7.setText("Mật khẩu");
+        jPanel15.add(jLabel7);
+        jPanel15.add(txtPassword);
+
+        jPanel2.add(jPanel15);
+
         jPanel9.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel5.setText("Trạng thái");
-        jPanel9.add(jLabel5);
+        jPanel18.setLayout(new java.awt.GridLayout(1, 2, 3, 0));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel9.add(jComboBox1);
+        jLabel5.setText("Trạng thái");
+        jPanel18.add(jLabel5);
+
+        cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang làm", "Nghỉ phép", "Thôi việc", "Nghỉ thai sản", "Đang thử việc ", " " }));
+        jPanel18.add(cbStatus);
+
+        jPanel9.add(jPanel18);
+
+        jPanel19.setLayout(new java.awt.GridLayout(1, 2, 3, 0));
+
+        jLabel9.setText("Chức vụ");
+        jPanel19.add(jLabel9);
+
+        cbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel19.add(cbRole);
+
+        jPanel9.add(jPanel19);
 
         jPanel2.add(jPanel9);
 
+        jPanel14.setLayout(new java.awt.GridLayout(2, 0));
+
+        jPanel17.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel17.add(txtSearch);
+
+        jPanel14.add(jPanel17);
+
+        btnSearch.setText("Tìm kiếm");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+        jPanel14.add(btnSearch);
+
+        jPanel2.add(jPanel14);
+
         jPanel12.setLayout(new java.awt.GridLayout(2, 0, 0, 4));
 
-        jButton1.setText("jButton1");
-        jPanel12.add(jButton1);
+        jPanel16.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton2.setText("jButton2");
-        jPanel12.add(jButton2);
+        btnAdd.setText("Thêm");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        jPanel16.add(btnAdd);
 
-        jButton3.setText("jButton3");
-        jPanel12.add(jButton3);
+        btnEdit.setText("Sửa");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+        jPanel16.add(btnEdit);
 
-        jButton4.setText("jButton4");
-        jPanel12.add(jButton4);
+        btnDelete.setText("Xóa");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel16.add(btnDelete);
+
+        jPanel12.add(jPanel16);
+
+        btnEditPassword.setText("Đổi mật khẩu");
+        btnEditPassword.setActionCommand("");
+        btnEditPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditPasswordActionPerformed(evt);
+            }
+        });
+        jPanel12.add(btnEditPassword);
 
         jPanel2.add(jPanel12);
 
         jPanel3.add(jPanel2, java.awt.BorderLayout.LINE_END);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbEmployee.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -180,15 +299,15 @@ public class frmEmployee extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbEmployee);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +322,7 @@ public class frmEmployee extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 960, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,6 +340,111 @@ public class frmEmployee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        String name=txtName.getText();
+        String gender=rbGenderBoy.isSelected()?"Nam":"Nữ";
+        String address=txtAddress.getText();
+        String status=cbStatus.getSelectedItem().toString();
+        String userName=txtUserName.getText();
+        String password=txtPassword.getText();
+        int year =Integer.parseInt(spYear.getValue().toString()) ;
+        int month =Integer.parseInt(spMonth.getValue().toString()) ;
+        int day = Integer.parseInt(spDay.getValue().toString()) ;
+        String dateString = String.format("%04d-%02d-%02d", year, month, day);
+        Date birthday = java.sql.Date.valueOf(dateString);
+        int roleId=1;
+        String phoneNumber=txtPhoneNumber.getText();
+        if(!name.isBlank()&& !phoneNumber.isBlank()){
+            employeecontroller.addEmployee(new Employee( name, gender, address, phoneNumber, status, userName, password, birthday, roleId));
+            loadData();
+            clearInput();
+        }        
+    // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        String name=txtName.getText();
+        String gender=rbGenderBoy.isSelected()?"Nam":"Nữ";
+        String address=txtAddress.getText();
+        String status=cbStatus.getSelectedItem().toString();
+        String userName=txtUserName.getText();
+        String password=txtPassword.getText();
+        int year =Integer.parseInt(spYear.getValue().toString()) ;
+        int month =Integer.parseInt(spMonth.getValue().toString()) ;
+        int day = Integer.parseInt(spDay.getValue().toString()) ;
+        String dateString = String.format("%04d-%02d-%02d", year, month, day);
+        Date birthday = java.sql.Date.valueOf(dateString);
+        int roleId=1;
+        String phoneNumber=txtPhoneNumber.getText();
+        if(!name.isBlank()&& !phoneNumber.isBlank()){
+            employeecontroller.editInforEmployee(new Employee( name, gender, address, phoneNumber, status, userName, password, birthday, roleId),selected);
+            loadData();
+            clearInput();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnEditPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditPasswordActionPerformed
+        String password=txtPassword.getText();
+        if(!password.isBlank()){
+            employeecontroller.updatePasswordEmployee(password, selected);
+            loadData();
+            clearInput();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditPasswordActionPerformed
+
+    private void loadData() {
+        // Lấy danh sách danh mục từ cơ sở dữ liệu
+        List<Employee> listCate = employeecontroller.getAllEmployee();
+
+        // Xóa dữ liệu cũ trong bảng
+        model.setRowCount(0);
+
+        // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
+        listCate.forEach(employee -> {
+            model.addRow(new Object[]{employee.getId(), employee.getRoleId(), employee.getName(), 
+                employee.getBirthday(), employee.getGender(), employee.getPhoneNumber(), 
+                employee.getStatus(), employee.getUsername()});
+        });
+    }
+    private void addEvent() {
+        tbEmployee.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = tbEmployee.getSelectedRow();
+                if (selectedRow != -1) {
+                    selected = Integer.parseInt(tbEmployee.getValueAt(selectedRow, 0).toString()) ;
+                    Employee employee= employeecontroller.getEmployeeById(selected);
+                    txtID.setText(selected+"");
+                    txtName.setText(employee.getName());
+                    txtPhoneNumber.setText(employee.getPhoneNumber());
+                    txtAddress.setText(employee.getAddress());
+                    txtUserName.setText(employee.getUsername());
+                    spDay.setValue(employee.getBirthday().getDate());
+                    spMonth.setValue(employee.getBirthday().getMonth()+1);
+                    spYear.setValue(employee.getBirthday().getYear()+1900);
+                    rbGenderBoy.setSelected(employee.getGender().toLowerCase().equals("nam"));
+                    rbGenderGirl.setSelected(employee.getGender().toLowerCase().equals("nữ"));
+                    
+                }
+            }
+        });
+    }
+    
+    private void clearInput(){
+            txtPhoneNumber.setText("");
+            txtName.setText("");
+            txtAddress.setText("");
+       }
     /**
      * @param args the command line arguments
      */
@@ -257,22 +481,38 @@ public class frmEmployee extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnEditPassword;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> cbRole;
+    private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -282,11 +522,18 @@ public class frmEmployee extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton rbGenderBoy;
     private javax.swing.JRadioButton rbGenderGirl;
+    private javax.swing.JSpinner spDay;
+    private javax.swing.JSpinner spMonth;
+    private javax.swing.JSpinner spYear;
+    private javax.swing.JTable tbEmployee;
+    private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtPhoneNumber;
+    private javax.swing.JTextField txtSearch;
+    private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,7 +4,6 @@
  */
 package com.mycompany.cuahanglinhkien_java.controllers;
 
-import com.mycompany.cuahanglinhkien_java.models.Category;
 import com.mycompany.cuahanglinhkien_java.models.Customer;
 import java.sql.SQLException;
 import java.util.ArrayList;
