@@ -110,17 +110,15 @@ public class frmProduct extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         lbImage = new javax.swing.JLabel();
+        btnLoadImage = new javax.swing.JButton();
         jPanel19 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JTextField();
-        jPanel14 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
-        btnLoadImage = new javax.swing.JButton();
-        jPanel15 = new javax.swing.JPanel();
+        jPanel20 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
-        btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         btnImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -130,10 +128,6 @@ public class frmProduct extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ SẢN PHẨM");
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
-
-        java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
-        jPanel2Layout.columnWidths = new int[] {700, 260};
-        jPanel2.setLayout(jPanel2Layout);
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
@@ -200,10 +194,6 @@ public class frmProduct extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
         jPanel3.add(btnSearch, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jPanel2.add(jPanel3, gridBagConstraints);
-
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -211,11 +201,11 @@ public class frmProduct extends javax.swing.JFrame {
         jLabel2.setText("Thông tin");
         jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
-        jPanel4.setLayout(new java.awt.GridLayout(5, 0, 0, 10));
+        jPanel4.setLayout(new java.awt.GridLayout(5, 0));
 
         jPanel16.setLayout(new java.awt.GridLayout(2, 0));
 
-        jPanel5.setLayout(new java.awt.GridLayout(2, 1));
+        jPanel5.setLayout(new java.awt.GridLayout(2, 2));
 
         jLabel3.setText("Mã sản phẩm");
         jPanel5.add(jLabel3);
@@ -225,11 +215,11 @@ public class frmProduct extends javax.swing.JFrame {
 
         jPanel16.add(jPanel5);
 
-        jPanel6.setLayout(new java.awt.BorderLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("Tên sản phẩm");
-        jPanel6.add(jLabel4, java.awt.BorderLayout.LINE_START);
+        jPanel6.add(jLabel4);
 
         txtName.setText("jTextField1");
         txtName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -238,7 +228,7 @@ public class frmProduct extends javax.swing.JFrame {
                 txtNameActionPerformed(evt);
             }
         });
-        jPanel6.add(txtName, java.awt.BorderLayout.CENTER);
+        jPanel6.add(txtName);
 
         jPanel16.add(jPanel6);
 
@@ -301,6 +291,14 @@ public class frmProduct extends javax.swing.JFrame {
         lbImage.setText("jLabel12");
         jPanel13.add(lbImage);
 
+        btnLoadImage.setText("Tải ảnh lên");
+        btnLoadImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoadImageActionPerformed(evt);
+            }
+        });
+        jPanel13.add(btnLoadImage);
+
         jPanel4.add(jPanel13);
 
         jPanel19.setLayout(new java.awt.GridLayout(2, 0));
@@ -315,46 +313,7 @@ public class frmProduct extends javax.swing.JFrame {
 
         jPanel19.add(jPanel12);
 
-        jPanel4.add(jPanel19);
-
-        jPanel11.setLayout(new java.awt.GridLayout(1, 0));
-
-        btnLoadImage.setText("Tải ảnh lên");
-        btnLoadImage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoadImageActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap(142, Short.MAX_VALUE)
-                .addComponent(btnLoadImage)
-                .addGap(122, 122, 122))
-            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel14Layout.createSequentialGroup()
-                    .addGap(0, 176, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 176, Short.MAX_VALUE)))
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addGap(0, 86, Short.MAX_VALUE)
-                .addComponent(btnLoadImage))
-            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel14Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-
-        jPanel4.add(jPanel14);
-
-        jPanel15.setLayout(new java.awt.GridLayout(0, 4));
+        jPanel20.setLayout(new java.awt.GridLayout(1, 4));
 
         btnAdd.setText("Thêm");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -362,15 +321,7 @@ public class frmProduct extends javax.swing.JFrame {
                 btnAddActionPerformed(evt);
             }
         });
-        jPanel15.add(btnAdd);
-
-        btnEdit.setText("Sửa");
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-        jPanel15.add(btnEdit);
+        jPanel20.add(btnAdd);
 
         btnDelete.setText("Xóa");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
@@ -378,7 +329,15 @@ public class frmProduct extends javax.swing.JFrame {
                 btnDeleteActionPerformed(evt);
             }
         });
-        jPanel15.add(btnDelete);
+        jPanel20.add(btnDelete);
+
+        btnEdit.setText("Sửa");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+        jPanel20.add(btnEdit);
 
         btnImport.setText("Nhập hàng");
         btnImport.addActionListener(new java.awt.event.ActionListener() {
@@ -386,15 +345,28 @@ public class frmProduct extends javax.swing.JFrame {
                 btnImportActionPerformed(evt);
             }
         });
-        jPanel15.add(btnImport);
+        jPanel20.add(btnImport);
 
-        jPanel4.add(jPanel15);
+        jPanel19.add(jPanel20);
+
+        jPanel4.add(jPanel19);
 
         jPanel1.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jPanel2.add(jPanel1, gridBagConstraints);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -748,16 +720,14 @@ public class frmProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

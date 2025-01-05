@@ -52,7 +52,7 @@ public class ProductController {
     }
 
     public boolean updateProduct(Product product) {
-        String query = "UPDATE product SET name = ?, category_id = ?, manufacturer_id = ?, quantity = ?, details = ?, image = ? WHERE id = ?";
+        String query = "UPDATE product SET  name = ?,cat_Id = ?, man_Id = ?,  quantity = ?, details = ?, price = ?, image = ? WHERE id = ?";
 
         try {
             int rowsAffected = _dbHelper.updateOrDelete(query,
@@ -61,6 +61,7 @@ public class ProductController {
                     product.getManufacturerId(),
                     product.getQuantity(),
                     product.getDetails(),
+                    product.getPrice(),
                     product.getImage(),
                     product.getId()
             );
