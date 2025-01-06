@@ -38,22 +38,22 @@ public class frmProduct extends javax.swing.JFrame {
     CategoryController controllerCate = new CategoryController();
     ManufacturerController controllerManu = new ManufacturerController();
     String[] columnNames = {"Mã ", "Tên ", "Danh mục", "Hãng", "Số lượng", "Chi tiết", "Giá", "Hình"};
-    
+
     int selected = 0;
     String path = System.getProperty("user.dir");
     String baseImagePath = path + "\\src\\main\\java\\com\\mycompany\\cuahanglinhkien_java\\images\\product_images\\";
     DefaultComboBoxModel<Category> cbCategoryModel = new DefaultComboBoxModel<Category>();
     DefaultComboBoxModel<Manufacturer> cbManufacturerModel = new DefaultComboBoxModel<Manufacturer>();
-    private DefaultTableModel model = new DefaultTableModel(columnNames, 0){
-        public Class<?> getColumnClass (int columIndex){
-            if (columIndex == 7){
+    private DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+        public Class<?> getColumnClass(int columIndex) {
+            if (columIndex == 7) {
                 return ImageIcon.class;
             }
             return super.getColumnClass(columIndex);
         }
     };
-    
-    public frmProduct()  {
+
+    public frmProduct() {
         initComponents();
         cbCategory.setModel(cbCategoryModel);
         cbManufacturer.setModel(cbManufacturerModel);
@@ -223,11 +223,6 @@ public class frmProduct extends javax.swing.JFrame {
 
         txtName.setText("jTextField1");
         txtName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
         jPanel6.add(txtName);
 
         jPanel16.add(jPanel6);
@@ -375,26 +370,26 @@ public class frmProduct extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
-            
+
             String name = txtName.getText().trim();
             Category selectedCate = (Category) cbCategory.getSelectedItem();
             Manufacturer selectedManu = (Manufacturer) cbManufacturer.getSelectedItem();
             int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
             String image = lbImage.getText().trim();
-            double price = Double.parseDouble(txtPrice.getText().trim()); 
-            
+            double price = Double.parseDouble(txtPrice.getText().trim());
+
             ImageIcon imgIcon = (ImageIcon) lbImage.getIcon();
             Image img = imgIcon.getImage();
             BufferedImage bufferedImage = new BufferedImage(img.getWidth(null),
-                    img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                    img.getHeight(null),
+                    BufferedImage.TYPE_INT_ARGB);
             bufferedImage.getGraphics().drawImage(img, 0, 0, null);
-            
-            String fileName = PasswordUtils.hashPassword(name)+".png";
+
+            String fileName = PasswordUtils.hashPassword(name) + ".png";
             File outputFile = new File(baseImagePath + fileName);
-            ImageIO.write(bufferedImage,"PNG", outputFile);
-            
-            
+            ImageIO.write(bufferedImage, "PNG", outputFile);
+
             if (name.isEmpty() || details.isEmpty() || image.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Không được để trống các trường bắt buộc!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
@@ -402,13 +397,13 @@ public class frmProduct extends javax.swing.JFrame {
 
             Product newPro = new Product();
             newPro.setName(name);
-            newPro.setCategoryId(selectedCate.getId() );
+            newPro.setCategoryId(selectedCate.getId());
             newPro.setManufacturerId(selectedManu.getId());
             newPro.setDetails(details);
             newPro.setQuantity(quantity);
             newPro.setPrice((float) price);
             newPro.setImage(fileName);
-            
+
             boolean success = controller.addProduct(newPro);
             if (success) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Thêm sản phẩm thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -424,6 +419,15 @@ public class frmProduct extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAddActionPerformed
+    public boolean DeleteImage(String ImageName) {
+
+        String duongDanHinhAnh = baseImagePath + ImageName;
+
+        // Tạo một đối tượng File
+        File ImageFile = new File(duongDanHinhAnh);
+        return false;
+    }
+
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         try {
@@ -441,26 +445,34 @@ public class frmProduct extends javax.swing.JFrame {
             Manufacturer selectedManufacturer = (Manufacturer) cbManufacturer.getSelectedItem();
             int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
-            String image = lbImage.getText().trim();
-            double price = Double.parseDouble(txtPrice.getText().trim());
 
-            // Kiểm tra trường nhập liệu
-            if (name.isEmpty() || details.isEmpty() || image.isEmpty()) {
+            double price = Double.parseDouble(txtPrice.getText().trim());
+            String newImage = lbImage.getText().trim();
+            String oldImage = tbProduct.getValueAt(selectedRow, 7).toString();
+
+            if (name.isEmpty() || details.isEmpty() || newImage.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Không được để trống các trường bắt buộc!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // Tạo đối tượng sản phẩm mới với dữ liệu đã chỉnh sửa
-            Product updatedProduct = new Product(id, name, selectedCategory.getId(), selectedManufacturer.getId(), quantity, details, image, (float) price);
+            if (!newImage.equals(oldImage)) {
+                boolean imageDelete = DeleteImage(oldImage);
+                if (!imageDelete) {
+                    return;
+                }
+
+            }
+
+            Product updatedProduct = new Product(id, name, selectedCategory.getId(), selectedManufacturer.getId(), quantity, details, newImage, (float) price);
             updatedProduct.setPrice((float) price);
 
-            //Gọi hàm updateProduct từ controller
+            
             boolean success = controller.updateProduct(updatedProduct);
 
             if (success) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Sửa sản phẩm thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                loadData(); // Tải lại bảng
-                clearInput(); // Reset các trường nhập liệu
+                loadData(); 
+                clearInput(); 
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Sửa sản phẩm thất bại!", "Thông báo", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
@@ -472,25 +484,27 @@ public class frmProduct extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         try {
-            // Lấy dòng được chọn trong bảng
             int selectedRow = tbProduct.getSelectedRow();
             if (selectedRow < 0) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm để xóa!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // Xác nhận trước khi xóa
             int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa sản phẩm này không?", "Xác nhận", javax.swing.JOptionPane.YES_NO_OPTION);
             if (confirm != javax.swing.JOptionPane.YES_OPTION) {
                 return;
             }
 
-            // Lấy ID của sản phẩm được chọn
             int id = Integer.parseInt(tbProduct.getValueAt(selectedRow, 0).toString());
+            String image = tbProduct.getValueAt(selectedRow, 7).toString(); // Cột hình ảnh
 
-            // Gọi hàm deleteProduct từ controller
             boolean success = controller.deleteProduct(id);
 
+            boolean imageDeleted = DeleteImage(image);
+            if (!imageDeleted) {
+                //javax.swing.JOptionPane.showMessageDialog(this, "Không thể xóa hình ảnh của sản phẩm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             if (success) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 loadData(); // Tải lại bảng
@@ -508,7 +522,7 @@ public class frmProduct extends javax.swing.JFrame {
         try {
             int row = this.tbProduct.getSelectedRow();
             if (row >= 0) {
-                
+
                 List<Category> listCate = controllerCate.getAllCategory();
                 List<Manufacturer> listManu = controllerManu.getAllManufacturer();
                 String id = tbProduct.getValueAt(row, 0).toString();
@@ -525,15 +539,15 @@ public class frmProduct extends javax.swing.JFrame {
                 txtQuantity.setText(quantity);
                 txtPrice.setText(price);
                 lbImage.setText(image);
-                
-                for ( Manufacturer manufacturer: listManu){
-                    if(manufacturer.getName().equals(tbProduct.getValueAt(row, 3).toString())){
+
+                for (Manufacturer manufacturer : listManu) {
+                    if (manufacturer.getName().equals(tbProduct.getValueAt(row, 3).toString())) {
                         cbManufacturerModel.setSelectedItem(manufacturer);
                         break;
                     }
                 }
-                for ( Category category: listCate){
-                    if(category.getName().equals(tbProduct.getValueAt(row, 2).toString())){
+                for (Category category : listCate) {
+                    if (category.getName().equals(tbProduct.getValueAt(row, 2).toString())) {
                         cbCategoryModel.setSelectedItem(category);
                         break;
                     }
@@ -545,7 +559,7 @@ public class frmProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_tbProductMouseClicked
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-        if ( selected != -1 ){
+        if (selected != -1) {
             int selectedRow = tbProduct.getSelectedRow();
             String productId = tbProduct.getValueAt(selectedRow, 0).toString();
             String productName = tbProduct.getValueAt(selectedRow, 1).toString();
@@ -553,7 +567,7 @@ public class frmProduct extends javax.swing.JFrame {
             frmInventory.setLocationRelativeTo(null);
             frmInventory.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -568,9 +582,9 @@ public class frmProduct extends javax.swing.JFrame {
             if (searchResults != null && !searchResults.isEmpty()) {
                 for (Product product : searchResults) {
                     model.addRow(new Object[]{product.getId(), product.getName(),
-                    product.getCategoryId(), product.getManufacturerId(),
-                    product.getQuantity(), product.getDetails(),
-                    product.getPrice(), product.getImage()});
+                        product.getCategoryId(), product.getManufacturerId(),
+                        product.getQuantity(), product.getDetails(),
+                        product.getPrice(), product.getImage()});
                 }
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -599,26 +613,19 @@ public class frmProduct extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoadImageActionPerformed
 
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
+    private void loadCate() {
 
-    private void loadCate()  {
-
-        List<Category> categories;  
+        List<Category> categories;
         categories = controllerCate.getAllCategory();
-        // Xóa tất cả mục hiện tại trong ComboBox trước khi thêm mới
         cbCategoryModel.removeAllElements();
-        // Thêm danh mục vào ComboBox
         for (Category category : categories) {
             cbCategoryModel.addElement(category);
         }
         cbCategory.firePopupMenuCanceled();
 
-        
     }
 
-    private void loadManu()  {
+    private void loadManu() {
         List<Manufacturer> listManu;
         listManu = controllerManu.getAllManufacturer();
         cbManufacturerModel.removeAllElements();
@@ -628,21 +635,19 @@ public class frmProduct extends javax.swing.JFrame {
         }
         cbManufacturer.firePopupMenuCanceled();
 
-        
     }
 
-    private void loadData()  {
+    private void loadData() {
         List<Product> listProduct = controller.getAllProduct();
         List<Category> listCate = controllerCate.getAllCategory();
         List<Manufacturer> listManu = controllerManu.getAllManufacturer();
-       
-        
+
         model.setRowCount(0);
-        listProduct.forEach(Product -> { 
-            Manufacturer manufacturer = listManu.stream().filter(p-> p.getId() == Product.getManufacturerId()).findFirst().orElse(null);
+        listProduct.forEach(Product -> {
+            Manufacturer manufacturer = listManu.stream().filter(p -> p.getId() == Product.getManufacturerId()).findFirst().orElse(null);
             Category category = listCate.stream().filter(p -> p.getId() == Product.getCategoryId()).findFirst().orElse(null);
             model.addRow(new Object[]{Product.getId(), Product.getName(),
-               category.getName(), manufacturer.getName(),
+                category.getName(), manufacturer.getName(),
                 Product.getQuantity(), Product.getDetails(),
                 Product.getPrice(), new ImageIcon(baseImagePath + Product.getImage())});
         });
@@ -653,20 +658,17 @@ public class frmProduct extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = tbProduct.getSelectedRow();
                 if (selectedRow != -1) {
-                    selected = Integer.parseInt( tbProduct.getValueAt(selectedRow, 0).toString());
-                    txtID.setText(selected+"");
+                    selected = Integer.parseInt(tbProduct.getValueAt(selectedRow, 0).toString());
+                    txtID.setText(selected + "");
                     txtName.setText((String) tbProduct.getValueAt(selectedRow, 1));
-                    Category selectedCate = (Category)cbCategory.getSelectedItem();
+                    Category selectedCate = (Category) cbCategory.getSelectedItem();
                     cbCategory.setSelectedItem(selectedCate);
-                    Manufacturer selectManu = (Manufacturer)cbManufacturer.getSelectedItem();
+                    Manufacturer selectManu = (Manufacturer) cbManufacturer.getSelectedItem();
                     cbManufacturer.setSelectedItem(selectManu);
-                    //Category category = controllerCate.getCategoryById((Integer) tbCategory.getValueAt(selectedRow, 2));
-                    //cbCategory.setSelectedItem((String) tbProduct.getValueAt((selectedRow), 2));
-                    //cbManufacturer.setSelectedItem((String) tbProduct.getValueAt((selectedRow), 3));
-                    txtDetail.setText( tbProduct.getValueAt(selectedRow, 5).toString());
+                    txtDetail.setText(tbProduct.getValueAt(selectedRow, 5).toString());
                     txtQuantity.setText(tbProduct.getValueAt(selectedRow, 4).toString());
-                    txtPrice.setText( tbProduct.getValueAt(selectedRow, 6).toString());
-                    lbImage.setIcon((ImageIcon)tbProduct.getValueAt(selectedRow, 7));
+                    txtPrice.setText(tbProduct.getValueAt(selectedRow, 6).toString());
+                    lbImage.setIcon((ImageIcon) tbProduct.getValueAt(selectedRow, 7));
                 }
             }
         });
