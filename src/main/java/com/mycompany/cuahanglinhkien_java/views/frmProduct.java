@@ -10,23 +10,22 @@ import com.mycompany.cuahanglinhkien_java.controllers.ManufacturerController;
 import com.mycompany.cuahanglinhkien_java.models.Category;
 import com.mycompany.cuahanglinhkien_java.models.Manufacturer;
 import com.mycompany.cuahanglinhkien_java.models.Product;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.net.PasswordAuthentication;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
-import share.utils.PasswordUtils;
 
 /**
  *
@@ -38,8 +37,8 @@ public class frmProduct extends javax.swing.JFrame {
     CategoryController controllerCate = new CategoryController();
     ManufacturerController controllerManu = new ManufacturerController();
     String[] columnNames = {"Mã ", "Tên ", "Danh mục", "Hãng", "Số lượng", "Chi tiết", "Giá", "Hình"};
-
     int selected = 0;
+
     String path = System.getProperty("user.dir");
     String baseImagePath = path + "\\src\\main\\java\\com\\mycompany\\cuahanglinhkien_java\\images\\product_images\\";
     DefaultComboBoxModel<Category> cbCategoryModel = new DefaultComboBoxModel<Category>();
@@ -52,6 +51,27 @@ public class frmProduct extends javax.swing.JFrame {
             return super.getColumnClass(columIndex);
         }
     };
+
+    public class ImageHasher {
+
+        // Hàm băm tệp hình ảnh bằng SHA-256
+        public static String hashFile(String imageName) throws NoSuchAlgorithmException, IOException {
+
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = digest.digest(imageName.getBytes());
+            // Chuyển đổi mảng byte thành chuỗi hex
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashedBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        }
+    }
 
     public frmProduct() {
         initComponents();
@@ -117,7 +137,6 @@ public class frmProduct extends javax.swing.JFrame {
         txtPrice = new javax.swing.JTextField();
         jPanel20 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
-        btnDelete = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnImport = new javax.swing.JButton();
 
@@ -318,14 +337,6 @@ public class frmProduct extends javax.swing.JFrame {
         });
         jPanel20.add(btnAdd);
 
-        btnDelete.setText("Xóa");
-        btnDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteActionPerformed(evt);
-            }
-        });
-        jPanel20.add(btnDelete);
-
         btnEdit.setText("Sửa");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -367,33 +378,51 @@ public class frmProduct extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public static boolean deleteImage(String imagePath) {
 
+            File imageFile = new File(imagePath);
+
+            if (imageFile.exists()) {
+                if (imageFile.delete()) {
+                    System.out.println("Hình ảnh đã được xóa: " + imagePath);
+                    return true;
+                } else {
+                    System.out.println("Không thể xóa hình ảnh: " + imagePath);
+                    return false;
+                }
+            } else {
+                System.out.println("Hình ảnh không tồn tại: " + imagePath);
+                return false;
+            }
+        }
+    
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
-
+            // Lấy thông tin sản phẩm từ các trường nhập liệu
             String name = txtName.getText().trim();
             Category selectedCate = (Category) cbCategory.getSelectedItem();
             Manufacturer selectedManu = (Manufacturer) cbManufacturer.getSelectedItem();
             int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
-            String image = lbImage.getText().trim();
             double price = Double.parseDouble(txtPrice.getText().trim());
 
             ImageIcon imgIcon = (ImageIcon) lbImage.getIcon();
-            Image img = imgIcon.getImage();
-            BufferedImage bufferedImage = new BufferedImage(img.getWidth(null),
-                    img.getHeight(null),
-                    BufferedImage.TYPE_INT_ARGB);
-            bufferedImage.getGraphics().drawImage(img, 0, 0, null);
-
-            String fileName = PasswordUtils.hashPassword(name) + ".png";
-            File outputFile = new File(baseImagePath + fileName);
-            ImageIO.write(bufferedImage, "PNG", outputFile);
-
-            if (name.isEmpty() || details.isEmpty() || image.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Không được để trống các trường bắt buộc!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+            if (imgIcon == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn hình ảnh!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
+
+            Image img = imgIcon.getImage();
+            BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            bufferedImage.getGraphics().drawImage(img, 0, 0, null);
+
+            // Tạo tên file bằng cách băm hình ảnh
+            //String fileName = ImageHasher.hashFile(lbImage.getText()) + ".png";  // Băm tệp ảnh để tạo tên file duy nhất
+            String uniqueInput = String.valueOf(System.currentTimeMillis()); // Kết hợp đường dẫn và thời gian
+            String fileName = ImageHasher.hashFile(uniqueInput) + ".png";
+            // Lưu ảnh vào thư mục
+            File outputFile = new File(baseImagePath + fileName);
+            ImageIO.write(bufferedImage, "PNG", outputFile);
 
             Product newPro = new Product();
             newPro.setName(name);
@@ -419,104 +448,90 @@ public class frmProduct extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAddActionPerformed
-    public boolean DeleteImage(String ImageName) {
-
-        String duongDanHinhAnh = baseImagePath + ImageName;
-
-        // Tạo một đối tượng File
-        File ImageFile = new File(duongDanHinhAnh);
-        return false;
-    }
-
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         try {
-            // Lấy dòng được chọn trong bảng
             int selectedRow = tbProduct.getSelectedRow();
             if (selectedRow < 0) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm để sửa!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // Lấy dữ liệu từ các trường nhập liệu
-            int id = Integer.parseInt(tbProduct.getValueAt(selectedRow, 0).toString()); // ID từ bảng
+            // Lấy thông tin từ giao diện
+            int id = Integer.parseInt(tbProduct.getValueAt(selectedRow, 0).toString());
             String name = txtName.getText().trim();
             Category selectedCategory = (Category) cbCategory.getSelectedItem();
             Manufacturer selectedManufacturer = (Manufacturer) cbManufacturer.getSelectedItem();
             int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
-
             double price = Double.parseDouble(txtPrice.getText().trim());
-            String newImage = lbImage.getText().trim();
-            String oldImage = tbProduct.getValueAt(selectedRow, 7).toString();
 
-            if (name.isEmpty() || details.isEmpty() || newImage.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Không được để trống các trường bắt buộc!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
-                return;
+            // Lấy tên file hình ảnh cũ
+            ImageIcon oldImageIcon = (ImageIcon) tbProduct.getValueAt(selectedRow, 7);
+            String oldImagePath = null;
+            if (oldImageIcon != null && oldImageIcon.getImage() != null) {
+                oldImagePath = oldImageIcon.toString(); // Lấy đường dẫn ảnh từ ImageIcon
             }
 
-            if (!newImage.equals(oldImage)) {
-                boolean imageDelete = DeleteImage(oldImage);
-                if (!imageDelete) {
+            // Kiểm tra oldImagePath trước khi sử dụng isEmpty()
+            if (oldImagePath != null && !oldImagePath.isEmpty()) {
+            // Tạo đường dẫn đầy đủ với baseImagePath
+            File oldImageFile = new File(baseImagePath + oldImagePath);
+            if (oldImageFile.exists()) {
+                // Xóa hình ảnh cũ (nếu có)
+                boolean imageDeleted = oldImageFile.delete();
+                if (!imageDeleted) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Không thể xóa hình ảnh cũ!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
                     return;
+                } else {
+                    System.out.println("Hình ảnh cũ đã được xóa: " + oldImagePath);
+                }
+            } else {
+                System.out.println("Hình ảnh cũ không tồn tại: " + oldImagePath);
+            }
+        }
+                // Xử lý hình ảnh mới
+                String imagePath = lbImage.getText().trim();
+                String newFileName = null;
+
+                if (!imagePath.isEmpty()) {
+                    ImageIcon imgIcon = (ImageIcon) lbImage.getIcon();
+                    if (imgIcon != null) {
+                        // Vẽ và lưu hình ảnh mới
+                        Image img = imgIcon.getImage();
+                        BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                        Graphics2D g2d = bufferedImage.createGraphics();
+                        g2d.drawImage(img, 0, 0, null);
+                        g2d.dispose();
+
+                        String hashedFileName = ImageHasher.hashFile(imagePath + System.currentTimeMillis());
+                        newFileName = hashedFileName + ".png";
+                        File outputFile = new File(baseImagePath + newFileName);
+                        ImageIO.write(bufferedImage, "PNG", outputFile);
+                    }
                 }
 
-            }
+                Product updatedProduct = new Product(
+                        id, name, selectedCategory.getId(), selectedManufacturer.getId(),
+                        quantity, details, newFileName, (float) price
+                );
 
-            Product updatedProduct = new Product(id, name, selectedCategory.getId(), selectedManufacturer.getId(), quantity, details, newImage, (float) price);
-            updatedProduct.setPrice((float) price);
+                boolean success = controller.updateProduct(updatedProduct);
 
-            
-            boolean success = controller.updateProduct(updatedProduct);
+                if (success) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Sửa sản phẩm thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    loadData(); // Cập nhật bảng
+                    clearInput(); // Xóa các trường nhập liệu
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Sửa sản phẩm thất bại!", "Thông báo", javax.swing.JOptionPane.ERROR_MESSAGE);
+                }
+            }catch (Exception ex) {
+        ex.printStackTrace();
+        javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
 
-            if (success) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Sửa sản phẩm thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                loadData(); 
-                clearInput(); 
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Sửa sản phẩm thất bại!", "Thông báo", javax.swing.JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+
     }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        try {
-            int selectedRow = tbProduct.getSelectedRow();
-            if (selectedRow < 0) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm để xóa!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa sản phẩm này không?", "Xác nhận", javax.swing.JOptionPane.YES_NO_OPTION);
-            if (confirm != javax.swing.JOptionPane.YES_OPTION) {
-                return;
-            }
-
-            int id = Integer.parseInt(tbProduct.getValueAt(selectedRow, 0).toString());
-            String image = tbProduct.getValueAt(selectedRow, 7).toString(); // Cột hình ảnh
-
-            boolean success = controller.deleteProduct(id);
-
-            boolean imageDeleted = DeleteImage(image);
-            if (!imageDeleted) {
-                //javax.swing.JOptionPane.showMessageDialog(this, "Không thể xóa hình ảnh của sản phẩm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            if (success) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Xóa sản phẩm thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                loadData(); // Tải lại bảng
-                clearInput(); // Reset các trường nhập liệu
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Xóa sản phẩm thất bại!", "Thông báo", javax.swing.JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void tbProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductMouseClicked
         try {
@@ -530,7 +545,7 @@ public class frmProduct extends javax.swing.JFrame {
                 String details = tbProduct.getValueAt(row, 5).toString();
                 String quantity = tbProduct.getValueAt(row, 4).toString();
                 String price = tbProduct.getValueAt(row, 6).toString();
-                String image = tbProduct.getValueAt(row, 7).toString();
+                ImageIcon icon = (ImageIcon) tbProduct.getValueAt(row, 7);
                 Category selectedCate = (Category) cbCategory.getSelectedItem();
                 Manufacturer selectManu = (Manufacturer) cbManufacturer.getSelectedItem();
                 txtID.setText(id);
@@ -538,7 +553,7 @@ public class frmProduct extends javax.swing.JFrame {
                 txtDetail.setText(details);
                 txtQuantity.setText(quantity);
                 txtPrice.setText(price);
-                lbImage.setText(image);
+                lbImage.setIcon(icon);
 
                 for (Manufacturer manufacturer : listManu) {
                     if (manufacturer.getName().equals(tbProduct.getValueAt(row, 3).toString())) {
@@ -596,19 +611,17 @@ public class frmProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnLoadImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadImageActionPerformed
-        // Hiển thị hộp thoại chọn tệp
+
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Hình ảnh", "jpg", "png", "jpeg"));
 
         int returnValue = fileChooser.showOpenDialog(this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            // Lấy đường dẫn tệp được chọn
+
             String filePath = fileChooser.getSelectedFile().getAbsolutePath();
 
-            // Tạo ImageIcon từ đường dẫn tệp
             ImageIcon imageIcon = new ImageIcon(filePath);
 
-            // Đặt hình ảnh vào JLabel
             lbImage.setIcon(imageIcon);
         }
     }//GEN-LAST:event_btnLoadImageActionPerformed
@@ -644,12 +657,26 @@ public class frmProduct extends javax.swing.JFrame {
 
         model.setRowCount(0);
         listProduct.forEach(Product -> {
+            ImageIcon imageIcon = null;
+            if (Product.getImage() != null && !Product.getImage().isEmpty()) {
+            // Tạo đường dẫn đầy đủ đến ảnh
+            String imagePath = baseImagePath + Product.getImage();
+            File imageFile = new File(imagePath);
+
+            // Kiểm tra nếu file ảnh tồn tại
+            if (imageFile.exists()) {
+                // Tạo ImageIcon từ ảnh và điều chỉnh kích thước
+                ImageIcon originalIcon = new ImageIcon(imagePath);
+                Image scaledImage = originalIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Điều chỉnh kích thước ảnh
+                imageIcon = new ImageIcon(scaledImage);
+            }
+        }
             Manufacturer manufacturer = listManu.stream().filter(p -> p.getId() == Product.getManufacturerId()).findFirst().orElse(null);
             Category category = listCate.stream().filter(p -> p.getId() == Product.getCategoryId()).findFirst().orElse(null);
             model.addRow(new Object[]{Product.getId(), Product.getName(),
                 category.getName(), manufacturer.getName(),
                 Product.getQuantity(), Product.getDetails(),
-                Product.getPrice(), new ImageIcon(baseImagePath + Product.getImage())});
+                Product.getPrice(), imageIcon});
         });
     }
 
@@ -723,7 +750,6 @@ public class frmProduct extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnImport;
     private javax.swing.JButton btnLoadImage;

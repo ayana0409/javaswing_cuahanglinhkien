@@ -72,18 +72,6 @@ public class ProductController {
         }
     }
 
-    public boolean deleteProduct(int productId) {
-        String query = "DELETE FROM product WHERE id = ?";
-
-        try {
-            int rowsAffected = _dbHelper.updateOrDelete(query, productId);
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     public List<Product> searchProductByName(String name) {
         String query = "SELECT * FROM product WHERE name LIKE ?";
         try {
