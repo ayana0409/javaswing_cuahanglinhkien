@@ -475,7 +475,6 @@ public class frmProduct extends javax.swing.JFrame {
                 }
             }
 
-            // Xử lý hình ảnh mới
             String newFileName = null;
             ImageIcon imgIcon = (ImageIcon) lbImage.getIcon();
             if (imgIcon != null) {
