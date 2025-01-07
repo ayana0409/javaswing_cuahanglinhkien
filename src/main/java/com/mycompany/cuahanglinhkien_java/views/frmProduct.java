@@ -137,6 +137,7 @@ public class frmProduct extends javax.swing.JFrame {
         btnImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(960, 640));
         setSize(new java.awt.Dimension(500, 300));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -396,21 +397,6 @@ public class frmProduct extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public static boolean deleteImage(String imagePath) {
-        File imageFile = new File(imagePath);
-        if (imageFile.exists()) {
-            if (imageFile.delete()) {
-                System.out.println("Hình ảnh đã được xóa: " + imagePath);
-                return true;
-            } else {
-                System.out.println("Không thể xóa hình ảnh: " + imagePath);
-                return false;
-            }
-        } else {
-            System.out.println("Hình ảnh không tồn tại: " + imagePath);
-            return false;
-        }
-    }
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
@@ -478,10 +464,10 @@ public class frmProduct extends javax.swing.JFrame {
             int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
             double price = Double.parseDouble(txtPrice.getText().trim());
-
+            Product product = controller.getProductById(id);
             // Lấy thông tin hình ảnh cũ từ bảng
-            String oldImagePath = tbProduct.getValueAt(selectedRow, 7).toString(); // Chỉ số 7 là cột chứa đường dẫn ảnh
-            if (oldImagePath != null && !oldImagePath.isEmpty()) {
+            String oldImagePath = product.getImage(); // Chỉ số 7 là cột chứa đường dẫn ảnh
+            if (!oldImagePath.isEmpty()) {
                 File oldImageFile = new File(baseImagePath + oldImagePath);
                 if (oldImageFile.exists() && !oldImageFile.delete()) {
                     javax.swing.JOptionPane.showMessageDialog(this, "Không thể xóa hình ảnh cũ!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -578,7 +564,6 @@ public class frmProduct extends javax.swing.JFrame {
             frmInventory.setLocationRelativeTo(null);
             frmInventory.setVisible(true);
         }
-
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -607,23 +592,17 @@ public class frmProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnLoadImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoadImageActionPerformed
-
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Hình ảnh", "jpg", "png", "jpeg"));
-
         int returnValue = fileChooser.showOpenDialog(this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-
             String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-
             ImageIcon imageIcon = new ImageIcon(filePath);
-
             lbImage.setIcon(imageIcon);
         }
     }//GEN-LAST:event_btnLoadImageActionPerformed
 
     private void loadCate() {
-
         List<Category> categories;
         categories = controllerCate.getAllCategory();
         cbCategoryModel.removeAllElements();
@@ -631,9 +610,7 @@ public class frmProduct extends javax.swing.JFrame {
             cbCategoryModel.addElement(category);
         }
         cbCategory.firePopupMenuCanceled();
-
     }
-
     private void loadManu() {
         List<Manufacturer> listManu;
         listManu = controllerManu.getAllManufacturer();
@@ -643,7 +620,6 @@ public class frmProduct extends javax.swing.JFrame {
             cbManufacturerModel.addElement(manufacturer);
         }
         cbManufacturer.firePopupMenuCanceled();
-
     }
 
     private void loadData() {
@@ -658,7 +634,6 @@ public class frmProduct extends javax.swing.JFrame {
                 String imagePath = baseImagePath + Product.getImage();
                 File imageFile = new File(imagePath);
 
-                // Kiểm tra nếu file ảnh tồn tại
                 if (imageFile.exists()) {
                     ImageIcon originalIcon = new ImageIcon(imagePath);
                     Image scaledImage = originalIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Điều chỉnh kích thước ảnh
@@ -705,7 +680,6 @@ public class frmProduct extends javax.swing.JFrame {
         lbImage.setText("");
         txtDetail.setText("");
     }
-
     /**
      * @param args the command line arguments
      */
