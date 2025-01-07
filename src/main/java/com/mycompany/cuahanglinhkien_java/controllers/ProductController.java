@@ -91,7 +91,6 @@ public class ProductController {
         }
     }
 
-
     public List<Product> getAllProduct() {
         String query = "SELECT * FROM product";
         try {
