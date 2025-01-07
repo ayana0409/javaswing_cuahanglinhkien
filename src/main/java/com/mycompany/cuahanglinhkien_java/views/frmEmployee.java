@@ -489,17 +489,16 @@ public class frmEmployee extends javax.swing.JFrame {
                     spYear.setValue(employee.getBirthday().getYear()+1900);
                     rbGenderBoy.setSelected(employee.getGender().toLowerCase().equals("nam"));
                     rbGenderGirl.setSelected(employee.getGender().toLowerCase().equals("nữ"));
-                    
                 }
             }
         });
     }
     
-    private void clearInput(){
-            txtPhoneNumber.setText("");
-            txtName.setText("");
-            txtAddress.setText("");
-       }
+    private void clearInput() {
+        txtPhoneNumber.setText("");
+        txtName.setText("");
+        txtAddress.setText("");
+    }
     /**
      * @param args the command line arguments
      */

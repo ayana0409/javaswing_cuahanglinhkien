@@ -74,6 +74,7 @@ public class frmOrder extends javax.swing.JFrame {
             }
         });
         loadData();
+        clearInput();
     }
 
     /**
@@ -214,7 +215,11 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel12.add(btnSearch);
 
         btnPrint.setText("Xuất hóa đơn");
-        btnPrint.setActionCommand("Xuất hóa đơn");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
         jPanel12.add(btnPrint);
 
         jPanel11.add(jPanel12);
@@ -275,8 +280,27 @@ public class frmOrder extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+
+        String phoneNumber=txtPhoneNumber.getText();
+        String status=cbStatus.getSelectedItem().toString();
+        String name=txtName.getText();
+        String address=txtAddress.getText();
+        if(!phoneNumber.isBlank()&& !status.isBlank()&& !name.isBlank()&& !address.isBlank()){
+            
+            Customer customer = customerController.getCustomerByPhoneNumber(phoneNumber);
+            if(customer==null){
+                customerController.addCustomer(new Customer(phoneNumber, name, address));
+            }
+            loadData();
+            clearInput();
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPrintActionPerformed
 
     private void loadData() {
         // Lấy danh sách danh mục từ cơ sở dữ liệu
@@ -304,6 +328,14 @@ public class frmOrder extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void clearInput() {
+        txtPhoneNumber.setText("");
+        txtName.setText("");
+        txtAddress.setText("");
+        txtTotal.setText("");
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -338,6 +370,9 @@ public class frmOrder extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

@@ -374,6 +374,11 @@ public class frmOrderDetails extends javax.swing.JFrame {
         btnCancelOrder.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCancelOrder.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelOrder.setText("Hủy");
+        btnCancelOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelOrderActionPerformed(evt);
+            }
+        });
         jPanel12.add(btnCancelOrder);
 
         jPanel4.add(jPanel12);
@@ -410,6 +415,10 @@ public class frmOrderDetails extends javax.swing.JFrame {
         frmAddProduct.setLocationRelativeTo(null);
         frmAddProduct.setVisible(true);
     }//GEN-LAST:event_btnAddProductActionPerformed
+
+    private void btnCancelOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelOrderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelOrderActionPerformed
 
     /**
      * @param args the command line arguments
