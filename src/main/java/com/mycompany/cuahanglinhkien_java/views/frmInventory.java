@@ -207,6 +207,11 @@ public class frmInventory extends javax.swing.JFrame {
         jPanel15.add(btnImport);
 
         btnExit.setText("Thoát");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
         jPanel15.add(btnExit);
 
         jPanel4.add(jPanel15);
@@ -239,6 +244,13 @@ public class frmInventory extends javax.swing.JFrame {
         }
         loadTable();
     }//GEN-LAST:event_btnImportActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        //this.dispose();
+        frmProduct productForm = new frmProduct();
+        productForm.setVisible(true);
+    }//GEN-LAST:event_btnExitActionPerformed
+    
     private void loadTable() {
         InventoryController controller = new InventoryController();
         Product pro = controllerPro.getProductById(productId);
