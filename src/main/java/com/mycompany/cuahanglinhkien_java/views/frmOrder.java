@@ -11,6 +11,7 @@ import com.mycompany.cuahanglinhkien_java.models.Customer;
 import com.mycompany.cuahanglinhkien_java.models.Employee;
 import com.mycompany.cuahanglinhkien_java.models.Order;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -33,46 +34,8 @@ public class frmOrder extends javax.swing.JFrame {
      */
     public frmOrder() {
         initComponents();
-        txtPhoneNumber.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                String phoneNumber = txtPhoneNumber.getText();
-                Customer customer = customerController.getCustomerByPhoneNumber(phoneNumber);
-                if (customer != null) {
-                    txtName.setText(customer.getName());
-                    txtAddress.setText(customer.getAddress());
-                    txtName.setEnabled(false);
-                    txtAddress.setEnabled(false);
-                } else {
-                    txtName.setText("");
-                    txtAddress.setText("");
-                    txtName.setEnabled(true);
-                    txtAddress.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                String phoneNumber = txtPhoneNumber.getText();
-                Customer customer = customerController.getCustomerByPhoneNumber(phoneNumber);
-                if (customer != null) {
-                    txtName.setText(customer.getName());
-                    txtAddress.setText(customer.getAddress());
-                    txtName.setEnabled(false);
-                    txtAddress.setEnabled(false);
-                } else {
-                    txtName.setText("");
-                    txtAddress.setText("");
-                    txtName.setEnabled(true);
-                    txtAddress.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                // Không cần xử lý, vì không thay đổi thuộc tính hiển thị (như font, style).
-            }
-        });
+        tbOrder.setModel(model);
+        addEvent();
         loadData();
         clearInput();
     }
@@ -124,6 +87,11 @@ public class frmOrder extends javax.swing.JFrame {
         tbOrder = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 126, 242));
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -235,6 +203,11 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel13.add(btnAdd);
 
         btnView.setText("Xem");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
         jPanel13.add(btnView);
 
         btnCancel.setText("Hủy");
@@ -282,15 +255,14 @@ public class frmOrder extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
 
         String phoneNumber=txtPhoneNumber.getText();
-        String status=cbStatus.getSelectedItem().toString();
         String name=txtName.getText();
         String address=txtAddress.getText();
-        if(!phoneNumber.isBlank()&& !status.isBlank()&& !name.isBlank()&& !address.isBlank()){
-            
+        if(!phoneNumber.isBlank()&& !name.isBlank()&& !address.isBlank()){
             Customer customer = customerController.getCustomerByPhoneNumber(phoneNumber);
             if(customer==null){
                 customerController.addCustomer(new Customer(phoneNumber, name, address));
             }
+            ordercontroller.addOrder(new Order(phoneNumber));
             loadData();
             clearInput();
         }
@@ -302,16 +274,28 @@ public class frmOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPrintActionPerformed
 
-    private void loadData() {
-        // Lấy danh sách danh mục từ cơ sở dữ liệu
-        List<Order> listCate = ordercontroller.getAllOrder();
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        if (selected != -1) {
+            frmOrderDetails frmDetail = new frmOrderDetails(selected, this);
+            frmDetail.setLocationRelativeTo(null);
+            frmDetail.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frmDetail.setVisible(true);
+        }
+    }//GEN-LAST:event_btnViewActionPerformed
 
-        // Xóa dữ liệu cũ trong bảng
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        frmHome frmHome = new frmHome();
+        frmHome.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frmHome.setVisible(true);        
+    }//GEN-LAST:event_formWindowClosing
+
+    protected void loadData() {
+        List<Order> orders = ordercontroller.getAllOrder();
+
         model.setRowCount(0);
-
-        // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
-        listCate.forEach(order -> {
-            model.addRow(new Object[]{order.getId(), order.getPhoneNumber(), order.getStatus(), order.getTotalAmount()});
+        orders.forEach(order -> {
+            model.addRow(new Object[]{order.getId(), order.getPhoneNumber(), order.getPurchaseDate(), order.getStatus(), order.getTotalAmount()});
         });
     }
     private void addEvent() {
@@ -325,6 +309,46 @@ public class frmOrder extends javax.swing.JFrame {
                     txtPhoneNumber.setText(order.getPhoneNumber());
                     cbStatus.setSelectedItem(order.getStatus());
                 }
+            }
+        });
+        txtPhoneNumber.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String phoneNumber = txtPhoneNumber.getText();
+                Customer customer = customerController.getCustomerByPhoneNumber(phoneNumber);
+                if (customer != null) {
+                    txtName.setText(customer.getName());
+                    txtAddress.setText(customer.getAddress());
+                    txtName.setEnabled(false);
+                    txtAddress.setEnabled(false);
+                } else {
+                    txtName.setText("");
+                    txtAddress.setText("");
+                    txtName.setEnabled(true);
+                    txtAddress.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String phoneNumber = txtPhoneNumber.getText();
+                Customer customer = customerController.getCustomerByPhoneNumber(phoneNumber);
+                if (customer != null) {
+                    txtName.setText(customer.getName());
+                    txtAddress.setText(customer.getAddress());
+                    txtName.setEnabled(false);
+                    txtAddress.setEnabled(false);
+                } else {
+                    txtName.setText("");
+                    txtAddress.setText("");
+                    txtName.setEnabled(true);
+                    txtAddress.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                // Không cần xử lý, vì không thay đổi thuộc tính hiển thị (như font, style).
             }
         });
     }

@@ -4,6 +4,8 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author YEN VY
@@ -60,6 +62,11 @@ public class frmStatistic extends javax.swing.JFrame {
         tbStatistic = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 126, 242));
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -80,7 +87,7 @@ public class frmStatistic extends javax.swing.JFrame {
         jLabel2.setText("Từ ngày");
         jPanel12.add(jLabel2);
 
-        jPanel13.setLayout(new java.awt.GridLayout());
+        jPanel13.setLayout(new java.awt.GridLayout(1, 0));
         jPanel13.add(spDayF);
         jPanel13.add(spMonthF);
         jPanel13.add(spYearF);
@@ -94,7 +101,7 @@ public class frmStatistic extends javax.swing.JFrame {
         jLabel3.setText("Đến ngày");
         jPanel14.add(jLabel3);
 
-        jPanel15.setLayout(new java.awt.GridLayout());
+        jPanel15.setLayout(new java.awt.GridLayout(1, 0));
         jPanel15.add(spDayT);
         jPanel15.add(spMonthT);
         jPanel15.add(spYearT);
@@ -105,7 +112,7 @@ public class frmStatistic extends javax.swing.JFrame {
 
         jPanel16.setLayout(new java.awt.GridLayout(2, 2, 5, 0));
 
-        jPanel17.setLayout(new java.awt.GridLayout());
+        jPanel17.setLayout(new java.awt.GridLayout(1, 0));
 
         btnImport.setText("Theo SP nhập");
         jPanel17.add(btnImport);
@@ -132,7 +139,7 @@ public class frmStatistic extends javax.swing.JFrame {
 
         jPanel19.setLayout(new java.awt.GridLayout(2, 0));
 
-        jPanel20.setLayout(new java.awt.GridLayout());
+        jPanel20.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel4.setText("Số lượng");
         jPanel20.add(jLabel4);
@@ -144,7 +151,7 @@ public class frmStatistic extends javax.swing.JFrame {
 
         jPanel21.setLayout(new java.awt.GridLayout(2, 0));
 
-        jPanel22.setLayout(new java.awt.GridLayout());
+        jPanel22.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel5.setText("Tổng tiền");
         jPanel22.add(jLabel5);
@@ -190,6 +197,13 @@ public class frmStatistic extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        frmHome frmHome = new frmHome();
+        frmHome.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frmHome.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

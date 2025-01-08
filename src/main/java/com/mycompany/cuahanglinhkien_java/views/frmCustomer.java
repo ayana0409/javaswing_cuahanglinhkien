@@ -11,6 +11,7 @@ import com.mycompany.cuahanglinhkien_java.models.Customer;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -72,6 +73,11 @@ public class frmCustomer extends javax.swing.JFrame {
         tbCustomer = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 126, 242));
         jPanel1.setPreferredSize(new java.awt.Dimension(960, 640));
@@ -269,6 +275,13 @@ public class frmCustomer extends javax.swing.JFrame {
     private void txtPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNumberActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPhoneNumberActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        frmHome frmHome = new frmHome();
+        frmHome.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frmHome.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
     private void loadData() {
         // Lấy danh sách danh mục từ cơ sở dữ liệu

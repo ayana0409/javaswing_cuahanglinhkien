@@ -44,7 +44,7 @@ public class OrderController {
         }
     }
     public List<Order> getAllOrder() {
-    String query = "SELECT * FROM order";
+    String query = "SELECT * FROM orders";
     try {
         return _dbContext.fetchAll(query, rs -> {
             try {
@@ -73,6 +73,28 @@ public class OrderController {
             int id = _dbContext.insert(query, order.getEmployeeId(), order.getPhoneNumber(),
                     formattedDate, order.getStatus(), order.getTotalAmount());
             return id > 0;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    public boolean paymentOrder(int orderId){
+        String query = "UPDATE orders SET status = 'Hoàn thành' WHERE id = ?";
+
+        try {
+            int result = _dbContext.updateOrDelete(query, orderId);
+            return result > 0;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+    
+    public boolean cancelOrder(int orderId){
+        String query = "UPDATE order SET status = 'Hủy' WHERE id = ?";
+
+        try {
+            int result = _dbContext.updateOrDelete(query, orderId);
+            return result > 0;
         } catch (SQLException e) {
             return false;
         }

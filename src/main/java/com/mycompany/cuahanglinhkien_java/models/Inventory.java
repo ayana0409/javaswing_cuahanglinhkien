@@ -48,6 +48,10 @@ public class Inventory extends BaseModelOnlyId {
         this.importDate = new Date(1999, 01, 01);
     }
     
+    public Inventory(int id, int stockQuantity) {
+        super(id);
+        this.stockQuantity = stockQuantity;
+    }
 
     public String getBatchNumber() {
         return batchNumber;

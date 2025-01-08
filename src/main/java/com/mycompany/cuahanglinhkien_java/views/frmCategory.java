@@ -10,6 +10,7 @@ import java.util.List;
 import com.mycompany.cuahanglinhkien_java.models.Category;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -69,6 +70,11 @@ public class frmCategory extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(960, 640));
         setSize(new java.awt.Dimension(500, 300));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -362,6 +368,13 @@ public class frmCategory extends javax.swing.JFrame {
         Logger.getLogger(frmCategory.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tbCategoryMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        frmHome frmHome = new frmHome();
+        frmHome.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frmHome.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
     private void addEvent() {
         tbCategory.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             if (!e.getValueIsAdjusting()) {

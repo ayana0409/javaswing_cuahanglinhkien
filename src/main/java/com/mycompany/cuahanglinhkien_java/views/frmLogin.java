@@ -193,10 +193,10 @@ public class frmLogin extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         //_authController.addAccount();
-//        if (!login()) {
-//            txtLoginError.setText("Tên đăng nhập hoặc tài khoản không đúng");
-//            return;
-//        }
+        if (!login()) {;
+            txtLoginError.setText("Tên đăng nhập hoặc tài khoản không đúng");
+            return;
+        }
         
         frmHome home = new frmHome();
         home.setLocationRelativeTo(null);

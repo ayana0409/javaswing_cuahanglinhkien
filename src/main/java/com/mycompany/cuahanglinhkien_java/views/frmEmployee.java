@@ -8,6 +8,7 @@ import com.mycompany.cuahanglinhkien_java.controllers.EmployeeController;
 import com.mycompany.cuahanglinhkien_java.models.Employee;
 import java.sql.Date;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -97,6 +98,11 @@ public class frmEmployee extends javax.swing.JFrame {
         tbEmployee = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 126, 242));
         jPanel1.setPreferredSize(new java.awt.Dimension(960, 640));
@@ -456,6 +462,13 @@ public class frmEmployee extends javax.swing.JFrame {
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditPasswordActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        frmHome frmHome = new frmHome();
+        frmHome.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frmHome.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
     
     private void loadData() {

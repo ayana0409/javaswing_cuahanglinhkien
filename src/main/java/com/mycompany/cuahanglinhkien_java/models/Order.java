@@ -63,7 +63,7 @@ public class Order extends BaseModelOnlyId {
     public Order(String phoneNumber) {
         super();
         this.purchaseDate = new Date();
-        this.status = "New";
+        this.status = "Mới";
         this.totalAmount = 0;
         this.employeeId = UserSession.getInstance().getId();
         this.phoneNumber = phoneNumber;

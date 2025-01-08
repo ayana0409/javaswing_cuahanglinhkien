@@ -6,13 +6,17 @@ package com.mycompany.cuahanglinhkien_java.views;
 
 import com.mycompany.cuahanglinhkien_java.controllers.OrderController;
 import com.mycompany.cuahanglinhkien_java.controllers.OrderDetailController;
+import com.mycompany.cuahanglinhkien_java.controllers.PaymentController;
 import com.mycompany.cuahanglinhkien_java.controllers.ProductController;
 import com.mycompany.cuahanglinhkien_java.models.Order;
 import com.mycompany.cuahanglinhkien_java.models.OrderDetail;
 import com.mycompany.cuahanglinhkien_java.models.Product;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import share.OutOfStockException;
 
 /**
  *
@@ -23,14 +27,18 @@ public class frmOrderDetails extends javax.swing.JFrame {
     private final OrderDetailController _orderDetailController;
     private final ProductController _productController;
     private final OrderController _orderController;
+    private final PaymentController _paymentController;
     private final Object[] header = {"ID", "Tên sản phẩm", "Số lượng", "Giá bán"};
     private final DefaultTableModel detailModel;
     private int selectedDetail;
     private Order order = null;
-    int orderId = 1;
+    int orderId;
+    frmOrder parent;
 
-    public frmOrderDetails() {
-
+    public frmOrderDetails(int orderId, frmOrder parent) {
+        this.orderId = orderId;
+        this.parent = parent;
+        _paymentController = new PaymentController();
         _orderDetailController = new OrderDetailController();
         _productController = new ProductController();
         _orderController = new OrderController();
@@ -163,6 +171,11 @@ public class frmOrderDetails extends javax.swing.JFrame {
         btnCancelOrder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -368,6 +381,11 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         btnPayment.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnPayment.setText("Thanh toán");
+        btnPayment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPaymentActionPerformed(evt);
+            }
+        });
         jPanel12.add(btnPayment);
 
         btnCancelOrder.setBackground(new java.awt.Color(209, 0, 0));
@@ -417,8 +435,34 @@ public class frmOrderDetails extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddProductActionPerformed
 
     private void btnCancelOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelOrderActionPerformed
-        // TODO add your handling code here:
+        int confirm = javax.swing.JOptionPane
+                .showConfirmDialog(this, "Đơn hàng sẽ bị hủy?", "Xác nhận hủy", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            _orderController.cancelOrder(orderId);
+            this.dispose();
+        }
     }//GEN-LAST:event_btnCancelOrderActionPerformed
+
+    private void btnPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaymentActionPerformed
+        int confirm = javax.swing.JOptionPane
+                .showConfirmDialog(this, "Hoàn thành đơn hàng?", "Xác nhận", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            try {
+                _paymentController.payOrder(orderId);
+                this.dispose();
+            } catch (OutOfStockException ex) {
+                javax.swing.JOptionPane.showMessageDialog(
+                        this, 
+                        "Không đủ hàng trong kho!", 
+                        "Cảnh báo", 
+                        javax.swing.JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnPaymentActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        parent.loadData();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -450,7 +494,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmOrderDetails().setVisible(true);
+                //new frmOrderDetails().setVisible(true);
             }
         });
     }
