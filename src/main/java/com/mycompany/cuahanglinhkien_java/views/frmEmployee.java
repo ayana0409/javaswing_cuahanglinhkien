@@ -467,7 +467,7 @@ public class frmEmployee extends javax.swing.JFrame {
         frmHome frmHome = new frmHome();
         frmHome.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frmHome.setVisible(true);        // TODO add your handling code here:
+        frmHome.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     

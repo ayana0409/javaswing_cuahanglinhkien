@@ -24,6 +24,7 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -62,6 +63,7 @@ public class frmProduct extends javax.swing.JFrame {
         clearInput();
         addEvent();
         tbProduct.setModel(model);
+        tbProduct.setRowHeight(100);
     }
 
     public class ImageHasher {
@@ -101,35 +103,35 @@ public class frmProduct extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         jPanel17 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        jPanel21 = new javax.swing.JPanel();
+        jPanel22 = new javax.swing.JPanel();
         cbManufacturer = new javax.swing.JComboBox<>();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         cbCategory = new javax.swing.JComboBox<>();
-        jPanel18 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
-        txtDetail = new javax.swing.JTextField();
-        jPanel9 = new javax.swing.JPanel();
-        jPanel14 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
+        jPanel23 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel24 = new javax.swing.JPanel();
+        jPanel25 = new javax.swing.JPanel();
         txtQuantity = new javax.swing.JTextField();
-        jPanel15 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
         txtPrice = new javax.swing.JTextField();
+        jPanel26 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtDetail = new javax.swing.JTextArea();
         jPanel13 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
         lbImage = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
         btnLoadImage = new javax.swing.JButton();
         jPanel20 = new javax.swing.JPanel();
         btnAdd = new javax.swing.JButton();
@@ -138,12 +140,19 @@ public class frmProduct extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(960, 640));
-        setSize(new java.awt.Dimension(500, 300));
+        setSize(new java.awt.Dimension(960, 630));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ SẢN PHẨM");
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
@@ -210,21 +219,21 @@ public class frmProduct extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 20, 0, 0);
         jPanel3.add(btnSearch, gridBagConstraints);
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Thông tin");
-        jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
-        jPanel4.setLayout(new java.awt.GridLayout(5, 0));
+        jPanel4.setPreferredSize(new java.awt.Dimension(960, 558));
+        jPanel4.setLayout(new java.awt.GridLayout(5, 0, 0, 5));
 
         jPanel16.setLayout(new java.awt.GridLayout(2, 0));
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 0));
 
-        jLabel3.setText("Mã sản phẩm");
-        jPanel5.add(jLabel3);
+        jLabel9.setText("ID");
+        jPanel5.add(jLabel9);
 
         txtID.setEnabled(false);
         jPanel5.add(txtID);
@@ -244,97 +253,90 @@ public class frmProduct extends javax.swing.JFrame {
 
         jPanel4.add(jPanel16);
 
-        jPanel17.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel17.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
 
-        jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel8.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel21.setLayout(new java.awt.BorderLayout());
+
+        jPanel22.setPreferredSize(new java.awt.Dimension(200, 0));
+        jPanel22.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
+
+        jPanel22.add(cbManufacturer);
+
+        jPanel22.add(cbCategory);
+
+        jPanel21.add(jPanel22, java.awt.BorderLayout.CENTER);
+
+        jPanel23.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
 
         jLabel6.setText("Hãng SX");
-        jPanel8.add(jLabel6);
+        jPanel23.add(jLabel6);
 
-        jPanel8.add(cbManufacturer);
+        jLabel5.setText("Danh mục  ");
+        jPanel23.add(jLabel5);
 
-        jPanel17.add(jPanel8);
+        jPanel21.add(jPanel23, java.awt.BorderLayout.WEST);
 
-        jPanel7.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel17.add(jPanel21);
 
-        jLabel5.setText("Danh mục");
-        jPanel7.add(jLabel5);
+        jPanel24.setLayout(new java.awt.BorderLayout());
 
-        jPanel7.add(cbCategory);
+        jPanel25.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
+        jPanel25.add(txtQuantity);
+        jPanel25.add(txtPrice);
 
-        jPanel17.add(jPanel7);
+        jPanel24.add(jPanel25, java.awt.BorderLayout.CENTER);
+
+        jPanel26.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
+
+        jLabel12.setText("Số lượng     ");
+        jPanel26.add(jLabel12);
+
+        jLabel7.setText("Giá");
+        jPanel26.add(jLabel7);
+
+        jPanel24.add(jPanel26, java.awt.BorderLayout.WEST);
+
+        jPanel17.add(jPanel24);
 
         jPanel4.add(jPanel17);
 
-        jPanel18.setLayout(new java.awt.GridLayout(2, 0));
-
-        jPanel10.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel18.setLayout(new java.awt.BorderLayout());
 
         jLabel8.setText("Chi tiết");
-        jPanel10.add(jLabel8);
+        jPanel18.add(jLabel8, java.awt.BorderLayout.PAGE_START);
 
-        jPanel11.setLayout(new java.awt.GridLayout(1, 2));
-        jPanel11.add(txtDetail);
+        txtDetail.setColumns(20);
+        txtDetail.setRows(5);
+        jScrollPane2.setViewportView(txtDetail);
 
-        jPanel10.add(jPanel11);
-
-        jPanel18.add(jPanel10);
-
-        jPanel9.setLayout(new java.awt.GridLayout(2, 0));
-
-        jPanel14.setLayout(new java.awt.GridLayout(0, 2));
-
-        jLabel12.setText("Số lượng");
-        jPanel14.add(jLabel12);
-
-        txtQuantity.setText("jTextField1");
-        jPanel14.add(txtQuantity);
-
-        jPanel9.add(jPanel14);
-
-        jLabel7.setText("Giá");
-
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtPrice))
-                .addContainerGap())
-        );
-
-        jPanel9.add(jPanel15);
-
-        jPanel18.add(jPanel9);
+        jPanel18.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(jPanel18);
 
         jPanel13.setPreferredSize(new java.awt.Dimension(100, 16));
-        jPanel13.setLayout(new java.awt.GridLayout(1, 2));
-
-        jLabel10.setText("Hình");
-        jPanel13.add(jLabel10);
 
         lbImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel13.add(lbImage);
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbImage, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbImage, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+        );
 
         jPanel4.add(jPanel13);
 
-        jPanel19.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel19.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
 
-        jPanel12.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel8.setLayout(new java.awt.GridLayout(1, 2, 30, 0));
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel10.setText("Hình");
+        jPanel8.add(jLabel10);
 
         btnLoadImage.setText("Tải ảnh lên");
         btnLoadImage.addActionListener(new java.awt.event.ActionListener() {
@@ -342,11 +344,11 @@ public class frmProduct extends javax.swing.JFrame {
                 btnLoadImageActionPerformed(evt);
             }
         });
-        jPanel12.add(btnLoadImage);
+        jPanel8.add(btnLoadImage);
 
-        jPanel19.add(jPanel12);
+        jPanel19.add(jPanel8);
 
-        jPanel20.setLayout(new java.awt.GridLayout(1, 4));
+        jPanel20.setLayout(new java.awt.GridLayout());
 
         btnAdd.setText("Thêm");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -376,22 +378,27 @@ public class frmProduct extends javax.swing.JFrame {
 
         jPanel4.add(jPanel19);
 
-        jPanel1.add(jPanel4, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        jPanel2.add(jPanel1, java.awt.BorderLayout.EAST);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -467,7 +474,7 @@ public class frmProduct extends javax.swing.JFrame {
             Product product = controller.getProductById(id);
             // Lấy thông tin hình ảnh cũ từ bảng
             String oldImagePath = product.getImage(); // Chỉ số 7 là cột chứa đường dẫn ảnh
-            if (!oldImagePath.isEmpty()) {
+            if (oldImagePath != null && !oldImagePath.isBlank()) {
                 File oldImageFile = new File(baseImagePath + oldImagePath);
                 if (oldImageFile.exists() && !oldImageFile.delete()) {
                     javax.swing.JOptionPane.showMessageDialog(this, "Không thể xóa hình ảnh cũ!", "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -518,7 +525,6 @@ public class frmProduct extends javax.swing.JFrame {
         try {
             int row = this.tbProduct.getSelectedRow();
             if (row >= 0) {
-
                 List<Category> listCate = controllerCate.getAllCategory();
                 List<Manufacturer> listManu = controllerManu.getAllManufacturer();
                 String id = tbProduct.getValueAt(row, 0).toString();
@@ -527,15 +533,13 @@ public class frmProduct extends javax.swing.JFrame {
                 String quantity = tbProduct.getValueAt(row, 4).toString();
                 String price = tbProduct.getValueAt(row, 6).toString();
                 ImageIcon icon = (ImageIcon) tbProduct.getValueAt(row, 7);
-                Category selectedCate = (Category) cbCategory.getSelectedItem();
-                Manufacturer selectManu = (Manufacturer) cbManufacturer.getSelectedItem();
                 txtID.setText(id);
                 txtName.setText(name);
                 txtDetail.setText(details);
                 txtQuantity.setText(quantity);
                 txtPrice.setText(price);
                 lbImage.setIcon(icon);
-
+                String path = icon.getDescription();
                 for (Manufacturer manufacturer : listManu) {
                     if (manufacturer.getName().equals(tbProduct.getValueAt(row, 3).toString())) {
                         cbManufacturerModel.setSelectedItem(manufacturer);
@@ -596,10 +600,22 @@ public class frmProduct extends javax.swing.JFrame {
         int returnValue = fileChooser.showOpenDialog(this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-            ImageIcon imageIcon = new ImageIcon(filePath);
+            ImageIcon originalIcon = new ImageIcon(filePath);
+            int labelHeight = lbImage.getHeight();
+            int labelWidth = lbImage.getWidth();
+            Image scaledImage = originalIcon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+            ImageIcon imageIcon = new ImageIcon(scaledImage);
+            imageIcon.setDescription(filePath);
             lbImage.setIcon(imageIcon);
         }
     }//GEN-LAST:event_btnLoadImageActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        frmHome frmHome = new frmHome();
+        frmHome.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frmHome.setVisible(true); 
+    }//GEN-LAST:event_formWindowClosing
 
     private void loadCate() {
         List<Category> categories;
@@ -635,8 +651,11 @@ public class frmProduct extends javax.swing.JFrame {
 
                 if (imageFile.exists()) {
                     ImageIcon originalIcon = new ImageIcon(imagePath);
-                    Image scaledImage = originalIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Điều chỉnh kích thước ảnh
+                    int labelHeight = lbImage.getHeight();
+                    int labelWidth = lbImage.getWidth();
+                    Image scaledImage = originalIcon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
                     imageIcon = new ImageIcon(scaledImage);
+                    imageIcon.setDescription(imagePath);
                 }
             }
             Manufacturer manufacturer = listManu.stream().filter(p -> p.getId() == Product.getManufacturerId()).findFirst().orElse(null);
@@ -728,36 +747,36 @@ public class frmProduct extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbImage;
     private javax.swing.JTable tbProduct;
-    private javax.swing.JTextField txtDetail;
+    private javax.swing.JTextArea txtDetail;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtPrice;

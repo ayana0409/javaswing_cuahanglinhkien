@@ -439,6 +439,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
                 .showConfirmDialog(this, "Đơn hàng sẽ bị hủy?", "Xác nhận hủy", javax.swing.JOptionPane.YES_NO_OPTION);
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             _orderController.cancelOrder(orderId);
+            parent.loadData();
             this.dispose();
         }
     }//GEN-LAST:event_btnCancelOrderActionPerformed
@@ -449,6 +450,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
         if (confirm == javax.swing.JOptionPane.YES_OPTION) {
             try {
                 _paymentController.payOrder(orderId);
+                parent.loadData();
                 this.dispose();
             } catch (OutOfStockException ex) {
                 javax.swing.JOptionPane.showMessageDialog(
