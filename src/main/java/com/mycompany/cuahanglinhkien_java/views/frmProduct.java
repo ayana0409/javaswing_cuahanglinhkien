@@ -139,7 +139,7 @@ public class frmProduct extends javax.swing.JFrame {
         btnImport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(960, 640));
+        setPreferredSize(new java.awt.Dimension(1078, 660));
         setSize(new java.awt.Dimension(960, 630));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -348,7 +348,7 @@ public class frmProduct extends javax.swing.JFrame {
 
         jPanel19.add(jPanel8);
 
-        jPanel20.setLayout(new java.awt.GridLayout());
+        jPanel20.setLayout(new java.awt.GridLayout(1, 0));
 
         btnAdd.setText("Thêm");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -539,7 +539,6 @@ public class frmProduct extends javax.swing.JFrame {
                 txtQuantity.setText(quantity);
                 txtPrice.setText(price);
                 lbImage.setIcon(icon);
-                String path = icon.getDescription();
                 for (Manufacturer manufacturer : listManu) {
                     if (manufacturer.getName().equals(tbProduct.getValueAt(row, 3).toString())) {
                         cbManufacturerModel.setSelectedItem(manufacturer);
@@ -560,9 +559,6 @@ public class frmProduct extends javax.swing.JFrame {
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
         if (selected != -1) {
-            int selectedRow = tbProduct.getSelectedRow();
-            String productId = tbProduct.getValueAt(selectedRow, 0).toString();
-            String productName = tbProduct.getValueAt(selectedRow, 1).toString();
             frmInventory frmInventory = new frmInventory(selected);
             frmInventory.setLocationRelativeTo(null);
             frmInventory.setVisible(true);

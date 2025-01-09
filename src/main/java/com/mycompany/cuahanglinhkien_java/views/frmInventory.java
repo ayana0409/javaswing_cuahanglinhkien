@@ -86,6 +86,7 @@ public class frmInventory extends javax.swing.JFrame {
         btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(960, 640));
         setSize(new java.awt.Dimension(500, 300));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -93,9 +94,7 @@ public class frmInventory extends javax.swing.JFrame {
         jLabel1.setText("QUẢN LÝ NHẬP HÀNG");
         getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
-        java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
-        jPanel2Layout.columnWidths = new int[] {700, 260};
-        jPanel2.setLayout(jPanel2Layout);
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
@@ -137,9 +136,7 @@ public class frmInventory extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 6, 0, 6);
         jPanel3.add(jScrollPane1, gridBagConstraints);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jPanel2.add(jPanel3, gridBagConstraints);
+        jPanel2.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -218,9 +215,7 @@ public class frmInventory extends javax.swing.JFrame {
 
         jPanel1.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        jPanel2.add(jPanel1, gridBagConstraints);
+        jPanel2.add(jPanel1, java.awt.BorderLayout.EAST);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 

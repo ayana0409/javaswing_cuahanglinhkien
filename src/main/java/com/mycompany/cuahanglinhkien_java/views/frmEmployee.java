@@ -5,9 +5,12 @@
 package com.mycompany.cuahanglinhkien_java.views;
 
 import com.mycompany.cuahanglinhkien_java.controllers.EmployeeController;
+import com.mycompany.cuahanglinhkien_java.controllers.RoleController;
 import com.mycompany.cuahanglinhkien_java.models.Employee;
+import com.mycompany.cuahanglinhkien_java.models.Role;
 import java.sql.Date;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
@@ -19,8 +22,11 @@ import javax.swing.table.DefaultTableModel;
 public class frmEmployee extends javax.swing.JFrame {
 
     private EmployeeController employeecontroller=new EmployeeController();
+    private RoleController roleController = new RoleController();
     String[] columnNames = {"Mã nhân viên","Chức vụ", "Họ & tên", "Ngày sinh", "Giới tính", "Số điện thoại", "Trạng thái", "Tên đăng nhập"};
     DefaultTableModel model = new DefaultTableModel(columnNames,0);
+    DefaultComboBoxModel<Role> roleModel = new DefaultComboBoxModel<>();
+    List<Role> roleList;
     int selected =-1;
     /**
      * Creates new form frmEmployee
@@ -28,6 +34,11 @@ public class frmEmployee extends javax.swing.JFrame {
     public frmEmployee() {
         initComponents();
         tbEmployee.setModel(model);
+        
+        roleList = roleController.getRole();
+        roleList.forEach(r -> roleModel.addElement(r));
+        cbRole.setModel(roleModel);
+        
         loadData();
         addEvent();
         clearInput();
@@ -228,7 +239,6 @@ public class frmEmployee extends javax.swing.JFrame {
         jLabel9.setText("Chức vụ");
         jPanel19.add(jLabel9);
 
-        cbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel19.add(cbRole);
 
         jPanel9.add(jPanel19);
@@ -359,7 +369,7 @@ public class frmEmployee extends javax.swing.JFrame {
         int day = Integer.parseInt(spDay.getValue().toString()) ;
         String dateString = String.format("%04d-%02d-%02d", year, month, day);
         Date birthday = java.sql.Date.valueOf(dateString);
-        int roleId=1;
+        int roleId= ((Role) cbRole.getSelectedItem()).getId();
         String phoneNumber=txtPhoneNumber.getText();
         if(!name.isBlank()&& !phoneNumber.isBlank()){
             employeecontroller.addEmployee(new Employee( name, gender, address, phoneNumber, status, userName, password, birthday, roleId));
@@ -381,7 +391,7 @@ public class frmEmployee extends javax.swing.JFrame {
         int day = Integer.parseInt(spDay.getValue().toString()) ;
         String dateString = String.format("%04d-%02d-%02d", year, month, day);
         Date birthday = java.sql.Date.valueOf(dateString);
-        int roleId=1;
+        int roleId= ((Role) cbRole.getSelectedItem()).getId();
         String phoneNumber=txtPhoneNumber.getText();
         if(!name.isBlank()&& !phoneNumber.isBlank()){
             employeecontroller.editInforEmployee(new Employee( name, gender, address, phoneNumber, status, userName, password, birthday, roleId),selected);
@@ -430,18 +440,25 @@ public class frmEmployee extends javax.swing.JFrame {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
 
         try {
-            String searchQuery ="%"+ txtSearch.getText().trim()+"%";
+            String searchQuery =txtSearch.getText();
             if (searchQuery.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên nhân viên để tìm kiếm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                loadData();
                 return;
             }
             List<Employee> searchResults = employeecontroller.searchEmployeebyName(searchQuery);
             model.setRowCount(0);
             if (searchResults != null && !searchResults.isEmpty()) {
                 for (Employee employee : searchResults) {
-                    model.addRow(new Object[]{employee.getId(), employee.getRoleId(), employee.getName(), 
-                employee.getBirthday(), employee.getGender(), employee.getPhoneNumber(), 
-                employee.getStatus(), employee.getUsername()});
+                    String roleName = "";
+                    for(Role r : roleList){
+                        if (r.getId() == employee.getRoleId()) {
+                            roleName = r.getName();
+                            break;
+                        }
+                    }
+                    model.addRow(new Object[]{employee.getId(), roleName, employee.getName(), 
+                            employee.getBirthday(), employee.getGender(), employee.getPhoneNumber(), 
+                            employee.getStatus(), employee.getUsername()});
                 }
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy nhân viên nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -474,13 +491,20 @@ public class frmEmployee extends javax.swing.JFrame {
     private void loadData() {
         // Lấy danh sách danh mục từ cơ sở dữ liệu
         List<Employee> listCate = employeecontroller.getAllEmployee();
-
+        
         // Xóa dữ liệu cũ trong bảng
         model.setRowCount(0);
 
         // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
         listCate.forEach(employee -> {
-            model.addRow(new Object[]{employee.getId(), employee.getRoleId(), employee.getName(), 
+            String roleName = "";
+            for(Role r : roleList){
+                if (r.getId() == employee.getRoleId()) {
+                    roleName = r.getName();
+                    break;
+                }
+            }
+            model.addRow(new Object[]{employee.getId(), roleName, employee.getName(), 
                 employee.getBirthday(), employee.getGender(), employee.getPhoneNumber(), 
                 employee.getStatus(), employee.getUsername()});
         });
@@ -502,6 +526,15 @@ public class frmEmployee extends javax.swing.JFrame {
                     spYear.setValue(employee.getBirthday().getYear()+1900);
                     rbGenderBoy.setSelected(employee.getGender().toLowerCase().equals("nam"));
                     rbGenderGirl.setSelected(employee.getGender().toLowerCase().equals("nữ"));
+                    cbStatus.setSelectedItem(employee.getStatus());
+                    Role existRole = new Role();
+                    for(Role r : roleList){
+                        if (r.getId() == employee.getRoleId()) {
+                            existRole = r;
+                            break;
+                        }
+                    }
+                    cbRole.setSelectedItem(existRole);
                 }
             }
         });
@@ -553,7 +586,7 @@ public class frmEmployee extends javax.swing.JFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnEditPassword;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> cbRole;
+    private javax.swing.JComboBox<Role> cbRole;
     private javax.swing.JComboBox<String> cbStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

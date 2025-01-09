@@ -142,7 +142,7 @@ public class EmployeeController implements Serializable{
         }
     }
     public List<Employee> searchEmployeebyName(String name) {
-        String query = "SELET * FROM employee WHERE name LIKE ?";
+        String query = "SELECT * FROM employee WHERE name LIKE ?";
         try {
             return _dbHelper.fetchAll(query, rs -> {
                 try {
