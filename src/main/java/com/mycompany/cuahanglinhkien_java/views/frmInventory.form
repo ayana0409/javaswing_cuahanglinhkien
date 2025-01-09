@@ -175,7 +175,7 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtProductID">
                       <Properties>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="focusable" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -194,7 +194,7 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtProductName">
                       <Properties>
-                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="focusable" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                   </SubComponents>

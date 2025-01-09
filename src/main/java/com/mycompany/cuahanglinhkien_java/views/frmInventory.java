@@ -30,13 +30,11 @@ public class frmInventory extends javax.swing.JFrame {
 
     InventoryController controller = new InventoryController();
     ProductController controllerPro = new ProductController();
-    String[] columnNames = {"Mã","Ngày nhập", "Số lô", "Số lượng nhập", "Giá nhập", "Tổng giá trị"};
+    String[] columnNames = {"Mã", "Ngày nhập", "Số lô", "Số lượng nhập", "Tồn kho", "Giá nhập", "Tổng giá trị"};
     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
     String selected = "";
     int productId;
     
-    
-
     /**
      * Creates new form frmCategory
      */
@@ -152,7 +150,7 @@ public class frmInventory extends javax.swing.JFrame {
         jLabel3.setText("Mã sản phẩm");
         jPanel5.add(jLabel3);
 
-        txtProductID.setEnabled(false);
+        txtProductID.setFocusable(false);
         jPanel5.add(txtProductID);
 
         jPanel4.add(jPanel5);
@@ -162,7 +160,7 @@ public class frmInventory extends javax.swing.JFrame {
         jLabel4.setText("Tên sản phẩm");
         jPanel6.add(jLabel4);
 
-        txtProductName.setEnabled(false);
+        txtProductName.setFocusable(false);
         jPanel6.add(txtProductName);
 
         jPanel4.add(jPanel6);
@@ -261,7 +259,8 @@ public class frmInventory extends javax.swing.JFrame {
                 inventory.getId(),
                 inventory.getImportDate(), 
                 inventory.getBatchNumber(), 
-                inventory.getQuantityImported(), 
+                inventory.getQuantityImported(),
+                inventory.getStockQuantity(),
                 inventory.getImportPirce(), 
                 inventory.getTotal() 
             });
