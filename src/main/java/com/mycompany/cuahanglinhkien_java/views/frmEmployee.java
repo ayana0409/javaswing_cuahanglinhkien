@@ -10,6 +10,7 @@ import com.mycompany.cuahanglinhkien_java.models.Employee;
 import com.mycompany.cuahanglinhkien_java.models.Role;
 import java.sql.Date;
 import java.util.List;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
@@ -21,8 +22,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmEmployee extends javax.swing.JFrame {
 
-    private EmployeeController employeecontroller=new EmployeeController();
-    private RoleController roleController = new RoleController();
+    private final EmployeeController employeecontroller=new EmployeeController();
+    private final RoleController roleController = new RoleController();
     String[] columnNames = {"Mã nhân viên","Chức vụ", "Họ & tên", "Ngày sinh", "Giới tính", "Số điện thoại", "Trạng thái", "Tên đăng nhập"};
     DefaultTableModel model = new DefaultTableModel(columnNames,0);
     DefaultComboBoxModel<Role> roleModel = new DefaultComboBoxModel<>();
@@ -38,6 +39,10 @@ public class frmEmployee extends javax.swing.JFrame {
         roleList = roleController.getRole();
         roleList.forEach(r -> roleModel.addElement(r));
         cbRole.setModel(roleModel);
+        
+        ButtonGroup gr = new ButtonGroup();
+        gr.add(rbGenderBoy);
+        gr.add(rbGenderGirl);
         
         loadData();
         addEvent();
@@ -364,9 +369,9 @@ public class frmEmployee extends javax.swing.JFrame {
         String status=cbStatus.getSelectedItem().toString();
         String userName=txtUserName.getText();
         String password=txtPassword.getText();
-        int year =Integer.parseInt(spYear.getValue().toString()) ;
-        int month =Integer.parseInt(spMonth.getValue().toString()) ;
-        int day = Integer.parseInt(spDay.getValue().toString()) ;
+        int year =Integer.parseInt(spYear.getValue().toString());
+        int month =Integer.parseInt(spMonth.getValue().toString());
+        int day = Integer.parseInt(spDay.getValue().toString());
         String dateString = String.format("%04d-%02d-%02d", year, month, day);
         Date birthday = java.sql.Date.valueOf(dateString);
         int roleId= ((Role) cbRole.getSelectedItem()).getId();
@@ -386,9 +391,9 @@ public class frmEmployee extends javax.swing.JFrame {
         String status=cbStatus.getSelectedItem().toString();
         String userName=txtUserName.getText();
         String password=txtPassword.getText();
-        int year =Integer.parseInt(spYear.getValue().toString()) ;
-        int month =Integer.parseInt(spMonth.getValue().toString()) ;
-        int day = Integer.parseInt(spDay.getValue().toString()) ;
+        int year =Integer.parseInt(spYear.getValue().toString());
+        int month =Integer.parseInt(spMonth.getValue().toString());
+        int day = Integer.parseInt(spDay.getValue().toString());
         String dateString = String.format("%04d-%02d-%02d", year, month, day);
         Date birthday = java.sql.Date.valueOf(dateString);
         int roleId= ((Role) cbRole.getSelectedItem()).getId();

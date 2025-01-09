@@ -19,12 +19,12 @@ import javax.swing.table.DefaultTableModel;
  * @author DLCT
  */
 public class frmManufacturer extends javax.swing.JFrame {
-           
+
     ManufacturerController controller = new ManufacturerController();
     String[] columnNames = {"Mã hãng", "Tên hãng"};
-    DefaultTableModel model = new DefaultTableModel(columnNames,0);
-    String selected ="";
-    
+    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+    String selected = "";
+
     public frmManufacturer() {
         initComponents();
         loadData();
@@ -33,7 +33,6 @@ public class frmManufacturer extends javax.swing.JFrame {
         tbManu.setModel(model);
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,6 +43,7 @@ public class frmManufacturer extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jPanel8 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -61,7 +61,6 @@ public class frmManufacturer extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
-        jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -71,21 +70,27 @@ public class frmManufacturer extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 126, 242));
         setSize(new java.awt.Dimension(500, 300));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel8.setBackground(new java.awt.Color(0, 126, 242));
+        jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel8.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setBackground(new java.awt.Color(0, 126, 242));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ HÃNG SẢN XUẤT");
-        getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        jPanel8.add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
-        java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
-        jPanel2Layout.columnWidths = new int[] {700, 260};
-        jPanel2.setLayout(jPanel2Layout);
+        jPanel2.setBackground(new java.awt.Color(0, 126, 242));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         tbManu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -106,6 +111,8 @@ public class frmManufacturer extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tbManu.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        tbManu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbManu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbManuMouseClicked(evt);
@@ -117,22 +124,18 @@ public class frmManufacturer extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(jPanel3, gridBagConstraints);
 
+        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -140,15 +143,20 @@ public class frmManufacturer extends javax.swing.JFrame {
         jLabel2.setText("Thông tin");
         jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
-        jPanel4.setLayout(new java.awt.GridLayout(7, 0));
+        jPanel4.setLayout(new java.awt.GridLayout(6, 0));
 
+        jPanel5.setBackground(new java.awt.Color(204, 255, 255));
         jPanel5.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel4.setText("Mã hãng");
         jPanel5.add(jLabel4);
+
+        txtID.setFocusable(false);
         jPanel5.add(txtID);
 
         jPanel4.add(jPanel5);
+
+        jPanel6.setBackground(new java.awt.Color(204, 255, 255));
 
         jLabel3.setText("Tên hãng sản xuất");
 
@@ -160,14 +168,14 @@ public class frmManufacturer extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                        .addComponent(txtName))
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 85, Short.MAX_VALUE)
+            .addGap(0, 95, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -179,6 +187,7 @@ public class frmManufacturer extends javax.swing.JFrame {
 
         jPanel4.add(jPanel6);
 
+        jPanel7.setBackground(new java.awt.Color(204, 255, 255));
         jPanel7.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel5.setText("Nhập thông tin tìm kiếm ");
@@ -187,20 +196,7 @@ public class frmManufacturer extends javax.swing.JFrame {
 
         jPanel4.add(jPanel7);
 
-        jPanel8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 260, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 85, Short.MAX_VALUE)
-        );
-
-        jPanel4.add(jPanel8);
+        jPanel9.setBackground(new java.awt.Color(204, 255, 255));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -210,10 +206,12 @@ public class frmManufacturer extends javax.swing.JFrame {
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 85, Short.MAX_VALUE)
+            .addGap(0, 95, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel9);
+
+        jPanel10.setBackground(new java.awt.Color(204, 255, 255));
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -223,10 +221,13 @@ public class frmManufacturer extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 85, Short.MAX_VALUE)
+            .addGap(0, 95, Short.MAX_VALUE)
         );
 
         jPanel4.add(jPanel10);
+
+        jPanel11.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel11.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
         btnSearch.setText("Tìm kiếm");
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -234,6 +235,7 @@ public class frmManufacturer extends javax.swing.JFrame {
                 btnSearchActionPerformed(evt);
             }
         });
+        jPanel11.add(btnSearch);
 
         btnAdd.setText("Thêm");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -241,6 +243,7 @@ public class frmManufacturer extends javax.swing.JFrame {
                 btnAddActionPerformed(evt);
             }
         });
+        jPanel11.add(btnAdd);
 
         btnEdit.setText("Sửa");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -248,42 +251,16 @@ public class frmManufacturer extends javax.swing.JFrame {
                 btnEditActionPerformed(evt);
             }
         });
+        jPanel11.add(btnEdit);
 
+        btnDelete.setBackground(new java.awt.Color(204, 204, 204));
         btnDelete.setText("Xóa");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel11Layout.createSequentialGroup()
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnSearch))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-        );
+        jPanel11.add(btnDelete);
 
         jPanel4.add(jPanel11);
 
@@ -293,7 +270,9 @@ public class frmManufacturer extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         jPanel2.add(jPanel1, gridBagConstraints);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+        jPanel8.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -301,25 +280,25 @@ public class frmManufacturer extends javax.swing.JFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         if (!selected.isEmpty()) {
             controller.updateManufacturer(Integer.parseInt(txtID.getText()), txtName.getText());
-                loadData();
-                clearInput();
+            loadData();
+            clearInput();
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
+
         try {
             // Lấy dữ liệu từ trường nhập liệu
             String name = txtName.getText().trim();
 
             // Kiểm tra nếu tên danh mục rỗng
             if (name.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Tên danh mục không được để trống!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Tên hãng không được để trống!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             // Tạo đối tượng danh mục
-            Manufacturer newManu= new Manufacturer(0, name);
+            Manufacturer newManu = new Manufacturer(0, name);
             newManu.setName(name);
 
             // Gọi phương thức thêm danh mụdíc từ controller
@@ -327,11 +306,11 @@ public class frmManufacturer extends javax.swing.JFrame {
 
             // Kiểm tra kết quả và thông báo
             if (success) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Thêm danh mục thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Thêm hãng thành công!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 loadData();
                 clearInput();
             } else {
-                javax.swing.JOptionPane.showMessageDialog(this, "Thêm danh mục thất bại!", "Thông báo", javax.swing.JOptionPane.ERROR_MESSAGE);
+                javax.swing.JOptionPane.showMessageDialog(this, "Thêm hãng thất bại!", "Thông báo", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -375,10 +354,10 @@ public class frmManufacturer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-      try {
+        try {
             String searchQuery = txtSearch.getText().trim();
             if (searchQuery.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên hãng để tìm kiếm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                loadData();
                 return;
             }
             List<Manufacturer> searchResults = controller.searchManufacturerbyName(searchQuery);
@@ -397,22 +376,22 @@ public class frmManufacturer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void tbManuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbManuMouseClicked
-                try{
+        try {
             int row = this.tbManu.getSelectedRow();
-             if (row >= 0) {
-            // Lấy dữ liệu từ bảng
-            String id = tbManu.getValueAt(row, 0).toString();
-            String name = tbManu.getValueAt(row, 1).toString();
+            if (row >= 0) {
+                // Lấy dữ liệu từ bảng
+                String id = tbManu.getValueAt(row, 0).toString();
+                String name = tbManu.getValueAt(row, 1).toString();
 
-            // Hiển thị dữ liệu lên các trường nhập liệu
-            txtID.setText(id);
-            txtName.setText(name);
-            
-            // Lưu id của dòng đã chọn vào biến selected
-            selected = id;
-        }
-    } catch (Exception ex) {
-        Logger.getLogger(frmCategory.class.getName()).log(Level.SEVERE, null, ex);
+                // Hiển thị dữ liệu lên các trường nhập liệu
+                txtID.setText(id);
+                txtName.setText(name);
+
+                // Lưu id của dòng đã chọn vào biến selected
+                selected = id;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(frmCategory.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tbManuMouseClicked
 
@@ -423,7 +402,6 @@ public class frmManufacturer extends javax.swing.JFrame {
         frmHome.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
-    
     private void loadData() {
         // Lấy danh sách danh mục từ cơ sở dữ liệu
         List<Manufacturer> listManu = controller.getAllManufacturer();
@@ -437,7 +415,7 @@ public class frmManufacturer extends javax.swing.JFrame {
 
     private void clearInput() {
         txtID.setText(" ");
-        txtName.setText(" ");        
+        txtName.setText(" ");
     }
 
     private void AddEvents() {
@@ -445,13 +423,14 @@ public class frmManufacturer extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 int selectedRow = tbManu.getSelectedRow();
                 if (selectedRow != -1) {
-                    selected = (String) tbManu.getValueAt(selectedRow, 0);
+                    selected = tbManu.getValueAt(selectedRow, 0).toString();
                     txtID.setText(selected);
                     txtName.setText((String) tbManu.getValueAt(selectedRow, 1));
                 }
             }
         });
     }
+
     /**
      * @param args the command line arguments
      */
@@ -515,6 +494,5 @@ public class frmManufacturer extends javax.swing.JFrame {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
-
 
 }

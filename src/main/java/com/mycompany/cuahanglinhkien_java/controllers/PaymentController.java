@@ -30,8 +30,15 @@ public class PaymentController {
         List<OrderDetail> details = getOrderDetail(orderId);
         
         for (OrderDetail detail : details){
-            if (!consumeInventory(detail.getProductId(), detail.getQuantitySold()))
+            int totalStock = getTotalStock(detail.getProductId());
+            if (totalStock < detail.getQuantitySold()) {
                 throw new OutOfStockException();
+            }
+        }
+        
+        for (OrderDetail detail : details){
+            if (!consumeInventory(detail.getProductId(), detail.getQuantitySold()))
+                return false;
         }
         _orderController.paymentOrder(orderId);
         return true;
@@ -58,11 +65,6 @@ public class PaymentController {
         List<Inventory> inventories = _inventoryController.getStockQuantityByProductId(productId);
         List<Inventory> updatedInventory = new ArrayList<>();
 
-        int totalStock = getTotalStock(inventories);
-        if (totalStock < consumeQuantity) {
-            return false;
-        }
-
         for (Inventory i : inventories) {
             int stock = i.getStockQuantity();
             if (stock >= consumeQuantity) {
@@ -85,7 +87,8 @@ public class PaymentController {
         return true;
     }
     
-    private int getTotalStock(List<Inventory> inventories) {
+    private int getTotalStock(int productId) {
+        List<Inventory> inventories = _inventoryController.getStockQuantityByProductId(productId);
         int totalStock = 0;
         for (Inventory i : inventories) {
            totalStock += i.getStockQuantity();
