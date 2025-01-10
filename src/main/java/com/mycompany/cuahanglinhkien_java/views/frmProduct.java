@@ -412,7 +412,7 @@ public class frmProduct extends javax.swing.JFrame {
             String name = txtName.getText().trim();
             Category selectedCate = (Category) cbCategory.getSelectedItem();
             Manufacturer selectedManu = (Manufacturer) cbManufacturer.getSelectedItem();
-            int quantity = Integer.parseInt(txtQuantity.getText().trim());
+            //int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
             double price = Double.parseDouble(txtPrice.getText().trim());
 
@@ -436,7 +436,7 @@ public class frmProduct extends javax.swing.JFrame {
             newPro.setCategoryId(selectedCate.getId());
             newPro.setManufacturerId(selectedManu.getId());
             newPro.setDetails(details);
-            newPro.setQuantity(quantity);
+            newPro.setQuantity(0);
             newPro.setPrice((float) price);
             newPro.setImage(fileName);
 

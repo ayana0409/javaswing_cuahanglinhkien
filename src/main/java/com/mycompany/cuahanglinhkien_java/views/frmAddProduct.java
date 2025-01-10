@@ -9,8 +9,10 @@ import com.mycompany.cuahanglinhkien_java.controllers.OrderDetailController;
 import com.mycompany.cuahanglinhkien_java.controllers.ProductController;
 import com.mycompany.cuahanglinhkien_java.models.OrderDetail;
 import com.mycompany.cuahanglinhkien_java.models.Product;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -53,7 +55,19 @@ public class frmAddProduct extends javax.swing.JFrame {
         String path = System.getProperty("user.dir");
         String baseImagePath = path + "\\src\\main\\java\\share\\utils\\images\\order.png";
         for(Product p : products){
-            productTbModel.addRow(new Object[] {p.getId(), new ImageIcon(baseImagePath), p.getName(), 
+            ImageIcon imageIcon = null;
+            if (p.getImage() != null && !p.getImage().isEmpty()) {
+                String imagePath = baseImagePath + p.getImage();
+                File imageFile = new File(imagePath);
+
+                if (imageFile.exists()) {
+                    ImageIcon originalIcon = new ImageIcon(imagePath);
+                    Image scaledImage = originalIcon.getImage().getScaledInstance(150, 100, Image.SCALE_SMOOTH);
+                    imageIcon = new ImageIcon(scaledImage);
+                    imageIcon.setDescription(imagePath);
+                }
+            }
+            productTbModel.addRow(new Object[] {p.getId(), imageIcon, p.getName(), 
                     p.getCategoryId(), p.getManufacturerId(), p.getPrice()});
         }
         productTbModel.fireTableDataChanged();

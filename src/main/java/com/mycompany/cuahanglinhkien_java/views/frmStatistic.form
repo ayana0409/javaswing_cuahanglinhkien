@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -100,11 +100,12 @@
                         <Property name="rows" type="int" value="1"/>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JSpinner" name="spDayF">
-                        </Component>
-                        <Component class="javax.swing.JSpinner" name="spMonthF">
-                        </Component>
-                        <Component class="javax.swing.JSpinner" name="spYearF">
+                        <Component class="javax.swing.JSpinner" name="spFrom">
+                          <Properties>
+                            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                              <SpinnerModel initial="now" stepSize="5" type="date"/>
+                            </Property>
+                          </Properties>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -130,11 +131,12 @@
                         <Property name="rows" type="int" value="1"/>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JSpinner" name="spDayT">
-                        </Component>
-                        <Component class="javax.swing.JSpinner" name="spMonthT">
-                        </Component>
-                        <Component class="javax.swing.JSpinner" name="spYearT">
+                        <Component class="javax.swing.JSpinner" name="spTo">
+                          <Properties>
+                            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                              <SpinnerModel initial="now" stepSize="5" type="date"/>
+                            </Property>
+                          </Properties>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -159,11 +161,17 @@
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Theo SP nh&#x1ead;p"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnImportActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="btnSale">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Theo SP b&#xe1;n"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaleActionPerformed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -172,7 +180,7 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="206" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="221" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -203,7 +211,10 @@
                             <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JSpinner" name="spQuantity">
+                        <Component class="javax.swing.JTextField" name="txtQuantity">
+                          <Properties>
+                            <Property name="focusable" type="boolean" value="false"/>
+                          </Properties>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -231,6 +242,9 @@
                       </SubComponents>
                     </Container>
                     <Component class="javax.swing.JTextField" name="txtTotal">
+                      <Properties>
+                        <Property name="focusable" type="boolean" value="false"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -247,7 +261,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jScrollPane1" pref="748" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="733" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>

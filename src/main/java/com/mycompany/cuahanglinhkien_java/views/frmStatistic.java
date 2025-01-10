@@ -4,19 +4,30 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.StatisticController;
+import com.mycompany.cuahanglinhkien_java.models.Statistic;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import static jdk.management.jfr.RecordingInfo.from;
 
 /**
  *
  * @author YEN VY
  */
 public class frmStatistic extends javax.swing.JFrame {
-
-    /**
-     * Creates new form frmStatistic
-     */
+    StatisticController statisticController = new StatisticController();
+    
+    String saleStatisticHeader[] = {"ID", "Tên sản phẩm", "Số lượng bán", "Doanh thu"};
+    String importStatisticHeader[] = {"ID", "Tên sản phẩm", "Số lượng nhập", "Tổng giá"};
+    
+    DefaultTableModel statisticTbModel = new DefaultTableModel(saleStatisticHeader, 0);
+    
     public frmStatistic() {
         initComponents();
+        tbStatistic.setModel(statisticTbModel);
     }
 
     /**
@@ -35,15 +46,11 @@ public class frmStatistic extends javax.swing.JFrame {
         jPanel12 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
-        spDayF = new javax.swing.JSpinner();
-        spMonthF = new javax.swing.JSpinner();
-        spYearF = new javax.swing.JSpinner();
+        spFrom = new javax.swing.JSpinner();
         jPanel14 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
-        spDayT = new javax.swing.JSpinner();
-        spMonthT = new javax.swing.JSpinner();
-        spYearT = new javax.swing.JSpinner();
+        spTo = new javax.swing.JSpinner();
         jPanel16 = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         btnImport = new javax.swing.JButton();
@@ -52,7 +59,7 @@ public class frmStatistic extends javax.swing.JFrame {
         jPanel19 = new javax.swing.JPanel();
         jPanel20 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        spQuantity = new javax.swing.JSpinner();
+        txtQuantity = new javax.swing.JTextField();
         jPanel21 = new javax.swing.JPanel();
         jPanel22 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -88,9 +95,9 @@ public class frmStatistic extends javax.swing.JFrame {
         jPanel12.add(jLabel2);
 
         jPanel13.setLayout(new java.awt.GridLayout(1, 0));
-        jPanel13.add(spDayF);
-        jPanel13.add(spMonthF);
-        jPanel13.add(spYearF);
+
+        spFrom.setModel(new javax.swing.SpinnerDateModel());
+        jPanel13.add(spFrom);
 
         jPanel12.add(jPanel13);
 
@@ -102,9 +109,9 @@ public class frmStatistic extends javax.swing.JFrame {
         jPanel14.add(jLabel3);
 
         jPanel15.setLayout(new java.awt.GridLayout(1, 0));
-        jPanel15.add(spDayT);
-        jPanel15.add(spMonthT);
-        jPanel15.add(spYearT);
+
+        spTo.setModel(new javax.swing.SpinnerDateModel());
+        jPanel15.add(spTo);
 
         jPanel14.add(jPanel15);
 
@@ -115,9 +122,19 @@ public class frmStatistic extends javax.swing.JFrame {
         jPanel17.setLayout(new java.awt.GridLayout(1, 0));
 
         btnImport.setText("Theo SP nhập");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportActionPerformed(evt);
+            }
+        });
         jPanel17.add(btnImport);
 
         btnSale.setText("Theo SP bán");
+        btnSale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaleActionPerformed(evt);
+            }
+        });
         jPanel17.add(btnSale);
 
         jPanel16.add(jPanel17);
@@ -126,7 +143,7 @@ public class frmStatistic extends javax.swing.JFrame {
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 206, Short.MAX_VALUE)
+            .addGap(0, 221, Short.MAX_VALUE)
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,7 +160,9 @@ public class frmStatistic extends javax.swing.JFrame {
 
         jLabel4.setText("Số lượng");
         jPanel20.add(jLabel4);
-        jPanel20.add(spQuantity);
+
+        txtQuantity.setFocusable(false);
+        jPanel20.add(txtQuantity);
 
         jPanel19.add(jPanel20);
 
@@ -157,6 +176,8 @@ public class frmStatistic extends javax.swing.JFrame {
         jPanel22.add(jLabel5);
 
         jPanel21.add(jPanel22);
+
+        txtTotal.setFocusable(false);
         jPanel21.add(txtTotal);
 
         jPanel3.add(jPanel21);
@@ -181,7 +202,7 @@ public class frmStatistic extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 733, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -204,6 +225,62 @@ public class frmStatistic extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frmHome.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
+
+    private void btnSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaleActionPerformed
+        java.util.Date fromDate = (java.util.Date) spFrom.getValue();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fromFormat = dateFormat.format(fromDate);
+        Date from = java.sql.Date.valueOf(fromFormat);
+        
+        java.util.Date toDate = (java.util.Date) spTo.getValue();
+        String toFormat = dateFormat.format(toDate);
+        Date to = java.sql.Date.valueOf(toFormat);
+        
+        List<Statistic> statistic = statisticController.getSaleStatistic(from, to);
+        int totalQuantity = 0;
+        float totalPrice = 0;
+        
+        statisticTbModel = new DefaultTableModel(saleStatisticHeader, 0);
+        for (Statistic s : statistic){
+            totalQuantity += s.getQuantity();
+            totalPrice += s.getTotal();
+            statisticTbModel.addRow(new Object[] {s.getId(), 
+                s.getProductName(), s.getQuantity(), String.format("%.0f", s.getTotal())});
+        }
+        
+        txtQuantity.setText(totalQuantity+"");
+        txtTotal.setText(String.format("%.0f", totalPrice));
+        
+        tbStatistic.setModel(statisticTbModel);
+    }//GEN-LAST:event_btnSaleActionPerformed
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        java.util.Date fromDate = (java.util.Date) spFrom.getValue();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fromFormat = dateFormat.format(fromDate);
+        Date from = java.sql.Date.valueOf(fromFormat);
+        
+        java.util.Date toDate = (java.util.Date) spTo.getValue();
+        String toFormat = dateFormat.format(toDate);
+        Date to = java.sql.Date.valueOf(toFormat);
+        
+        List<Statistic> statistic = statisticController.getImportStatistic(from, to);
+        int totalQuantity = 0;
+        float totalPrice = 0;
+        
+        statisticTbModel = new DefaultTableModel(importStatisticHeader, 0);
+        for (Statistic s : statistic){
+            totalQuantity += s.getQuantity();
+            totalPrice += s.getTotal();
+            statisticTbModel.addRow(new Object[] {s.getId(), 
+                s.getProductName(), s.getQuantity(), String.format("%.0f", s.getTotal())});
+        }
+        
+        txtQuantity.setText(totalQuantity+"");
+        txtTotal.setText(String.format("%.0f", totalPrice));
+        
+        tbStatistic.setModel(statisticTbModel);
+    }//GEN-LAST:event_btnImportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,14 +341,10 @@ public class frmStatistic extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner spDayF;
-    private javax.swing.JSpinner spDayT;
-    private javax.swing.JSpinner spMonthF;
-    private javax.swing.JSpinner spMonthT;
-    private javax.swing.JSpinner spQuantity;
-    private javax.swing.JSpinner spYearF;
-    private javax.swing.JSpinner spYearT;
+    private javax.swing.JSpinner spFrom;
+    private javax.swing.JSpinner spTo;
     private javax.swing.JTable tbStatistic;
+    private javax.swing.JTextField txtQuantity;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
