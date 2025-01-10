@@ -131,13 +131,17 @@ public class frmEmployee extends javax.swing.JFrame {
         jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(jLabel10, java.awt.BorderLayout.PAGE_START);
 
+        jPanel3.setBackground(new java.awt.Color(204, 255, 255));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(225, 592));
         jPanel2.setLayout(new java.awt.GridLayout(9, 0, 0, 2));
 
+        jPanel5.setBackground(new java.awt.Color(204, 255, 255));
         jPanel5.setLayout(new java.awt.BorderLayout());
 
+        jPanel22.setBackground(new java.awt.Color(204, 255, 255));
         jPanel22.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel1.setText("Mã ");
@@ -148,8 +152,10 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel5.add(jPanel22, java.awt.BorderLayout.LINE_START);
 
+        jPanel23.setBackground(new java.awt.Color(204, 255, 255));
         jPanel23.setLayout(new java.awt.GridLayout(2, 0, 0, 4));
 
+        txtID.setFocusable(false);
         txtID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIDActionPerformed(evt);
@@ -168,6 +174,7 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel5);
 
+        jPanel6.setBackground(new java.awt.Color(204, 255, 255));
         jPanel6.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
         jLabel2.setText("Họ & Tên");
@@ -176,21 +183,26 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel6);
 
+        jPanel8.setBackground(new java.awt.Color(204, 255, 255));
         jPanel8.setLayout(new java.awt.GridLayout(2, 3));
 
+        jPanel10.setBackground(new java.awt.Color(204, 255, 255));
         jPanel10.setLayout(new java.awt.GridLayout(1, 3, 3, 0));
 
         jLabel4.setText("Giới tính");
         jPanel10.add(jLabel4);
 
+        rbGenderBoy.setBackground(new java.awt.Color(204, 255, 255));
         rbGenderBoy.setText("Nam");
         jPanel10.add(rbGenderBoy);
 
+        rbGenderGirl.setBackground(new java.awt.Color(204, 255, 255));
         rbGenderGirl.setText("Nữ");
         jPanel10.add(rbGenderGirl);
 
         jPanel8.add(jPanel10);
 
+        jPanel13.setBackground(new java.awt.Color(204, 255, 255));
         jPanel13.setLayout(new java.awt.GridLayout(1, 4, 2, 0));
 
         jLabel6.setText("Ngày sinh");
@@ -203,6 +215,7 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel8);
 
+        jPanel7.setBackground(new java.awt.Color(204, 255, 255));
         jPanel7.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
         jLabel11.setText("Địa chỉ");
@@ -211,6 +224,7 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel7);
 
+        jPanel20.setBackground(new java.awt.Color(204, 255, 255));
         jPanel20.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
 
         jLabel8.setText("Tên đăng nhập");
@@ -219,6 +233,7 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel20);
 
+        jPanel15.setBackground(new java.awt.Color(204, 255, 255));
         jPanel15.setLayout(new java.awt.GridLayout(2, 1, 3, 5));
 
         jLabel7.setText("Mật khẩu");
@@ -227,8 +242,10 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel15);
 
+        jPanel9.setBackground(new java.awt.Color(204, 255, 255));
         jPanel9.setLayout(new java.awt.GridLayout(2, 0));
 
+        jPanel18.setBackground(new java.awt.Color(204, 255, 255));
         jPanel18.setLayout(new java.awt.GridLayout(1, 2, 3, 0));
 
         jLabel5.setText("Trạng thái");
@@ -239,6 +256,7 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel9.add(jPanel18);
 
+        jPanel19.setBackground(new java.awt.Color(204, 255, 255));
         jPanel19.setLayout(new java.awt.GridLayout(1, 2, 3, 0));
 
         jLabel9.setText("Chức vụ");
@@ -250,7 +268,8 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel9);
 
-        jPanel14.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel14.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel14.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
 
         jPanel17.setLayout(new java.awt.GridLayout(1, 0));
         jPanel17.add(txtSearch);
@@ -267,6 +286,7 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel2.add(jPanel14);
 
+        jPanel12.setBackground(new java.awt.Color(204, 255, 255));
         jPanel12.setLayout(new java.awt.GridLayout(2, 0, 0, 4));
 
         jPanel16.setLayout(new java.awt.GridLayout(1, 0));
@@ -310,6 +330,8 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jPanel3.add(jPanel2, java.awt.BorderLayout.LINE_END);
 
+        jPanel4.setBackground(new java.awt.Color(204, 255, 255));
+
         tbEmployee.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -333,7 +355,7 @@ public class frmEmployee extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -376,7 +398,14 @@ public class frmEmployee extends javax.swing.JFrame {
         Date birthday = java.sql.Date.valueOf(dateString);
         int roleId= ((Role) cbRole.getSelectedItem()).getId();
         String phoneNumber=txtPhoneNumber.getText();
-        if(!name.isBlank()&& !phoneNumber.isBlank()){
+        if(!name.isBlank()&& !phoneNumber.isBlank() 
+                && !userName.isBlank() && !password.isBlank()){
+            if (checkExistEmployee(userName))
+            {
+                javax.swing.JOptionPane.showMessageDialog(this, "Tên đăng nhập ["+ userName +"] đã tồn tại!", 
+                        "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             employeecontroller.addEmployee(new Employee( name, gender, address, phoneNumber, status, userName, password, birthday, roleId));
             loadData();
             clearInput();
@@ -398,7 +427,14 @@ public class frmEmployee extends javax.swing.JFrame {
         Date birthday = java.sql.Date.valueOf(dateString);
         int roleId= ((Role) cbRole.getSelectedItem()).getId();
         String phoneNumber=txtPhoneNumber.getText();
-        if(!name.isBlank()&& !phoneNumber.isBlank()){
+        if(!name.isBlank()&& !phoneNumber.isBlank() 
+                && !userName.isBlank() && !password.isBlank()){
+            if (checkExistEmployee(userName))
+            {
+                javax.swing.JOptionPane.showMessageDialog(this, "Tên đăng nhập ["+ userName +"] đã tồn tại!", 
+                        "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             employeecontroller.editInforEmployee(new Employee( name, gender, address, phoneNumber, status, userName, password, birthday, roleId),selected);
             loadData();
             clearInput();
@@ -549,6 +585,11 @@ public class frmEmployee extends javax.swing.JFrame {
         txtPhoneNumber.setText("");
         txtName.setText("");
         txtAddress.setText("");
+    }
+    
+    private boolean checkExistEmployee(String username){
+        Employee employee = employeecontroller.getEmployeeByUsername(username);
+        return employee != null;
     }
     /**
      * @param args the command line arguments

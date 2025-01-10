@@ -103,10 +103,13 @@ public class frmOrder extends javax.swing.JFrame {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
+        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jPanel3.setBackground(new java.awt.Color(204, 255, 255));
         jPanel3.setLayout(new java.awt.GridLayout(7, 0, 0, 10));
 
+        jPanel5.setBackground(new java.awt.Color(204, 255, 255));
         jPanel5.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
         jLabel2.setText("Mã đơn hàng");
@@ -119,6 +122,7 @@ public class frmOrder extends javax.swing.JFrame {
 
         jPanel3.add(jPanel5);
 
+        jPanel7.setBackground(new java.awt.Color(204, 255, 255));
         jPanel7.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
         jLabel4.setText("Tên khách hàng");
@@ -127,6 +131,7 @@ public class frmOrder extends javax.swing.JFrame {
 
         jPanel3.add(jPanel7);
 
+        jPanel6.setBackground(new java.awt.Color(204, 255, 255));
         jPanel6.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
         jLabel6.setText("Địa chỉ");
@@ -135,6 +140,7 @@ public class frmOrder extends javax.swing.JFrame {
 
         jPanel3.add(jPanel6);
 
+        jPanel8.setBackground(new java.awt.Color(204, 255, 255));
         jPanel8.setLayout(new java.awt.GridLayout(2, 0));
 
         jLabel5.setText("Trạng thái");
@@ -145,6 +151,7 @@ public class frmOrder extends javax.swing.JFrame {
 
         jPanel3.add(jPanel8);
 
+        jPanel10.setBackground(new java.awt.Color(204, 255, 255));
         jPanel10.setLayout(new java.awt.GridLayout(2, 3));
 
         jPanel14.setLayout(new java.awt.BorderLayout());
@@ -157,7 +164,10 @@ public class frmOrder extends javax.swing.JFrame {
 
         jPanel3.add(jPanel10);
 
+        jPanel9.setBackground(new java.awt.Color(204, 255, 255));
         jPanel9.setLayout(new java.awt.GridLayout(2, 0));
+
+        jPanel15.setBackground(new java.awt.Color(204, 255, 255));
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -175,8 +185,10 @@ public class frmOrder extends javax.swing.JFrame {
 
         jPanel3.add(jPanel9);
 
+        jPanel11.setBackground(new java.awt.Color(204, 255, 255));
         jPanel11.setLayout(new java.awt.GridLayout(2, 0));
 
+        jPanel12.setBackground(new java.awt.Color(204, 255, 255));
         jPanel12.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
 
         btnSearch.setText("Tìm kiếm");
@@ -192,6 +204,7 @@ public class frmOrder extends javax.swing.JFrame {
 
         jPanel11.add(jPanel12);
 
+        jPanel13.setBackground(new java.awt.Color(204, 255, 255));
         jPanel13.setLayout(new java.awt.GridLayout(1, 3, 5, 0));
 
         btnAdd.setText("Thêm");

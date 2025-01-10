@@ -26,7 +26,7 @@ public class EmployeeController implements Serializable{
     GenericController<Employee> _dbHelper = new GenericController<>();
 
     public Employee getEmployeeById(int id) {
-    String query = "SELECT * FROM employee WHERE id = ?";
+        String query = "SELECT * FROM employee WHERE id = ?";
         try {
             return _dbHelper.fetchOne(query, rs -> {
                 try {
@@ -52,6 +52,35 @@ public class EmployeeController implements Serializable{
             return null;
         }  
     }
+    
+    public Employee getEmployeeByUsername(String username) {
+        String query = "SELECT * FROM employee WHERE username LIKE ?";
+        try {
+            return _dbHelper.fetchOne(query, rs -> {
+                try {
+                    return new Employee(
+                            rs.getInt("id"),
+                            rs.getString("name"),
+                            rs.getString("gender"),
+                            rs.getString("address"),
+                            rs.getString("PhoneNumber"),
+                            rs.getString("Status"),
+                            rs.getString("Username"),
+                            rs.getString("Password"),
+                            rs.getDate("birthday"),
+                            rs.getInt("Rol_Id")
+                    );
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }, username);
+        } catch (SQLException ex) {
+            Logger.getLogger(EmployeeController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }  
+    }
+    
     public List<Employee> getAllEmployee() {
         String query = "SELECT * FROM employee";
         try {

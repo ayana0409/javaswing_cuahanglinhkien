@@ -234,8 +234,6 @@ public class frmProduct extends javax.swing.JFrame {
 
         jLabel9.setText("ID");
         jPanel5.add(jLabel9);
-
-        txtID.setEnabled(false);
         jPanel5.add(txtID);
 
         jPanel16.add(jPanel5);
@@ -281,6 +279,9 @@ public class frmProduct extends javax.swing.JFrame {
         jPanel24.setLayout(new java.awt.BorderLayout());
 
         jPanel25.setLayout(new java.awt.GridLayout(2, 0, 0, 3));
+
+        txtQuantity.setText("0");
+        txtQuantity.setFocusable(false);
         jPanel25.add(txtQuantity);
         jPanel25.add(txtPrice);
 
@@ -569,17 +570,35 @@ public class frmProduct extends javax.swing.JFrame {
         try {
             String searchQuery = txtSearch.getText().trim();
             if (searchQuery.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Vui lòng nhập tên sản phẩm để tìm kiếm!", "Thông báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                loadData();
                 return;
             }
             List<Product> searchResults = controller.searchProductByName(searchQuery);
             model.setRowCount(0);
             if (searchResults != null && !searchResults.isEmpty()) {
+                List<Category> listCate = controllerCate.getAllCategory();
+                List<Manufacturer> listManu = controllerManu.getAllManufacturer();
                 for (Product product : searchResults) {
+                    ImageIcon imageIcon = null;
+                    if (product.getImage() != null && !product.getImage().isEmpty()) {
+                        String imagePath = baseImagePath + product.getImage();
+                        File imageFile = new File(imagePath);
+
+                        if (imageFile.exists()) {
+                            ImageIcon originalIcon = new ImageIcon(imagePath);
+                            int labelHeight = lbImage.getHeight();
+                            int labelWidth = lbImage.getWidth();
+                            Image scaledImage = originalIcon.getImage().getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+                            imageIcon = new ImageIcon(scaledImage);
+                            imageIcon.setDescription(imagePath);
+                        }
+                    }
+                    Manufacturer manufacturer = listManu.stream().filter(p -> p.getId() == product.getManufacturerId()).findFirst().orElse(null);
+                    Category category = listCate.stream().filter(p -> p.getId() == product.getCategoryId()).findFirst().orElse(null);
                     model.addRow(new Object[]{product.getId(), product.getName(),
-                        product.getCategoryId(), product.getManufacturerId(),
+                        category.getName(), manufacturer.getName(),
                         product.getQuantity(), product.getDetails(),
-                        product.getPrice(), product.getImage()});
+                        product.getPrice(), imageIcon});
                 }
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);

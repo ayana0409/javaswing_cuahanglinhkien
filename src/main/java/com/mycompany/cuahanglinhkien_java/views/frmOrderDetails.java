@@ -239,6 +239,8 @@ public class frmOrderDetails extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(204, 255, 255));
         jPanel4.setLayout(new java.awt.GridLayout(8, 0, 0, 10));
 
+        jPanel5.setBackground(new java.awt.Color(204, 255, 255));
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Thông tin");
@@ -292,6 +294,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
         jPanel4.add(jPanel7);
 
+        jPanel8.setBackground(new java.awt.Color(204, 255, 255));
         jPanel8.setLayout(new java.awt.GridLayout(2, 0));
 
         lbQuantity.setText("Số lượng");
