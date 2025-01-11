@@ -53,7 +53,7 @@ public class frmAddProduct extends javax.swing.JFrame {
     private void loadTable() {
         List<Product> products = _productController.getAllProduct();
         String path = System.getProperty("user.dir");
-        String baseImagePath = path + "\\src\\main\\java\\share\\utils\\images\\order.png";
+        String baseImagePath = path + "\\src\\main\\java\\com\\mycompany\\cuahanglinhkien_java\\images\\product_images\\";
         for(Product p : products){
             ImageIcon imageIcon = null;
             if (p.getImage() != null && !p.getImage().isEmpty()) {
