@@ -275,7 +275,7 @@ public class frmCustomer extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         if (!selected.isEmpty()&&!txtPhoneNumber.getText().isBlank()&& !txtName.getText().isBlank()&& !txtAddress.getText().isBlank()) {
-            customercontroller.editCustomer(new Customer(txtPhoneNumber.getText(),txtAddress.getText(),txtName.getText()),selected );
+            customercontroller.editCustomer(new Customer(txtPhoneNumber.getText(),txtName.getText(),txtAddress.getText()),selected );
             
                 loadData();
                 clearInput();

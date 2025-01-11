@@ -9,6 +9,7 @@ import com.mycompany.cuahanglinhkien_java.controllers.RoleController;
 import com.mycompany.cuahanglinhkien_java.models.Employee;
 import com.mycompany.cuahanglinhkien_java.models.Role;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -80,9 +81,7 @@ public class frmEmployee extends javax.swing.JFrame {
         rbGenderGirl = new javax.swing.JRadioButton();
         jPanel13 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        spDay = new javax.swing.JSpinner();
-        spMonth = new javax.swing.JSpinner();
-        spYear = new javax.swing.JSpinner();
+        spBirthday = new javax.swing.JSpinner();
         jPanel7 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         txtAddress = new javax.swing.JTextField();
@@ -207,9 +206,9 @@ public class frmEmployee extends javax.swing.JFrame {
 
         jLabel6.setText("Ngày sinh");
         jPanel13.add(jLabel6);
-        jPanel13.add(spDay);
-        jPanel13.add(spMonth);
-        jPanel13.add(spYear);
+
+        spBirthday.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
+        jPanel13.add(spBirthday);
 
         jPanel8.add(jPanel13);
 
@@ -391,11 +390,10 @@ public class frmEmployee extends javax.swing.JFrame {
         String status=cbStatus.getSelectedItem().toString();
         String userName=txtUserName.getText();
         String password=txtPassword.getText();
-        int year =Integer.parseInt(spYear.getValue().toString());
-        int month =Integer.parseInt(spMonth.getValue().toString());
-        int day = Integer.parseInt(spDay.getValue().toString());
-        String dateString = String.format("%04d-%02d-%02d", year, month, day);
-        Date birthday = java.sql.Date.valueOf(dateString);
+        java.util.Date fromDate = (java.util.Date) spBirthday.getValue();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fromFormat = dateFormat.format(fromDate);
+        Date birthday = java.sql.Date.valueOf(fromFormat);
         int roleId= ((Role) cbRole.getSelectedItem()).getId();
         String phoneNumber=txtPhoneNumber.getText();
         if(!name.isBlank()&& !phoneNumber.isBlank() 
@@ -423,19 +421,17 @@ public class frmEmployee extends javax.swing.JFrame {
         String address=txtAddress.getText();
         String status=cbStatus.getSelectedItem().toString();
         String userName=txtUserName.getText();
-        String password=txtPassword.getText();
-        int year =Integer.parseInt(spYear.getValue().toString());
-        int month =Integer.parseInt(spMonth.getValue().toString());
-        int day = Integer.parseInt(spDay.getValue().toString());
-        String dateString = String.format("%04d-%02d-%02d", year, month, day);
-        Date birthday = java.sql.Date.valueOf(dateString);
+        java.util.Date fromDate = (java.util.Date) spBirthday.getValue();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fromFormat = dateFormat.format(fromDate);
+        Date birthday = java.sql.Date.valueOf(fromFormat);
         int roleId= ((Role) cbRole.getSelectedItem()).getId();
         String phoneNumber=txtPhoneNumber.getText();
         
         Employee employee = employeecontroller.getEmployeeById(selected);
         if(!name.isBlank()&& !phoneNumber.isBlank() 
                 && !userName.isBlank()){
-            if (!userName.equals(employee.getUsername()) && echeckExistEmployee(userName))
+            if (!userName.equals(employee.getUsername()) && checkExistEmployee(userName))
             {
                 javax.swing.JOptionPane.showMessageDialog(this, "Tên đăng nhập ["+ userName +"] đã tồn tại!", 
                         "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
@@ -568,9 +564,7 @@ public class frmEmployee extends javax.swing.JFrame {
                     txtPhoneNumber.setText(employee.getPhoneNumber());
                     txtAddress.setText(employee.getAddress());
                     txtUserName.setText(employee.getUsername());
-                    spDay.setValue(employee.getBirthday().getDate());
-                    spMonth.setValue(employee.getBirthday().getMonth()+1);
-                    spYear.setValue(employee.getBirthday().getYear()+1900);
+                    spBirthday.setValue(employee.getBirthday());
                     rbGenderBoy.setSelected(employee.getGender().toLowerCase().equals("nam"));
                     rbGenderGirl.setSelected(employee.getGender().toLowerCase().equals("nữ"));
                     cbStatus.setSelectedItem(employee.getStatus());
@@ -680,9 +674,7 @@ public class frmEmployee extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JRadioButton rbGenderBoy;
     private javax.swing.JRadioButton rbGenderGirl;
-    private javax.swing.JSpinner spDay;
-    private javax.swing.JSpinner spMonth;
-    private javax.swing.JSpinner spYear;
+    private javax.swing.JSpinner spBirthday;
     private javax.swing.JTable tbEmployee;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtID;
@@ -692,8 +684,4 @@ public class frmEmployee extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
-
-    private boolean echeckExistEmployee(String userName) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
