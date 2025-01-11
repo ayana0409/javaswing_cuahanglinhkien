@@ -52,7 +52,7 @@ public class AuthenticationController {
         try {
             Date date = new Date(03, 9, 4);
             Employee e = new Employee("Dương Đoàn Thuận", "Nam", "Cần Thơ", "123123123", 
-                    "Đang làm", "admin", "1", date, 1);
+                    "Đang làm", "admin", "123", date, 1);
             int id = _dbContext.insert(query, e.getName(), e.getGender(), e.getAddress(), 
                     e.getPhoneNumber(), e.getStatus(), e.getUsername() , e.getHashedPassword(),
                     e.getBirthday(), e.getRoleId());

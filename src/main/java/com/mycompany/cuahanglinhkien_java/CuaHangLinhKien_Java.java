@@ -6,6 +6,7 @@ package com.mycompany.cuahanglinhkien_java;
 
 import com.mycompany.cuahanglinhkien_java.views.frmCategory;
 import com.mycompany.cuahanglinhkien_java.views.frmLogin;
+import com.mycompany.cuahanglinhkien_java.views.frmProduct;
 import javax.swing.JFrame;
 
 /**
@@ -18,7 +19,7 @@ public class CuaHangLinhKien_Java {
         
         frmLogin frmLogin = new frmLogin();
         frmLogin.setVisible(true);
-
+         
     }
     
 }

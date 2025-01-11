@@ -192,8 +192,8 @@ public class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        //_authController.addAccount();
-        if (!login()) {;
+       _authController.addAccount();
+        if (!login()) {
             txtLoginError.setText("Tên đăng nhập hoặc tài khoản không đúng");
             return;
         }

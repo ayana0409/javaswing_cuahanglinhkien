@@ -36,28 +36,29 @@ public class InventoryController {
         }
     }
 
-    public List<Inventory> getAllInventory() {
-        String query = "SELECT * FROM inventory";
+    public List<Inventory> getProductById(int productid) {
+        String query = "SELECT * FROM inventory where pro_id = ?";
         try {
             return _dbHelper.fetchAll(query, rs -> {
+                
                 try {
                     return new Inventory(
-                            rs.getInt("Id"), // Lấy Id từ bảng inventory
-                            rs.getInt("Pro_Id"), // Lấy ProductId
-                            rs.getString("BatchNumber"), // Lấy BatchNumber
-                            rs.getInt("QuantityImported"), // Lấy QuantityImported
-                            rs.getInt("StockQuantity"), // Lấy StockQuantity
-                            rs.getFloat("ImportPrice"), // Lấy ImportPrice
-                            rs.getDate("ImportDate") // Lấy ImportDate
+                            rs.getInt("Id"), 
+                            rs.getInt("Pro_Id"), 
+                            rs.getString("BatchNumber"),
+                            rs.getInt("QuantityImported"), 
+                            rs.getInt("StockQuantity"),
+                            rs.getFloat("ImportPrice"), 
+                            rs.getDate("ImportDate")
                     );
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return null;
                 }
-            });
+            },productid);
         } catch (SQLException e) {
             e.printStackTrace();
-            return new ArrayList<>(); // Trả về danh sách rỗng nếu có lỗi
+            return new ArrayList<>(); 
         }
     }
 
@@ -100,4 +101,6 @@ public class InventoryController {
             throw ex;
         }
     }
+   
+
 }

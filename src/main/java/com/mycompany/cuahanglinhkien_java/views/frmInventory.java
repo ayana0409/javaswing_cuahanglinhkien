@@ -6,20 +6,10 @@ package com.mycompany.cuahanglinhkien_java.views;
 
 import com.mycompany.cuahanglinhkien_java.controllers.ProductController;
 import com.mycompany.cuahanglinhkien_java.controllers.InventoryController;
-import com.mycompany.cuahanglinhkien_java.models.Category;
 import com.mycompany.cuahanglinhkien_java.models.Inventory;
-import com.mycompany.cuahanglinhkien_java.models.Manufacturer;
 import com.mycompany.cuahanglinhkien_java.models.Product;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.event.ListDataListener;
-import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -32,7 +22,6 @@ public class frmInventory extends javax.swing.JFrame {
     ProductController controllerPro = new ProductController();
     String[] columnNames = {"Mã", "Ngày nhập", "Số lô", "Số lượng nhập", "Tồn kho", "Giá nhập", "Tổng giá trị"};
     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-    String selected = "";
     int productId;
     
     /**
@@ -98,17 +87,17 @@ public class frmInventory extends javax.swing.JFrame {
 
         tbInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Ngày nhập", "Số lô", "Số lượng nhập", "Giá nhập", "Tổng giá trị"
+                "Ngày nhập", "Số lô", "Số lượng nhập", "Tồn kho", "Giá nhập", "Tổng giá trị"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -249,8 +238,8 @@ public class frmInventory extends javax.swing.JFrame {
         Product pro = controllerPro.getProductById(productId);
         txtProductID.setText(productId+"");
         txtProductName.setText(pro.getName());
-        List<Inventory> listInventory = controller.getAllInventory();
-        
+        List<Inventory> listInventory = controller.getProductById(productId);
+       
         DefaultTableModel model = (DefaultTableModel) tbInventory.getModel();
         model.setRowCount(0);
 
