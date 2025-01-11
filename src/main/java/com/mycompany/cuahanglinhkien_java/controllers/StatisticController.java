@@ -45,19 +45,11 @@ public class StatisticController {
     }
     
     public List<Statistic> getImportStatistic(Date from, Date to) {
-        String query = "SELECT \n" +
-"    p.Id AS ProductID,\n" +
-"    p.Name AS ProductName,\n" +
-"    SUM(i.QuantityImported) AS TotalQuantityImported,\n" +
-"    SUM(i.QuantityImported * i.ImportPrice) AS TotalImportCost\n" +
-"FROM \n" +
-"    Inventory i\n" +
-"JOIN \n" +
-"    Product p ON i.Pro_Id = p.Id\n" +
-"WHERE \n" +
-"    i.ImportDate BETWEEN ? AND ?\n" +
-"GROUP BY \n" +
-"    p.Id, p.Name;";
+        String query = "SELECT p.Id AS ProductID, p.Name AS ProductName, "
+                + "SUM(i.QuantityImported) AS TotalQuantityImported, "
+                + "SUM(i.QuantityImported * i.ImportPrice) AS TotalImportCost "
+                + "FROM Inventory i JOIN Product p ON i.Pro_Id = p.Id "
+                + "WHERE i.ImportDate BETWEEN ? AND ? GROUP BY p.Id, p.Name;";
         try {
             return statisticController.fetchAll(query, s -> {
                 try {

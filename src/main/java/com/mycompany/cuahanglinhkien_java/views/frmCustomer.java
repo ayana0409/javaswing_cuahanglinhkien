@@ -64,10 +64,10 @@ public class frmCustomer extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
+        btnSearch = new javax.swing.JButton();
         btnAdd = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        btnSearch = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbCustomer = new javax.swing.JTable();
@@ -90,10 +90,13 @@ public class frmCustomer extends javax.swing.JFrame {
         jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel1.add(jLabel6, java.awt.BorderLayout.PAGE_START);
 
+        jPanel2.setBackground(new java.awt.Color(204, 255, 255));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jPanel3.setBackground(new java.awt.Color(204, 255, 255));
         jPanel3.setLayout(new java.awt.GridLayout(7, 0, 0, 10));
 
+        jPanel5.setBackground(new java.awt.Color(204, 255, 255));
         jPanel5.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
         jLabel1.setText("Số điện thoại");
@@ -108,6 +111,7 @@ public class frmCustomer extends javax.swing.JFrame {
 
         jPanel3.add(jPanel5);
 
+        jPanel6.setBackground(new java.awt.Color(204, 255, 255));
         jPanel6.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
         jLabel2.setText("Họ & Tên Khách hàng");
@@ -116,6 +120,7 @@ public class frmCustomer extends javax.swing.JFrame {
 
         jPanel3.add(jPanel6);
 
+        jPanel7.setBackground(new java.awt.Color(204, 255, 255));
         jPanel7.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
         jLabel3.setText("Địa chỉ");
@@ -123,6 +128,8 @@ public class frmCustomer extends javax.swing.JFrame {
         jPanel7.add(txtAddress);
 
         jPanel3.add(jPanel7);
+
+        jPanel9.setBackground(new java.awt.Color(204, 255, 255));
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -137,6 +144,7 @@ public class frmCustomer extends javax.swing.JFrame {
 
         jPanel3.add(jPanel9);
 
+        jPanel12.setBackground(new java.awt.Color(204, 255, 255));
         jPanel12.setLayout(new java.awt.GridLayout(2, 0, 0, 5));
 
         jLabel4.setText("Tìm kiếm");
@@ -144,6 +152,8 @@ public class frmCustomer extends javax.swing.JFrame {
         jPanel12.add(txtSearch);
 
         jPanel3.add(jPanel12);
+
+        jPanel10.setBackground(new java.awt.Color(204, 255, 255));
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -158,7 +168,11 @@ public class frmCustomer extends javax.swing.JFrame {
 
         jPanel3.add(jPanel10);
 
+        jPanel11.setBackground(new java.awt.Color(204, 255, 255));
         jPanel11.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
+
+        btnSearch.setText("Tìm kiếm");
+        jPanel11.add(btnSearch);
 
         btnAdd.setText("Thêm");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -184,12 +198,11 @@ public class frmCustomer extends javax.swing.JFrame {
         });
         jPanel11.add(btnDelete);
 
-        btnSearch.setText("Tìm kiếm");
-        jPanel11.add(btnSearch);
-
         jPanel3.add(jPanel11);
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.LINE_END);
+
+        jPanel4.setBackground(new java.awt.Color(204, 255, 255));
 
         tbCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -214,9 +227,7 @@ public class frmCustomer extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
         );
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);

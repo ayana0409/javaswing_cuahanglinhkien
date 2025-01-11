@@ -414,6 +414,10 @@ public class frmEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        if (selected == -1){
+            return;
+        }
+        
         String name=txtName.getText();
         String gender=rbGenderBoy.isSelected()?"Nam":"Nữ";
         String address=txtAddress.getText();
@@ -427,15 +431,17 @@ public class frmEmployee extends javax.swing.JFrame {
         Date birthday = java.sql.Date.valueOf(dateString);
         int roleId= ((Role) cbRole.getSelectedItem()).getId();
         String phoneNumber=txtPhoneNumber.getText();
+        
+        Employee employee = employeecontroller.getEmployeeById(selected);
         if(!name.isBlank()&& !phoneNumber.isBlank() 
-                && !userName.isBlank() && !password.isBlank()){
-            if (checkExistEmployee(userName))
+                && !userName.isBlank()){
+            if (!userName.equals(employee.getUsername()) && echeckExistEmployee(userName))
             {
                 javax.swing.JOptionPane.showMessageDialog(this, "Tên đăng nhập ["+ userName +"] đã tồn tại!", 
                         "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            employeecontroller.editInforEmployee(new Employee( name, gender, address, phoneNumber, status, userName, password, birthday, roleId),selected);
+            employeecontroller.editInforEmployee(new Employee( name, gender, address, phoneNumber, status, userName, "a", birthday, roleId),selected);
             loadData();
             clearInput();
         }
@@ -585,6 +591,10 @@ public class frmEmployee extends javax.swing.JFrame {
         txtPhoneNumber.setText("");
         txtName.setText("");
         txtAddress.setText("");
+        txtID.setText("");
+        txtPassword.setText("");
+        txtUserName.setText("");
+        selected = -1;
     }
     
     private boolean checkExistEmployee(String username){
@@ -682,4 +692,8 @@ public class frmEmployee extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
+
+    private boolean echeckExistEmployee(String userName) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

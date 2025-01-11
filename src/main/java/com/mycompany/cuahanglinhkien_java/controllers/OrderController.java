@@ -4,6 +4,8 @@
  */
 package com.mycompany.cuahanglinhkien_java.controllers;
 
+import com.mycompany.cuahanglinhkien_java.models.InvoiceItem;
+import com.mycompany.cuahanglinhkien_java.models.InvoiceModel;
 import com.mycompany.cuahanglinhkien_java.models.Order;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -20,9 +22,13 @@ import share.GenericController;
 public class OrderController {
 
     private final GenericController<Order> _dbContext;
-
+    private final GenericController<InvoiceModel> _invoiceContext;
+    private final GenericController<InvoiceItem> _invoiceItemContext;
+    
     public OrderController() {
         this._dbContext = new GenericController<>();
+        this._invoiceContext = new GenericController<>();
+        this._invoiceItemContext = new GenericController<>();
     }
 
     public Order getOrder(int orderId) {
@@ -99,4 +105,45 @@ public class OrderController {
             return false;
         }
     }
+    
+    public InvoiceModel getInvoiceData(int orderId){
+        String query = "SELECT o.PhoneNumber, c.name as customerName, c.Address, e.name as EmployeeName "
+                + "FROM Orders o JOIN Customer c ON o.PhoneNumber = c.PhoneNumber "
+                + "JOIN Employee e ON o.Emp_Id = e.Id WHERE o.Id = ?;";
+        List<InvoiceItem> items = getInvoiceItems(orderId);
+        
+        try {
+            return _invoiceContext.fetchOne(query, i-> { 
+                try {
+                    return new InvoiceModel(i.getString("customerName"), i.getString("PhoneNumber"),
+                            i.getString("Address"), i.getString("EmployeeName"), items);
+                } catch (SQLException ex) {
+                    Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+                    return null;
+                }
+            }, orderId);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    private List<InvoiceItem> getInvoiceItems(int orderId){
+        String query = "SELECT p.Id AS productId, od.QuantitySold, p.Name AS ProductName, od.SalePrice "
+                + "FROM OrderDetail od JOIN Product p ON od.Pro_Id = p.Id WHERE od.Id = ?;";
+        try {
+            return _invoiceItemContext.fetchAll(query, i -> {
+                try {
+                    return new InvoiceItem(i.getInt("productId"), i.getString("ProductName"), i.getInt("QuantitySold"), i.getFloat("SalePrice"));
+                } catch (SQLException ex) {
+                    Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+                    return null;
+                }
+            },orderId);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ArrayList<>();
+        }
+    }
+    
 }

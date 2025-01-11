@@ -9,13 +9,22 @@ import com.mycompany.cuahanglinhkien_java.controllers.EmployeeController;
 import com.mycompany.cuahanglinhkien_java.controllers.OrderController;
 import com.mycompany.cuahanglinhkien_java.models.Customer;
 import com.mycompany.cuahanglinhkien_java.models.Employee;
+import com.mycompany.cuahanglinhkien_java.models.InvoiceModel;
 import com.mycompany.cuahanglinhkien_java.models.Order;
+import java.io.FileOutputStream;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.mycompany.cuahanglinhkien_java.models.InvoiceItem;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import static share.utils.StringFormat.formatCurrencyVND;
 
 /**
  *
@@ -114,6 +123,8 @@ public class frmOrder extends javax.swing.JFrame {
 
         jLabel2.setText("Mã đơn hàng");
         jPanel5.add(jLabel2);
+
+        txtID.setFocusable(false);
         jPanel5.add(txtID);
 
         jLabel3.setText("Số điện thoại");
@@ -127,6 +138,10 @@ public class frmOrder extends javax.swing.JFrame {
 
         jLabel4.setText("Tên khách hàng");
         jPanel7.add(jLabel4);
+
+        txtName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtName.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtName.setFocusable(false);
         jPanel7.add(txtName);
 
         jPanel3.add(jPanel7);
@@ -136,6 +151,10 @@ public class frmOrder extends javax.swing.JFrame {
 
         jLabel6.setText("Địa chỉ");
         jPanel6.add(jLabel6);
+
+        txtAddress.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtAddress.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtAddress.setFocusable(false);
         jPanel6.add(txtAddress);
 
         jPanel3.add(jPanel6);
@@ -147,6 +166,7 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel8.add(jLabel5);
 
         cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mới", "Hoàn thành", "Hủy" }));
+        cbStatus.setFocusable(false);
         jPanel8.add(cbStatus);
 
         jPanel3.add(jPanel8);
@@ -154,10 +174,13 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel10.setBackground(new java.awt.Color(204, 255, 255));
         jPanel10.setLayout(new java.awt.GridLayout(2, 3));
 
+        jPanel14.setBackground(new java.awt.Color(204, 255, 255));
         jPanel14.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setText("Tổng tiền");
         jPanel14.add(jLabel7, java.awt.BorderLayout.LINE_START);
+
+        txtTotal.setFocusable(false);
         jPanel14.add(txtTotal, java.awt.BorderLayout.CENTER);
 
         jPanel10.add(jPanel14);
@@ -266,7 +289,6 @@ public class frmOrder extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-
         String phoneNumber=txtPhoneNumber.getText();
         String name=txtName.getText();
         String address=txtAddress.getText();
@@ -283,8 +305,16 @@ public class frmOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
-
-        // TODO add your handling code here:
+        if (selected != -1) {
+            InvoiceModel invoice = ordercontroller.getInvoiceData(selected);
+            try {
+                exportInvoiceToPDF(invoice);
+                JOptionPane.showMessageDialog(null, "Xuất hóa đơn thành công!");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi khi xuất hóa đơn!");
+            }
+        }
     }//GEN-LAST:event_btnPrintActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
@@ -371,6 +401,44 @@ public class frmOrder extends javax.swing.JFrame {
         txtName.setText("");
         txtAddress.setText("");
         txtTotal.setText("");
+    }
+    
+    public static void exportInvoiceToPDF(InvoiceModel invoice) throws Exception {
+        String path = System.getProperty("user.dir");
+        String baseFontPath = path + "\\src\\main\\java\\share\\arialuni.ttf";
+        
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("C:/CuaHangLinhKien/" + invoice.getCustomerName() 
+                + invoice.getPhone() + ".pdf"));
+        document.open();
+
+        String fontPath = baseFontPath;
+        BaseFont baseFont = BaseFont.createFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        Font font = new Font(baseFont, 12);
+        
+        document.add(new Paragraph("INVOICE", font));
+        document.add(new Paragraph(" "));
+
+        document.add(new Paragraph("Customer name: " + invoice.getCustomerName(), font));
+        document.add(new Paragraph("Phone number: " + invoice.getPhone(), font));
+        document.add(new Paragraph("Address: " + invoice.getAddress(), font));
+        document.add(new Paragraph(" "));
+
+        document.add(new Paragraph("Employee name: " + invoice.getEmployeeName(), font));
+        document.add(new Paragraph(" "));
+        
+        document.add(new Paragraph("Product list:", font));
+        List<InvoiceItem> items = invoice.getItems();
+        for (int i = 1; i <= items.size(); i++){
+            InvoiceItem item = items.get(i-1);
+            document.add(new Paragraph(i + ". " + item.getProductName() + " - Quantity: " 
+                    + item.getQuantity() + " - Price: " + formatCurrencyVND(item.getPrice()) + "VND", font));
+        }
+        document.add(new Paragraph(" "));
+
+        document.add(new Paragraph("Total: " + formatCurrencyVND(invoice.getTotalPrice()) + "VND", font));
+
+        document.close();
     }
 
     /**
