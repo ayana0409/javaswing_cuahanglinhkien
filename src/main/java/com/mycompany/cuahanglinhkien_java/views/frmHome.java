@@ -9,6 +9,7 @@ import java.io.Console;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import share.singleton.UserSession;
 
 /**
  *
@@ -34,6 +35,18 @@ public class frmHome extends javax.swing.JFrame {
         setLabelIcon(lbEmployee, baseImagePath + "employee.png");
         setLabelIcon(lbStatistic, baseImagePath + "statistic.png");
         
+        String role = UserSession.getInstance().getRole();
+        if (role.equals("Employee")) {
+            pnCategory.setVisible(false);
+            pnEmployee.setVisible(false);
+            pnManufacturer.setVisible(false);
+            pnProduct.setVisible(false);
+            pnStatistic.setVisible(false);
+        }
+        else if (role.equals("Manager")) {
+            pnStatistic.setVisible(false);
+            pnEmployee.setVisible(false);
+        }
     }
     
     public static void setLabelIcon(JLabel label, String imagePath) {
@@ -65,19 +78,19 @@ public class frmHome extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         btnManageCustomer = new javax.swing.JButton();
         lbCustomer = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        pnCategory = new javax.swing.JPanel();
         btnManageCategory = new javax.swing.JButton();
         lbCategory = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        pnManufacturer = new javax.swing.JPanel();
         lbManufacturer = new javax.swing.JLabel();
         btnManageManufacturer = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
+        pnProduct = new javax.swing.JPanel();
         lbProduct = new javax.swing.JLabel();
         btnProduct = new javax.swing.JButton();
-        jPanel9 = new javax.swing.JPanel();
+        pnEmployee = new javax.swing.JPanel();
         lbEmployee = new javax.swing.JLabel();
         btnManageEmployee = new javax.swing.JButton();
-        jPanel10 = new javax.swing.JPanel();
+        pnStatistic = new javax.swing.JPanel();
         lbStatistic = new javax.swing.JLabel();
         btnStatistic = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
@@ -162,7 +175,7 @@ public class frmHome extends javax.swing.JFrame {
 
         jPanel3.add(jPanel5);
 
-        jPanel6.setLayout(new java.awt.BorderLayout());
+        pnCategory.setLayout(new java.awt.BorderLayout());
 
         btnManageCategory.setBackground(new java.awt.Color(52, 45, 126));
         btnManageCategory.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -173,19 +186,19 @@ public class frmHome extends javax.swing.JFrame {
                 btnManageCategoryActionPerformed(evt);
             }
         });
-        jPanel6.add(btnManageCategory, java.awt.BorderLayout.PAGE_END);
+        pnCategory.add(btnManageCategory, java.awt.BorderLayout.PAGE_END);
 
         lbCategory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbCategory.setIconTextGap(0);
-        jPanel6.add(lbCategory, java.awt.BorderLayout.CENTER);
+        pnCategory.add(lbCategory, java.awt.BorderLayout.CENTER);
 
-        jPanel3.add(jPanel6);
+        jPanel3.add(pnCategory);
 
-        jPanel7.setLayout(new java.awt.BorderLayout());
+        pnManufacturer.setLayout(new java.awt.BorderLayout());
 
         lbManufacturer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbManufacturer.setIconTextGap(0);
-        jPanel7.add(lbManufacturer, java.awt.BorderLayout.CENTER);
+        pnManufacturer.add(lbManufacturer, java.awt.BorderLayout.CENTER);
 
         btnManageManufacturer.setBackground(new java.awt.Color(52, 45, 126));
         btnManageManufacturer.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -196,14 +209,14 @@ public class frmHome extends javax.swing.JFrame {
                 btnManageManufacturerActionPerformed(evt);
             }
         });
-        jPanel7.add(btnManageManufacturer, java.awt.BorderLayout.PAGE_END);
+        pnManufacturer.add(btnManageManufacturer, java.awt.BorderLayout.PAGE_END);
 
-        jPanel3.add(jPanel7);
+        jPanel3.add(pnManufacturer);
 
-        jPanel8.setLayout(new java.awt.BorderLayout());
+        pnProduct.setLayout(new java.awt.BorderLayout());
 
         lbProduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel8.add(lbProduct, java.awt.BorderLayout.CENTER);
+        pnProduct.add(lbProduct, java.awt.BorderLayout.CENTER);
 
         btnProduct.setBackground(new java.awt.Color(52, 45, 126));
         btnProduct.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -214,14 +227,14 @@ public class frmHome extends javax.swing.JFrame {
                 btnProductActionPerformed(evt);
             }
         });
-        jPanel8.add(btnProduct, java.awt.BorderLayout.PAGE_END);
+        pnProduct.add(btnProduct, java.awt.BorderLayout.PAGE_END);
 
-        jPanel3.add(jPanel8);
+        jPanel3.add(pnProduct);
 
-        jPanel9.setLayout(new java.awt.BorderLayout());
+        pnEmployee.setLayout(new java.awt.BorderLayout());
 
         lbEmployee.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel9.add(lbEmployee, java.awt.BorderLayout.CENTER);
+        pnEmployee.add(lbEmployee, java.awt.BorderLayout.CENTER);
 
         btnManageEmployee.setBackground(new java.awt.Color(52, 45, 126));
         btnManageEmployee.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -233,14 +246,14 @@ public class frmHome extends javax.swing.JFrame {
                 btnManageEmployeeActionPerformed(evt);
             }
         });
-        jPanel9.add(btnManageEmployee, java.awt.BorderLayout.PAGE_END);
+        pnEmployee.add(btnManageEmployee, java.awt.BorderLayout.PAGE_END);
 
-        jPanel3.add(jPanel9);
+        jPanel3.add(pnEmployee);
 
-        jPanel10.setLayout(new java.awt.BorderLayout());
+        pnStatistic.setLayout(new java.awt.BorderLayout());
 
         lbStatistic.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel10.add(lbStatistic, java.awt.BorderLayout.CENTER);
+        pnStatistic.add(lbStatistic, java.awt.BorderLayout.CENTER);
 
         btnStatistic.setBackground(new java.awt.Color(52, 45, 126));
         btnStatistic.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -251,9 +264,9 @@ public class frmHome extends javax.swing.JFrame {
                 btnStatisticActionPerformed(evt);
             }
         });
-        jPanel10.add(btnStatistic, java.awt.BorderLayout.PAGE_END);
+        pnStatistic.add(btnStatistic, java.awt.BorderLayout.PAGE_END);
 
-        jPanel3.add(jPanel10);
+        jPanel3.add(pnStatistic);
 
         jPanel11.setLayout(new java.awt.GridLayout(3, 0, 20, 20));
 
@@ -422,7 +435,6 @@ public class frmHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
@@ -430,10 +442,6 @@ public class frmHome extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lbCategory;
     private javax.swing.JLabel lbCustomer;
     private javax.swing.JLabel lbEmployee;
@@ -441,5 +449,10 @@ public class frmHome extends javax.swing.JFrame {
     private javax.swing.JLabel lbOrder;
     private javax.swing.JLabel lbProduct;
     private javax.swing.JLabel lbStatistic;
+    private javax.swing.JPanel pnCategory;
+    private javax.swing.JPanel pnEmployee;
+    private javax.swing.JPanel pnManufacturer;
+    private javax.swing.JPanel pnProduct;
+    private javax.swing.JPanel pnStatistic;
     // End of variables declaration//GEN-END:variables
 }

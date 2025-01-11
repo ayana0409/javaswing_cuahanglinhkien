@@ -5,8 +5,12 @@
 package com.mycompany.cuahanglinhkien_java.views;
 
 import com.mycompany.cuahanglinhkien_java.controllers.AuthenticationController;
+import com.mycompany.cuahanglinhkien_java.controllers.EmployeeController;
+import com.mycompany.cuahanglinhkien_java.controllers.RoleController;
 import com.mycompany.cuahanglinhkien_java.models.Employee;
+import com.mycompany.cuahanglinhkien_java.models.Role;
 import java.util.Arrays;
+import java.util.List;
 import share.singleton.UserSession;
 
 /**
@@ -15,8 +19,10 @@ import share.singleton.UserSession;
  */
 public class frmLogin extends javax.swing.JFrame {
     private final AuthenticationController _authController;
+    private final RoleController _roleController;
     public frmLogin() {
         _authController = new AuthenticationController();
+        _roleController = new RoleController();
         initComponents();
     }
 
@@ -192,7 +198,7 @@ public class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-       _authController.addAccount();
+        //_authController.addAccount();
         if (!login()) {
             txtLoginError.setText("Tên đăng nhập hoặc tài khoản không đúng");
             return;
@@ -235,11 +241,21 @@ public class frmLogin extends javax.swing.JFrame {
         String password = new String(txtPassword.getPassword());
         
         Employee user = _authController.getUserByUsername(username);
+        List<Role> roles = _roleController.getRole();
         if (user == null) return false;
         
         if (user.checkPassword(password)) {
             UserSession.getInstance().setId(user.getId());
             UserSession.getInstance().setUsername(user.getUsername());
+            String role = "";
+            for (Role r : roles){
+                if (r.getId() == user.getRoleId())
+                {
+                    role = r.getName();
+                    break;
+                }
+            }
+            UserSession.getInstance().setRole(role);
             return true;
         }
         

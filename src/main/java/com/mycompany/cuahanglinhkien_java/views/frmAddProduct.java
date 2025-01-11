@@ -4,9 +4,13 @@
  */
 package com.mycompany.cuahanglinhkien_java.views;
 
+import com.mycompany.cuahanglinhkien_java.controllers.CategoryController;
+import com.mycompany.cuahanglinhkien_java.controllers.ManufacturerController;
 import com.mycompany.cuahanglinhkien_java.controllers.OrderController;
 import com.mycompany.cuahanglinhkien_java.controllers.OrderDetailController;
 import com.mycompany.cuahanglinhkien_java.controllers.ProductController;
+import com.mycompany.cuahanglinhkien_java.models.Category;
+import com.mycompany.cuahanglinhkien_java.models.Manufacturer;
 import com.mycompany.cuahanglinhkien_java.models.OrderDetail;
 import com.mycompany.cuahanglinhkien_java.models.Product;
 import java.awt.Image;
@@ -28,6 +32,8 @@ public class frmAddProduct extends javax.swing.JFrame {
     frmOrderDetails parentForm;
     private final ProductController _productController = new ProductController();
     private final OrderDetailController _orderDetailController = new OrderDetailController();
+    private final CategoryController _categoryController = new CategoryController();
+    private final ManufacturerController _manufacturerController = new ManufacturerController();
     private Object[] header = {"Id", "Ảnh", "Tên sản phẩm", "Danh mục", "Hãng SX", "Giá"};
     private DefaultTableModel productTbModel = new DefaultTableModel(header, 0) {
         @Override
@@ -52,6 +58,8 @@ public class frmAddProduct extends javax.swing.JFrame {
 
     private void loadTable() {
         List<Product> products = _productController.getAllProduct();
+        List<Category> catrgories = _categoryController.getAllCategory();
+        List<Manufacturer> manufacturers = _manufacturerController.getAllManufacturer();
         String path = System.getProperty("user.dir");
         String baseImagePath = path + "\\src\\main\\java\\com\\mycompany\\cuahanglinhkien_java\\images\\product_images\\";
         for(Product p : products){
@@ -67,8 +75,25 @@ public class frmAddProduct extends javax.swing.JFrame {
                     imageIcon.setDescription(imagePath);
                 }
             }
+            
+            String manufacturerName = "", categoryName = "";
+            
+            for (Category c : catrgories){
+                if (c.getId() == p.getCategoryId()){
+                    categoryName = c.getName();
+                    break;
+                }
+            }
+            
+            for (Manufacturer m : manufacturers){
+                if (m.getId() == p.getManufacturerId()){
+                    manufacturerName = m.getName();
+                    break;
+                }
+            }
+            
             productTbModel.addRow(new Object[] {p.getId(), imageIcon, p.getName(), 
-                    p.getCategoryId(), p.getManufacturerId(), p.getPrice()});
+                    categoryName, manufacturerName, p.getPrice()});
         }
         productTbModel.fireTableDataChanged();
     }

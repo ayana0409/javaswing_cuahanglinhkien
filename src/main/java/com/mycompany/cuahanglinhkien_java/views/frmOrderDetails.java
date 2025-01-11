@@ -14,6 +14,7 @@ import com.mycompany.cuahanglinhkien_java.models.Product;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import share.OutOfStockException;
@@ -433,6 +434,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
 
     private void btnAddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductActionPerformed
         frmAddProduct frmAddProduct = new frmAddProduct(orderId, this);
+        frmAddProduct.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frmAddProduct.setLocationRelativeTo(null);
         frmAddProduct.setVisible(true);
     }//GEN-LAST:event_btnAddProductActionPerformed
