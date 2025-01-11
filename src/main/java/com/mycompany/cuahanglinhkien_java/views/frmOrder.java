@@ -141,7 +141,6 @@ public class frmOrder extends javax.swing.JFrame {
 
         txtName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtName.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        txtName.setFocusable(false);
         jPanel7.add(txtName);
 
         jPanel3.add(jPanel7);
@@ -154,7 +153,6 @@ public class frmOrder extends javax.swing.JFrame {
 
         txtAddress.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtAddress.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        txtAddress.setFocusable(false);
         jPanel6.add(txtAddress);
 
         jPanel3.add(jPanel6);
@@ -362,13 +360,13 @@ public class frmOrder extends javax.swing.JFrame {
                 if (customer != null) {
                     txtName.setText(customer.getName());
                     txtAddress.setText(customer.getAddress());
-                    txtName.setEnabled(false);
-                    txtAddress.setEnabled(false);
+                    txtName.setFocusable(false);
+                    txtAddress.setFocusable(false);
                 } else {
                     txtName.setText("");
                     txtAddress.setText("");
-                    txtName.setEnabled(true);
-                    txtAddress.setEnabled(true);
+                    txtName.setFocusable(true);
+                    txtAddress.setFocusable(true);
                 }
             }
 
@@ -379,13 +377,13 @@ public class frmOrder extends javax.swing.JFrame {
                 if (customer != null) {
                     txtName.setText(customer.getName());
                     txtAddress.setText(customer.getAddress());
-                    txtName.setEnabled(false);
-                    txtAddress.setEnabled(false);
+                    txtName.setFocusable(false);
+                    txtAddress.setFocusable(false);
                 } else {
                     txtName.setText("");
                     txtAddress.setText("");
-                    txtName.setEnabled(true);
-                    txtAddress.setEnabled(true);
+                    txtName.setFocusable(true);
+                    txtAddress.setFocusable(true);
                 }
             }
 
