@@ -24,6 +24,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.mycompany.cuahanglinhkien_java.models.InvoiceItem;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import static share.utils.PhoneNumberUtils.checkPhoneNumber;
 import static share.utils.StringFormat.formatCurrencyVND;
 
 /**
@@ -293,6 +294,11 @@ public class frmOrder extends javax.swing.JFrame {
         if(!phoneNumber.isBlank()&& !name.isBlank()&& !address.isBlank()){
             Customer customer = customerController.getCustomerByPhoneNumber(phoneNumber);
             if(customer==null){
+                if (!checkPhoneNumber(phoneNumber)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ", 
+                        "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
                 customerController.addCustomer(new Customer(phoneNumber, name, address));
             }
             ordercontroller.addOrder(new Order(phoneNumber));

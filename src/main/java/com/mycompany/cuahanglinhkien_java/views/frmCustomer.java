@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import static share.utils.PhoneNumberUtils.checkPhoneNumber;
 
 /**
  *
@@ -265,6 +266,11 @@ public class frmCustomer extends javax.swing.JFrame {
         String name=txtName.getText();
         String address=txtAddress.getText();
         if(!phoneNumber.isBlank()&& !name.isBlank()&& !address.isBlank()){
+            if (!checkPhoneNumber(phoneNumber)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ", 
+                        "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             customercontroller.addCustomer(new Customer(phoneNumber, name, address));
             loadData();
             clearInput();
@@ -275,10 +281,15 @@ public class frmCustomer extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         if (!selected.isEmpty()&&!txtPhoneNumber.getText().isBlank()&& !txtName.getText().isBlank()&& !txtAddress.getText().isBlank()) {
+            if (!checkPhoneNumber(txtPhoneNumber.getText())){
+                javax.swing.JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ", 
+                        "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             customercontroller.editCustomer(new Customer(txtPhoneNumber.getText(),txtName.getText(),txtAddress.getText()),selected );
             
-                loadData();
-                clearInput();
+            loadData();
+            clearInput();
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditActionPerformed

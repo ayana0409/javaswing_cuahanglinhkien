@@ -16,6 +16,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import static share.utils.PhoneNumberUtils.checkPhoneNumber;
 
 /**
  *
@@ -404,6 +405,11 @@ public class frmEmployee extends javax.swing.JFrame {
                         "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
+            if (!checkPhoneNumber(phoneNumber)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ", 
+                        "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
             employeecontroller.addEmployee(new Employee( name, gender, address, phoneNumber, status, userName, password, birthday, roleId));
             loadData();
             clearInput();
@@ -434,6 +440,11 @@ public class frmEmployee extends javax.swing.JFrame {
             if (!userName.equals(employee.getUsername()) && checkExistEmployee(userName))
             {
                 javax.swing.JOptionPane.showMessageDialog(this, "Tên đăng nhập ["+ userName +"] đã tồn tại!", 
+                        "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (!checkPhoneNumber(phoneNumber)){
+                javax.swing.JOptionPane.showMessageDialog(this, "Số điện thoại không hợp lệ", 
                         "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
