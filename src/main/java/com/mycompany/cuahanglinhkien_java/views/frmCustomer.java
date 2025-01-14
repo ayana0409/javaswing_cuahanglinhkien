@@ -270,7 +270,7 @@ public class frmCustomer extends javax.swing.JFrame {
                         "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            customercontroller.addCustomer(new Customer(phoneNumber, name, address));
+            customercontroller.addCustomer(new Customer(phoneNumber, address, name));
             loadData();
             clearInput();
         }
@@ -285,7 +285,7 @@ public class frmCustomer extends javax.swing.JFrame {
                         "Cảnh báo", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            customercontroller.editCustomer(new Customer(txtPhoneNumber.getText(),txtName.getText(),txtAddress.getText()),selected );
+            customercontroller.editCustomer(new Customer(txtPhoneNumber.getText(),txtAddress.getText(),txtName.getText()),selected );
             
             loadData();
             clearInput();

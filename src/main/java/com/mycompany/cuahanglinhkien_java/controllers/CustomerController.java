@@ -25,7 +25,7 @@ public class CustomerController extends javax.swing.JFrame {
         try {
             return _dbHelper.fetchOne(query, rs -> {
                 try {
-                    return new Customer(rs.getString("PhoneNumber"), rs.getString("name"), rs.getString("Address"));
+                    return new Customer(rs.getString("PhoneNumber"), rs.getString("Address"), rs.getString("name"));
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return null;
@@ -42,7 +42,7 @@ public class CustomerController extends javax.swing.JFrame {
         try {
             return _dbHelper.fetchAll(query, rs -> {
                 try {
-                    return new Customer(rs.getString("PhoneNumber"), rs.getString("name"), rs.getString("Address"));
+                    return new Customer(rs.getString("PhoneNumber"), rs.getString("Address"), rs.getString("name"));
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return null;
@@ -92,7 +92,7 @@ public class CustomerController extends javax.swing.JFrame {
         try {
             return _dbHelper.fetchAll(query, rs -> {
                 try {
-                    return new Customer(rs.getString("PhoneNumber"), rs.getString("name"), rs.getString("Address"));
+                    return new Customer(rs.getString("PhoneNumber"), rs.getString("Address"), rs.getString("name"));
                 } catch (SQLException e) {
                     e.printStackTrace();
                     return null;
