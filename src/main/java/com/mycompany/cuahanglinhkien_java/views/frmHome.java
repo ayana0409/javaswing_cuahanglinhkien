@@ -296,6 +296,11 @@ public class frmHome extends javax.swing.JFrame {
         btnExit.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnExit.setForeground(new java.awt.Color(255, 255, 255));
         btnExit.setText("Đóng chương trình");
+        btnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExitActionPerformed(evt);
+            }
+        });
         jPanel11.add(btnExit);
 
         jPanel3.add(jPanel11);
@@ -384,6 +389,10 @@ public class frmHome extends javax.swing.JFrame {
         frmStatistic.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnStatisticActionPerformed
+
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnExitActionPerformed
 
     /**
      * @param args the command line arguments

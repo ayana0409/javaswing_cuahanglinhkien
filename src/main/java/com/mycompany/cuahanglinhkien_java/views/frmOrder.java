@@ -214,6 +214,11 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel12.setLayout(new java.awt.GridLayout(1, 2, 5, 0));
 
         btnSearch.setText("Tìm kiếm");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
         jPanel12.add(btnSearch);
 
         btnPrint.setText("Xuất hóa đơn");
@@ -246,6 +251,11 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel13.add(btnView);
 
         btnCancel.setText("Hủy");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
         jPanel13.add(btnCancel);
 
         jPanel11.add(jPanel13);
@@ -310,6 +320,11 @@ public class frmOrder extends javax.swing.JFrame {
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         if (selected != -1) {
+            Order order = ordercontroller.getOrder(selected);
+            if (!order.getStatus().equals("Hoàn thành")){
+                JOptionPane.showMessageDialog(null, "Lỗi xuất hỏa đơn: Đơn chưa hoàn thành!");
+                return;
+            }
             InvoiceModel invoice = ordercontroller.getInvoiceData(selected);
             try {
                 exportInvoiceToPDF(invoice);
@@ -337,6 +352,46 @@ public class frmOrder extends javax.swing.JFrame {
         frmHome.setVisible(true);        
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        try {
+            String searchQuery = txtSearch.getText();
+            if (searchQuery.isEmpty()) {
+                loadData();
+                return;
+            }
+            List<Order> searchResults = ordercontroller.searchOrderByIdOrPhone(searchQuery);
+            model.setRowCount(0);
+            if (searchResults != null && !searchResults.isEmpty()) {
+                model.setRowCount(0);
+                searchResults.forEach(order -> {
+                    model.addRow(new Object[]{order.getId(), order.getPhoneNumber(), order.getPurchaseDate(), order.getStatus(), order.getTotalAmount()});
+                });
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy đơn hàng nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        if (selected != -1){
+            Order order = ordercontroller.getOrder(selected);
+            if (order.getStatus().equals("Hủy")){
+                JOptionPane.showMessageDialog(null, "Đơn đã được hủy!");
+                return;
+            }
+            int confirm = javax.swing.JOptionPane
+                .showConfirmDialog(this, "Đơn hàng sẽ bị hủy?", "Xác nhận hủy", javax.swing.JOptionPane.YES_NO_OPTION);
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+                ordercontroller.cancelOrder(selected);
+                loadData();
+            }
+        }
+        
+    }//GEN-LAST:event_btnCancelActionPerformed
+
     protected void loadData() {
         List<Order> orders = ordercontroller.getAllOrder();
 
@@ -355,6 +410,7 @@ public class frmOrder extends javax.swing.JFrame {
                     txtID.setText(selected+"");
                     txtPhoneNumber.setText(order.getPhoneNumber());
                     cbStatus.setSelectedItem(order.getStatus());
+                    txtTotal.setText(order.getTotalAmount() + "");
                 }
             }
         });

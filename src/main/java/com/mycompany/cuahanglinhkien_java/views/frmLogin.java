@@ -54,6 +54,11 @@ public class frmLogin extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 204, 153));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setSize(new java.awt.Dimension(480, 480));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 126, 242));
         jPanel1.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
@@ -174,6 +179,11 @@ public class frmLogin extends javax.swing.JFrame {
                 btnExitActionPerformed(evt);
             }
         });
+        btnExit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnExitKeyPressed(evt);
+            }
+        });
         jPanel3.add(btnExit);
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
@@ -194,7 +204,7 @@ public class frmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -218,12 +228,28 @@ public class frmLogin extends javax.swing.JFrame {
     private void txtUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsernameKeyPressed
         txtUsernameError.setText("");
         txtLoginError.setText("");
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnLogin.doClick(); // Kích hoạt sự kiện click của btnLogin
+        }
     }//GEN-LAST:event_txtUsernameKeyPressed
 
     private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
         txtPasswordError.setText("");
         txtLoginError.setText("");
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnLogin.doClick(); // Kích hoạt sự kiện click của btnLogin
+        }
     }//GEN-LAST:event_txtPasswordKeyPressed
+
+    private void btnExitKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnExitKeyPressed
+        this.dispose();
+    }//GEN-LAST:event_btnExitKeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnLogin.doClick(); // Kích hoạt sự kiện click của btnLogin
+        }
+    }//GEN-LAST:event_formKeyPressed
 
     private boolean login(){
         if (txtUsername.getText().isBlank()) {

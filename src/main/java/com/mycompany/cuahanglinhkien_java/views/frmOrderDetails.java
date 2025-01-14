@@ -50,6 +50,13 @@ public class frmOrderDetails extends javax.swing.JFrame {
         tbOrderDetails.setModel(detailModel);
         addEvent();
         loadData();
+        
+        if (order.getStatus().equals("Hủy") || order.getStatus().equals("Hoàn thành")){
+            btnAddProduct.setVisible(false);
+            btnCancelOrder.setVisible(false);
+            btnDelete.setVisible(false);
+            btnPayment.setVisible(false);
+        }
     }
 
     private void addEvent() {

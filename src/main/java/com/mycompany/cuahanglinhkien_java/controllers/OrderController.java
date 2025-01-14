@@ -96,7 +96,7 @@ public class OrderController {
     }
     
     public boolean cancelOrder(int orderId){
-        String query = "UPDATE order SET status = 'Hủy' WHERE id = ?";
+        String query = "UPDATE orders SET status = 'Hủy' WHERE id = ?";
 
         try {
             int result = _dbContext.updateOrDelete(query, orderId);
@@ -143,6 +143,25 @@ public class OrderController {
         } catch (SQLException ex) {
             Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
             return new ArrayList<>();
+        }
+    }
+    public List<Order> searchOrderByIdOrPhone(String name) {
+        String query = "SELECT * FROM Orders WHERE id LIKE ? or phonenumber like ?";
+        try {
+            return _dbContext.fetchAll(query, rs -> {
+                try {
+                    return new Order(rs.getInt("id"), rs.getInt("emp_id"), 
+                            rs.getString("phoneNumber"), rs.getDate("purchaseDate"), 
+                            rs.getString("status"), rs.getFloat("totalAmount"));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }, "%"+name+"%", "%"+name+"%");
+        } catch (SQLException e) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            return null;
         }
     }
     

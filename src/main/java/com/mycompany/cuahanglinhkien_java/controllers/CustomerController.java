@@ -87,4 +87,21 @@ public class CustomerController extends javax.swing.JFrame {
             return false;
         }
     }
+    public List<Customer> searchCustomerByName(String name) {
+        String query = "SELECT * FROM Customer WHERE name LIKE ? or phonenumber like ?";
+        try {
+            return _dbHelper.fetchAll(query, rs -> {
+                try {
+                    return new Customer(rs.getString("PhoneNumber"), rs.getString("name"), rs.getString("Address"));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }, "%"+name+"%", "%"+name+"%");
+        } catch (SQLException e) {
+            Logger.getLogger(CustomerController.class.getName()).log(Level.SEVERE, null, e);
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

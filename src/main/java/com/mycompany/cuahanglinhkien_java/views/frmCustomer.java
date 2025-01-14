@@ -102,12 +102,6 @@ public class frmCustomer extends javax.swing.JFrame {
 
         jLabel1.setText("Số điện thoại");
         jPanel5.add(jLabel1);
-
-        txtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPhoneNumberActionPerformed(evt);
-            }
-        });
         jPanel5.add(txtPhoneNumber);
 
         jPanel3.add(jPanel5);
@@ -173,6 +167,11 @@ public class frmCustomer extends javax.swing.JFrame {
         jPanel11.setLayout(new java.awt.GridLayout(2, 2, 5, 5));
 
         btnSearch.setText("Tìm kiếm");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
         jPanel11.add(btnSearch);
 
         btnAdd.setText("Thêm");
@@ -294,10 +293,6 @@ public class frmCustomer extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditActionPerformed
 
-    private void txtPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPhoneNumberActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         frmHome frmHome = new frmHome();
         frmHome.setLocationRelativeTo(null);
@@ -305,15 +300,38 @@ public class frmCustomer extends javax.swing.JFrame {
         frmHome.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
 
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        try {
+            String searchQuery =txtSearch.getText();
+            if (searchQuery.isEmpty()) {
+                loadData();
+                return;
+            }
+            List<Customer> searchResults = customercontroller.searchCustomerByName(searchQuery);
+            model.setRowCount(0);
+            if (searchResults != null && !searchResults.isEmpty()) {
+                model.setRowCount(0);
+                searchResults.forEach(customer -> {
+                    model.addRow(new Object[]{customer.getPhoneNumber(), customer.getName(), customer.getAddress()});
+                });
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy khách hàng nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Đã xảy ra lỗi: " + ex.getMessage(), "Lỗi", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnSearchActionPerformed
+
     private void loadData() {
         // Lấy danh sách danh mục từ cơ sở dữ liệu
-        List<Customer> listCate = customercontroller.getAllCustomer();
+        List<Customer> listCustomer = customercontroller.getAllCustomer();
 
         // Xóa dữ liệu cũ trong bảng
         model.setRowCount(0);
 
         // Sử dụng phương thức forEach để duyệt qua danh sách danh mục
-        listCate.forEach(customer -> {
+        listCustomer.forEach(customer -> {
             model.addRow(new Object[]{customer.getPhoneNumber(), customer.getName(), customer.getAddress()});
         });
 
