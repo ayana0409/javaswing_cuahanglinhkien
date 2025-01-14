@@ -85,6 +85,7 @@ public class frmManufacturer extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(0, 126, 242));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN LÝ HÃNG SẢN XUẤT");
         jPanel8.add(jLabel1, java.awt.BorderLayout.PAGE_START);

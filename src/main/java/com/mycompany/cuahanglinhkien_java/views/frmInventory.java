@@ -23,16 +23,19 @@ public class frmInventory extends javax.swing.JFrame {
     String[] columnNames = {"Mã", "Ngày nhập", "Số lô", "Số lượng nhập", "Tồn kho", "Giá nhập", "Tổng giá trị"};
     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
     int productId;
+    frmProduct parent;
     
     /**
      * Creates new form frmCategory
      */
-    public frmInventory(int productId) {
+    public frmInventory(int productId,frmProduct parent) {
         initComponents();
-        tbInventory.setModel(model);
+        this.parent = parent;
         this.productId = productId;
+        tbInventory.setModel(model);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         loadTable();
+        clearInput();
     }
 
     /**
@@ -45,7 +48,6 @@ public class frmInventory extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -71,18 +73,21 @@ public class frmInventory extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         btnImport = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(960, 640));
         setSize(new java.awt.Dimension(500, 300));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("QUẢN LÝ NHẬP HÀNG");
-        getContentPane().add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jPanel3.setBackground(new java.awt.Color(204, 255, 255));
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         tbInventory.setModel(new javax.swing.table.DefaultTableModel(
@@ -104,11 +109,6 @@ public class frmInventory extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        tbInventory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbInventoryMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tbInventory);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -127,15 +127,18 @@ public class frmInventory extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        jLabel2.setBackground(new java.awt.Color(204, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Thông tin sản phẩm");
         jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
+        jPanel4.setBackground(new java.awt.Color(204, 255, 255));
         jPanel4.setLayout(new java.awt.GridLayout(6, 0, 0, 10));
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 0));
 
+        jLabel3.setBackground(new java.awt.Color(204, 255, 255));
         jLabel3.setText("Mã sản phẩm");
         jPanel5.add(jLabel3);
 
@@ -206,12 +209,19 @@ public class frmInventory extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
+        jPanel7.setBackground(new java.awt.Color(0, 126, 242));
+        jPanel7.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("QUẢN LÝ NHẬP HÀNG");
+        jPanel7.add(jLabel1);
+
+        getContentPane().add(jPanel7, java.awt.BorderLayout.PAGE_START);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tbInventoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbInventoryMouseClicked
-
-    }//GEN-LAST:event_tbInventoryMouseClicked
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
 
@@ -225,13 +235,19 @@ public class frmInventory extends javax.swing.JFrame {
             controller.ImportProduct(newInventory);
         }
         loadTable();
+        clearInput();
     }//GEN-LAST:event_btnImportActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        //this.dispose();
-        frmProduct productForm = new frmProduct();
-        productForm.setVisible(true);
+        parent.loadData();
+        this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        parent.loadData();
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+  
     
     private void loadTable() {
         InventoryController controller = new InventoryController();
@@ -254,7 +270,12 @@ public class frmInventory extends javax.swing.JFrame {
                 inventory.getTotal() 
             });
         });
-
+    }
+    
+    private void clearInput() {
+        txtBatchNumber.setText("");
+        spQuantity.setValue(0);
+        spImportPrice.setValue(0);
     }
    
     /**
@@ -313,6 +334,7 @@ public class frmInventory extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
