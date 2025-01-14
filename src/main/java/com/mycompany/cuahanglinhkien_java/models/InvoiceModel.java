@@ -11,15 +11,25 @@ import java.util.List;
  * @author Asus
  */
 public class InvoiceModel {
+    private int id;
     private String customerName, phone, address, employeeName;
     private List<InvoiceItem> items;
 
-    public InvoiceModel(String customerName, String phone, String address, String employeeName, List<InvoiceItem> items) {
+    public InvoiceModel(int id, String customerName, String phone, String address, String employeeName, List<InvoiceItem> items) {
+        this.id = id;
         this.customerName = customerName;
         this.phone = phone;
         this.address = address;
         this.employeeName = employeeName;
         this.items = items;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCustomerName() {

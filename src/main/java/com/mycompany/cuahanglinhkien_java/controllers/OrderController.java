@@ -111,11 +111,11 @@ public class OrderController {
                 + "FROM Orders o JOIN Customer c ON o.PhoneNumber = c.PhoneNumber "
                 + "JOIN Employee e ON o.Emp_Id = e.Id WHERE o.Id = ?;";
         List<InvoiceItem> items = getInvoiceItems(orderId);
-        
+         
         try {
             return _invoiceContext.fetchOne(query, i-> { 
                 try {
-                    return new InvoiceModel(i.getString("customerName"), i.getString("PhoneNumber"),
+                    return new InvoiceModel(orderId, i.getString("customerName"), i.getString("PhoneNumber"),
                             i.getString("Address"), i.getString("EmployeeName"), items);
                 } catch (SQLException ex) {
                     Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,7 +134,8 @@ public class OrderController {
         try {
             return _invoiceItemContext.fetchAll(query, i -> {
                 try {
-                    return new InvoiceItem(i.getInt("productId"), i.getString("ProductName"), i.getInt("QuantitySold"), i.getFloat("SalePrice"));
+                    return new InvoiceItem(i.getInt("productId"), i.getString("ProductName"), 
+                            i.getInt("QuantitySold"), i.getFloat("SalePrice"));
                 } catch (SQLException ex) {
                     Logger.getLogger(OrderController.class.getName()).log(Level.SEVERE, null, ex);
                     return null;

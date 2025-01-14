@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import share.OutOfStockException;
+import static share.utils.StringFormat.formatCurrencyVND;
 
 /**
  *
@@ -93,7 +94,7 @@ public class frmOrderDetails extends javax.swing.JFrame {
         txtOrderId.setText(order.getId() + "");
         txtPhone.setText(order.getPhoneNumber());
         txtStatus.setText(order.getStatus());
-        txtTotalPrice.setText(order.getTotalAmount() + "");
+        txtTotalPrice.setText(formatCurrencyVND(order.getTotalAmount()));
 
         loadTable();
     }

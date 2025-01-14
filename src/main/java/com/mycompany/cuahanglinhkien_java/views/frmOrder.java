@@ -364,7 +364,7 @@ public class frmOrder extends javax.swing.JFrame {
             if (searchResults != null && !searchResults.isEmpty()) {
                 model.setRowCount(0);
                 searchResults.forEach(order -> {
-                    model.addRow(new Object[]{order.getId(), order.getPhoneNumber(), order.getPurchaseDate(), order.getStatus(), order.getTotalAmount()});
+                    model.addRow(new Object[]{order.getId(), order.getPhoneNumber(), order.getPurchaseDate(), order.getStatus(), formatCurrencyVND(order.getTotalAmount())});
                 });
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy đơn hàng nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -378,8 +378,8 @@ public class frmOrder extends javax.swing.JFrame {
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
         if (selected != -1){
             Order order = ordercontroller.getOrder(selected);
-            if (order.getStatus().equals("Hủy")){
-                JOptionPane.showMessageDialog(null, "Đơn đã được hủy!");
+            if (order.getStatus().equals("Hủy") || order.getStatus().equals("Hoàn thành")){
+                JOptionPane.showMessageDialog(null, "Không thể hủy!");
                 return;
             }
             int confirm = javax.swing.JOptionPane
@@ -397,7 +397,7 @@ public class frmOrder extends javax.swing.JFrame {
 
         model.setRowCount(0);
         orders.forEach(order -> {
-            model.addRow(new Object[]{order.getId(), order.getPhoneNumber(), order.getPurchaseDate(), order.getStatus(), order.getTotalAmount()});
+            model.addRow(new Object[]{order.getId(), order.getPhoneNumber(), order.getPurchaseDate(), order.getStatus(), formatCurrencyVND(order.getTotalAmount())});
         });
     }
     private void addEvent() {
@@ -410,7 +410,7 @@ public class frmOrder extends javax.swing.JFrame {
                     txtID.setText(selected+"");
                     txtPhoneNumber.setText(order.getPhoneNumber());
                     cbStatus.setSelectedItem(order.getStatus());
-                    txtTotal.setText(order.getTotalAmount() + "");
+                    txtTotal.setText(formatCurrencyVND(order.getTotalAmount()));
                 }
             }
         });
@@ -468,8 +468,8 @@ public class frmOrder extends javax.swing.JFrame {
         String baseFontPath = path + "\\src\\main\\java\\share\\arialuni.ttf";
         
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream("C:/CuaHangLinhKien/" + invoice.getCustomerName() 
-                + invoice.getPhone() + ".pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream("C:/CuaHangLinhKien/" 
+                + invoice.getId() + invoice.getCustomerName() + invoice.getPhone() + ".pdf"));
         document.open();
 
         String fontPath = baseFontPath;
@@ -478,7 +478,8 @@ public class frmOrder extends javax.swing.JFrame {
         
         document.add(new Paragraph("INVOICE", font));
         document.add(new Paragraph(" "));
-
+        
+        document.add(new Paragraph("Order Id: " + invoice.getId(), font));
         document.add(new Paragraph("Customer name: " + invoice.getCustomerName(), font));
         document.add(new Paragraph("Phone number: " + invoice.getPhone(), font));
         document.add(new Paragraph("Address: " + invoice.getAddress(), font));

@@ -250,6 +250,9 @@
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtID">
+                          <Properties>
+                            <Property name="focusable" type="boolean" value="false"/>
+                          </Properties>
                         </Component>
                       </SubComponents>
                     </Container>

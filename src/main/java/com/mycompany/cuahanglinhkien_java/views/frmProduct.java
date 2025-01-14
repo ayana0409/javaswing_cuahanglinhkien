@@ -233,6 +233,8 @@ public class frmProduct extends javax.swing.JFrame {
 
         jLabel9.setText("ID");
         jPanel5.add(jLabel9);
+
+        txtID.setFocusable(false);
         jPanel5.add(txtID);
 
         jPanel16.add(jPanel5);
@@ -709,7 +711,7 @@ public class frmProduct extends javax.swing.JFrame {
         cbManufacturer.setSelectedIndex(0);
         txtPrice.setText("");
         txtQuantity.setText("");
-        lbImage.setText("");
+        lbImage.setIcon(null);
         txtDetail.setText("");
     }
     /**
