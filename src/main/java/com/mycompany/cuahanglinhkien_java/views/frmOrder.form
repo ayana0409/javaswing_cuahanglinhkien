@@ -211,6 +211,7 @@
                             <StringItem index="2" value="H&#x1ee7;y"/>
                           </StringArray>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                         <Property name="focusable" type="boolean" value="false"/>
                       </Properties>
                       <AuxValues>

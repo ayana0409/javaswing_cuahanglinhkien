@@ -165,6 +165,7 @@ public class frmOrder extends javax.swing.JFrame {
         jPanel8.add(jLabel5);
 
         cbStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mới", "Hoàn thành", "Hủy" }));
+        cbStatus.setEnabled(false);
         cbStatus.setFocusable(false);
         jPanel8.add(cbStatus);
 
