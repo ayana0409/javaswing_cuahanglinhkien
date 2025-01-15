@@ -26,6 +26,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import static share.utils.StringFormat.formatCurrencyVND;
 
 /**
  *
@@ -66,9 +67,7 @@ public class frmProduct extends javax.swing.JFrame {
     }
 
     public class ImageHasher {
-
         public static String hashFile(String imageName) throws NoSuchAlgorithmException, IOException {
-
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hashedBytes = digest.digest(imageName.getBytes());
             // Chuyển đổi mảng byte thành chuỗi hex
@@ -409,11 +408,9 @@ public class frmProduct extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         try {
-            // Lấy thông tin sản phẩm từ các trường nhập liệu
             String name = txtName.getText().trim();
             Category selectedCate = (Category) cbCategory.getSelectedItem();
             Manufacturer selectedManu = (Manufacturer) cbManufacturer.getSelectedItem();
-            //int quantity = Integer.parseInt(txtQuantity.getText().trim());
             String details = txtDetail.getText().trim();
             double price = Double.parseDouble(txtPrice.getText().trim());
 
@@ -425,10 +422,8 @@ public class frmProduct extends javax.swing.JFrame {
             Image img = imgIcon.getImage();
             BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
             bufferedImage.getGraphics().drawImage(img, 0, 0, null);
-            //String fileName = ImageHasher.hashFile(lbImage.getText()) + ".png";  // Băm tệp ảnh để tạo tên file duy nhất
-            String uniqueInput = String.valueOf(System.currentTimeMillis()); // Kết hợp đường dẫn và thời gian
+            String uniqueInput = String.valueOf(System.currentTimeMillis()); 
             String fileName = ImageHasher.hashFile(uniqueInput) + ".png";
-            // Lưu ảnh vào thư mục
             File outputFile = new File(baseImagePath + fileName);
             ImageIO.write(bufferedImage, "PNG", outputFile);
 
@@ -465,7 +460,6 @@ public class frmProduct extends javax.swing.JFrame {
                 return;
             }
 
-            // Lấy thông tin từ giao diện
             int id = Integer.parseInt(tbProduct.getValueAt(selectedRow, 0).toString());
             String name = txtName.getText().trim();
             Category selectedCategory = (Category) cbCategory.getSelectedItem();
@@ -474,8 +468,7 @@ public class frmProduct extends javax.swing.JFrame {
             String details = txtDetail.getText().trim();
             double price = Double.parseDouble(txtPrice.getText().trim());
             Product product = controller.getProductById(id);
-            // Lấy thông tin hình ảnh cũ từ bảng
-            String oldImagePath = product.getImage(); // Chỉ số 7 là cột chứa đường dẫn ảnh
+            String oldImagePath = product.getImage(); 
             if (oldImagePath != null && !oldImagePath.isBlank()) {
                 File oldImageFile = new File(baseImagePath + oldImagePath);
                 if (oldImageFile.exists() && !oldImageFile.delete()) {
@@ -491,18 +484,15 @@ public class frmProduct extends javax.swing.JFrame {
                 BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
                 bufferedImage.getGraphics().drawImage(img, 0, 0, null);
 
-                // Tạo tên tệp mới bằng ImageHasher
                 String uniqueInput = String.valueOf(System.currentTimeMillis());
                 String hashedFileName = ImageHasher.hashFile(uniqueInput);
                 newFileName = hashedFileName + ".png";
 
-                // Lưu hình ảnh mới
                 File outputFile = new File(baseImagePath + newFileName);
                 ImageIO.write(bufferedImage, "PNG", outputFile);
                 System.out.println("Hình ảnh mới đã được lưu: " + newFileName);
             }
 
-            // Cập nhật thông tin sản phẩm
             Product updatedProduct = new Product(
                     id, name, selectedCategory.getId(), selectedManufacturer.getId(),
                     quantity, details, newFileName, (float) price
@@ -599,7 +589,7 @@ public class frmProduct extends javax.swing.JFrame {
                     model.addRow(new Object[]{product.getId(), product.getName(),
                         category.getName(), manufacturer.getName(),
                         product.getQuantity(), product.getDetails(),
-                        product.getPrice(), imageIcon});
+                        formatCurrencyVND(product.getPrice()), imageIcon});
                 }
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm nào!", "Thông báo", javax.swing.JOptionPane.INFORMATION_MESSAGE);
@@ -679,7 +669,7 @@ public class frmProduct extends javax.swing.JFrame {
             model.addRow(new Object[]{Product.getId(), Product.getName(),
                 category.getName(), manufacturer.getName(),
                 Product.getQuantity(), Product.getDetails(),
-                Product.getPrice(), imageIcon});
+                formatCurrencyVND((float)Product.getPrice()), imageIcon});
         });
     }
 

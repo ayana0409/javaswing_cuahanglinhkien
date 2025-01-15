@@ -11,7 +11,7 @@ import com.mycompany.cuahanglinhkien_java.models.Product;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-
+import static share.utils.StringFormat.formatCurrencyVND;
 /**
  *
  * @author DLCT
@@ -266,8 +266,8 @@ public class frmInventory extends javax.swing.JFrame {
                 inventory.getBatchNumber(), 
                 inventory.getQuantityImported(),
                 inventory.getStockQuantity(),
-                inventory.getImportPirce(), 
-                inventory.getTotal() 
+                formatCurrencyVND(inventory.getImportPirce()), 
+                formatCurrencyVND(inventory.getTotal())
             });
         });
     }
