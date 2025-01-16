@@ -229,7 +229,7 @@ public class frmLogin extends javax.swing.JFrame {
         txtUsernameError.setText("");
         txtLoginError.setText("");
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-            btnLogin.doClick(); // Kích hoạt sự kiện click của btnLogin
+            btnLogin.doClick();
         }
     }//GEN-LAST:event_txtUsernameKeyPressed
 
@@ -237,7 +237,7 @@ public class frmLogin extends javax.swing.JFrame {
         txtPasswordError.setText("");
         txtLoginError.setText("");
         if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-            btnLogin.doClick(); // Kích hoạt sự kiện click của btnLogin
+            btnLogin.doClick();
         }
     }//GEN-LAST:event_txtPasswordKeyPressed
 

@@ -669,7 +669,7 @@ public class frmProduct extends javax.swing.JFrame {
             model.addRow(new Object[]{Product.getId(), Product.getName(),
                 category.getName(), manufacturer.getName(),
                 Product.getQuantity(), Product.getDetails(),
-                formatCurrencyVND((float)Product.getPrice()), imageIcon});
+                Product.getPrice(), imageIcon});
         });
     }
 
